@@ -197,12 +197,16 @@ h4,
 h5,
 h6 {
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 10px; font-family: Rubik,sans-serif;
 }
 
 .hero__intro-title {
   color: #f0f2f6;
-  font-size: 46px;
+  font-size: 46px;    font-family: Rubik,sans-serif;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .06em;  
+  line-height: 1.1em;
   line-height: 58px;
 }
 
@@ -883,7 +887,7 @@ img {
 }
 .btn--hypercolor span {
   position: absolute;
- }
+ } 
 
 .btn--hypercolor span:nth-child(1) {
   top: 0;

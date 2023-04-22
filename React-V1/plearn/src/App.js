@@ -5,6 +5,10 @@ import styled from "styled-components";
 import Nav from "./components/Nav";
 import WalletContext from "./contexts/WalletContext";
 import MarketPlace from "./Pages/MarketPlace";
+import AuctionPlace from "./components/MarketPlace/Buy";
+import data from "./utils/data";
+import Owned from "./Pages/Owned";
+import PrivacyPolicy from "./Pages/PrivacyPolicy";
 const Main = lazy(() => import("./Pages/Main"));
 const Error = lazy(() => import("./Pages/404"));
 export default React.memo(function App() {
@@ -19,6 +23,7 @@ export default React.memo(function App() {
     setUserAccount(newUserAccount);
   };
 
+  // const Name = useSelector((state) => state.Blog.Name);
   const renderLoader = () => {
     return (
       <Loader>
@@ -53,7 +58,16 @@ export default React.memo(function App() {
       <Routes>
         <Route path={"/"} element={<Main />} />
         <Route path="*" element={<Error />} />
+        {data.map((item) => (
+          <Route
+            key={item.id}
+            path={`/Buy/${item.Name}`}
+            element={<AuctionPlace />}
+          />
+        ))}
         <Route path="/Marketplace" element={<MarketPlace />}></Route>
+        <Route path="/owned" element={<Owned />}></Route>
+        <Route path="/Policy" element={<PrivacyPolicy />}></Route>
       </Routes>
     );
   };

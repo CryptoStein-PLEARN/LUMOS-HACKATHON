@@ -1,8 +1,32 @@
 import React from "react";
 import styled from "styled-components";
 import coin from "../../assets/MarketPlace/A (5).png";
+import { useDispatch } from "react-redux";
+import { SetBlog } from "../../Store/Slice/Cardslice";
+import { useNavigate } from "react-router-dom";
 export default React.memo(function Cards(props) {
-  const { Category, Name, id, ImgUri, desc, price } = props.data;
+  const { Category, Name, id, ImgUri, desc, price, buy } = props.data;
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+  const HandleClick = async () => {
+    try {
+      await dispatch(
+        SetBlog({
+          Category: Category,
+          Name: Name,
+          price: price,
+          id: id,
+          ImgUri: ImgUri,
+          desc: desc,
+        })
+      );
+      await console.log(Name);
+      nav(`/Buy/${Name}`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Container>
       <div key={Category} className="card">
@@ -21,7 +45,12 @@ export default React.memo(function Cards(props) {
             <p className="desp">{desc}</p>
             <div className="details"></div>
             <div className="product">
-              <a href="" className="btn">
+              <a
+                className="btn"
+                onClick={() => {
+                  HandleClick();
+                }}
+              >
                 Buy now
               </a>
             </div>

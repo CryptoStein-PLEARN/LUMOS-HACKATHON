@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&display=swap');
+html{
+  scroll-behavior: smooth;
+}
+:root {
+  --color-primary: #DCFF03;
+  --color-secondary: #5200ff;
+  --color-body: #18181b;
+  --content-background-color: rgb(33,33,33);
+  --color-white: #F0F2F6;
+  --color-grey: #1F2128;
+  --color-grey-ligher: #808191;
+  --color-bodys: #acacac;
+}
+ 
+  input:-webkit-autofill{
+    -webkit-text-fill-color: wheat !important;
+ background-color: transparent !important;
+    transition: background-color 9999s ease-in-out 0s !important;
+}
+ 
+body{
+  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/402979/purple-space.jpg");
+  background-color: #4121b2;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  padding-left: 12%;
+  padding-top:5%;
+  padding-bottom: 0;
+  transition: all 0.2s ease-in;
+  display: flex;
+  overflow:auto; 
+  font-family: 'Bai Jamjuree', sans-serif;
+ color:black;
+  align-items: center;
+}
+@media (max-width: 512px) {
+ body {
+    padding: 7%;
+    transition: all 0.2s ease-in;
+  }
+}
+
+@media (max-height: 764px) {
+  body {
+    
+    height: 100%;
+  }
+}
+.container {
+  width: 1300px;
+}
+
+@media only screen and (max-width: 1280px) {
+  .container {
+    width: 90%;
+  }
+}
+
+.container--relative {
+  position: relative;
+}
+
+.container--news-list {
+  width: 100%;
+}
+ 
+
+ 
+
+.logo-thumbnail img {
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.navbar {
+  border-bottom: 1px solid #ffffff2e;
+}
+
+.logo-thumbnail::after {
+  background: #ffffff66;
+  width: 1px;
+  height: 36px;
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.nav-link {
+  font-weight: 500;
+  padding: 28px 6px;
+  font-size: 16px;
+  display: block;
+  color: white;
+  margin: 0 8px;
+  border-radius: 3px;
+}
+ 
+
+ 
+ 
+h4 {
+  font-size: 18px;
+  line-height: 24px;
+  margin-top: 10px;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  margin-bottom: 10px; font-family: Rubik,sans-serif;
+}
+
+
+h1 {
+  font-size: 38px;
+  line-height: 44px;
+  margin-top: 20px;
+}
+
+p {
+  color: white;
+}
+
+.mt--45 {
+  margin-top: 35px;
+}
+
+.mb--20 {
+  margin-bottom: 20px;
+}
+
+.mb--40 {
+  margin-bottom: 40px;
+}
+
+p:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 16px;
+  font-style: normal;
+  line-height: 1.4em;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 10px;
+}

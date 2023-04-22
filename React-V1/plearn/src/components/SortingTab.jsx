@@ -1,10 +1,15 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { setSearchQuery } from "../Store/Slice/userSlice";
 
 export default React.memo(function SortingTab({ ShopState }) {
   const dispatch = useDispatch();
+  const Name = useSelector((state) => state.Blog.Name);
+  if (Name !== "") {
+    ShopState = true;
+  }
+
   const handleSearch = (event) => {
     dispatch(setSearchQuery(event.target.value));
   };
@@ -51,16 +56,20 @@ export default React.memo(function SortingTab({ ShopState }) {
           />
         </div>
       </div>
+      <>
+        <div className="details">
+          <span> Home / Shop / Buy / {Name}</span>
+        </div>
+      </>
     </Container>
   );
 });
 const Container = styled.div`
-  margin-top: 10vh;
+  padding-top: 10vh;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   align-content: flex-end;
-  padding-bottom: 19px;
   border-bottom: 1px solid white;
   .left {
     h1 {
@@ -71,7 +80,7 @@ const Container = styled.div`
       color: var(--qode-main-color);
       font-size: 50px;
       line-height: 1.1em;
-      margin: 25px 0;
+      margin: 20px 0;
       -ms-word-wrap: break-word;
       word-wrap: break-word;
     }
@@ -86,6 +95,13 @@ const Container = styled.div`
     justify-content: center;
     gap: 15px;
     position: relative;
+  }
+  .details {
+    span {
+      font-size: 16px;
+      color: #ccc;
+      text-transform: lowercase;
+    }
   }
 
   .input {

@@ -33,8 +33,9 @@ export default function Nav() {
     { name: "Home" },
     { name: "About" },
     { name: "MarketPlace" },
+    { name: "Owned" },
     { name: "Tokenomics" },
-    { name: "Trading" },
+    // { name: "Trading" },
     { name: "NFT" },
   ];
 

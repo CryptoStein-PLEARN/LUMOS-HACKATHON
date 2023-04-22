@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { filterCards, setSortBy } from "../../Store/Slice/userSlice";
+import { filterCards } from "../../Store/Slice/userSlice";
 
 export default React.memo(function Category() {
   const dispatch = useDispatch();
@@ -24,7 +24,6 @@ export default React.memo(function Category() {
     </div>
   );
 });
-const Sort = styled.div``;
 const Cat = styled.div`
   display: flex;
   display: flex;

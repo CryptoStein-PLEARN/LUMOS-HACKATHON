@@ -41,10 +41,7 @@ export default React.memo(function Faq() {
             <div className="elementor-widget-wrap ">
               <div className="elementor-element elementor-widget ">
                 <div className="">
-                  <div
-                    className="qodef-shortcode qodef-m qodef-accordion clear qodef-behavior--accordion qodef-layout--simple ui-accordion ui-widget ui-helper-reset qodef--init"
-                    role="tablist"
-                  >
+                  <div className="qodef-shortcode qodef-m qodef-accordion clear qodef-behavior--accordion qodef-layout--simple ui-accordion ui-widget ui-helper-reset qodef--init">
                     {accordionData.map((data) => (
                       <>
                         <div key={data.id}>
@@ -54,7 +51,6 @@ export default React.memo(function Faq() {
                                 ? ""
                                 : "ui-accordion-header-collapsed"
                             } ui-corner-all`}
-                            role="tab"
                             onClick={() => handleClick(data.id)}
                             tabIndex="0"
                           >
