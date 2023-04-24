@@ -8,8 +8,38 @@ const houseDetail = require("../model/house");
 const energyDetail = require("../model/energy");
 const lfDetail = require("../model/lifeInsurance");
 const {bankLoan, bankDeposit} = require("../model/bank");
+const preRegistrationDetail = require("../model/preregistration");
 
 const app = express();
+
+//For pre registration
+
+const preRegisterUser = (req,res) => {
+    const { email } = req.body;
+
+    preRegistrationDetail.findOne({email: email}, async (err, user) => {
+        if(user)
+        {
+            res.status(409).json({success: false, message: "User already registered" + " " + email});
+        }
+        else
+        {
+            const user = new preRegistrationDetail({
+                email
+            });
+            await user.save(err => {
+                if(err)
+                {
+                    res.status(500).json({ success: false, message: "An error occurred while pre-registering" });
+                }
+                else
+                {
+                    res.status(200).json({success: true, message: "Successfully Registered!"});
+                }
+            });
+        }
+    })
+}
 
 //For registering the user in 'metamask_login_table' and 'player_detail_table' through website.
 const registerUser = (req,res) => {
@@ -340,4 +370,4 @@ const updateBankDeposit = (req,res) => {
     )
 }
 
-module.exports = {registerUser, getPlayer, saveDetails, getCharacterDetails, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit};
