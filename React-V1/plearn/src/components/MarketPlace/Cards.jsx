@@ -20,7 +20,7 @@ export default React.memo(function Cards(props) {
           desc: desc,
         })
       );
-      await console.log(Name);
+      // await console.log(Name);
       nav(`/Buy/${Name}`);
     } catch (error) {
       console.error(error);
