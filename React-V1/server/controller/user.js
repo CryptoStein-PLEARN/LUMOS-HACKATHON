@@ -143,6 +143,11 @@ const updateHouseDetails = (req,res) => {
     const selectedHouseID = req.body.selectedHouseID;
     const gameCoins = req.body.gameCoins;
 
+    // Input validation
+    if (!/^[a-zA-Z0-9_-]+$/.test(selectedHouseID)) {
+        return res.sendStatus(400); // Bad Request
+    }
+
     playerDetail.updateOne(
         { userAccount: userAccount },
         { 
@@ -181,25 +186,24 @@ const getEnergyList = (req, res) => {
     })
 }
 
-const updateEnergyDetails = (req,res) => {
+const updateEnergyDetails = (req, res) => {
     const userAccount = req.body.userAccount;
     const gameCoins = req.body.gameCoins;
 
     playerDetail.updateOne(
-        { userAccount: userAccount },
+        { userAccount: { $eq: userAccount } },
         {
-            $set: { gameCoins: gameCoins },  
+            $set: { gameCoins: { $eq: gameCoins } },  
         },
         (err) => {
-            if(err)
-            {
+            if (err) {
                 console.error(err);
                 return res.sendStatus(500);
             }
             res.sendStatus(200);
         }
-    )
-}
+    );
+};
 
 //For adding lifeInsurance options in DB.
 const insertLF = async () => {
@@ -233,9 +237,9 @@ const updateLFDetails = (req,res) => {
     const loanAgainstLF = req.body.loanAgainstLF;
 
     playerDetail.updateOne(
-        { userAccount: userAccount },
+        { userAccount: { $eq: userAccount } },
         { 
-            $set: { lfID: selectedLFID, lfBoughtAt: lfBoughtAt, gameCoins: gameCoins, loanAgainstLF: loanAgainstLF },
+            $set: { lfID: { $eq: selectedLFID }, lfBoughtAt: { $eq: lfBoughtAt }, gameCoins: { $eq: gameCoins }, loanAgainstLF: { $eq: loanAgainstLF } },
         },
         (err) => {
             if(err) {
@@ -278,9 +282,9 @@ const updateBankLoan = (req,res) => {
     const payLoanByLevel = req.body.payLoanByLevel;
 
     playerDetail.updateOne(
-        { userAccount: userAccount },
+        { userAccount: { $eq: userAccount } },
         { 
-            $set: { bankLoan: bankLoan, gameCoins: gameCoins, payLoanByLevel: payLoanByLevel },
+            $set: { bankLoan: { $eq: bankLoan }, gameCoins: { $eq: gameCoins }, payLoanByLevel: { $eq: payLoanByLevel } },
         },
         (err) => {
             if(err) {
