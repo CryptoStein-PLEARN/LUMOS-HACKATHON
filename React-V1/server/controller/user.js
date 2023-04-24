@@ -237,9 +237,9 @@ const updateLFDetails = (req,res) => {
     const loanAgainstLF = req.body.loanAgainstLF;
 
     playerDetail.updateOne(
-        { userAccount: { $eq: userAccount } },
+        { userAccount: userAccount },
         { 
-            $set: { lfID: { $eq: selectedLFID }, lfBoughtAt: { $eq: lfBoughtAt }, gameCoins: { $eq: gameCoins }, loanAgainstLF: { $eq: loanAgainstLF } },
+            $set: { lfID: selectedLFID, lfBoughtAt: lfBoughtAt, gameCoins: gameCoins, loanAgainstLF: loanAgainstLF },
         },
         (err) => {
             if(err) {
