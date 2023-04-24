@@ -74,6 +74,7 @@ export default function Nav() {
         .post("https://plearn-backend.onrender.com/", { userAccount })
         .then((res) => {
           setConnButtonText("Wallet Connected");
+          localStorage.setItem("1", userAccount);
           alert(res.data.message);
           setIsLoading(false);
         })

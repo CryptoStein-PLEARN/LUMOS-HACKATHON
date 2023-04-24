@@ -19,70 +19,66 @@ export default React.memo(function App() {
     }, 1500);
   }, []);
   const [userAccount, setUserAccount] = useState(null);
-  const handleUserAccountChange = (newUserAccount) => {
-    setUserAccount(newUserAccount);
-  };
+  useEffect(() => {
+    if (localStorage.length !== 0) {
+      localStorage.getItem("1");
+    }
+  }, []);
+  // const handleUserAccountChange = (newUserAccount) => {
+  //   setUserAccount(newUserAccount);
+  // };
 
   // const Name = useSelector((state) => state.Blog.Name);
-  const renderLoader = () => {
-    return (
-      <Loader>
-        <div
-          aria-label="Orange and tan hamster running in a metal wheel"
-          role="img"
-          className="wheel-and-hamster"
-        >
-          <div className="wheel"></div>
-          <div className="hamster">
-            <div className="hamster__body">
-              <div className="hamster__head">
-                <div className="hamster__ear"></div>
-                <div className="hamster__eye"></div>
-                <div className="hamster__nose"></div>
-              </div>
-              <div className="hamster__limb hamster__limb--fr"></div>
-              <div className="hamster__limb hamster__limb--fl"></div>
-              <div className="hamster__limb hamster__limb--br"></div>
-              <div className="hamster__limb hamster__limb--bl"></div>
-              <div className="hamster__tail"></div>
-            </div>
-          </div>
-          <div className="spoke"></div>
-        </div>
-        <p>Loading...</p>
-      </Loader>
-    );
-  };
-  const renderRoutes = () => {
-    return (
-      <Routes>
-        <Route path={"/"} element={<Main />} />
-        <Route path="*" element={<Error />} />
-        {data.map((item) => (
-          <Route
-            key={item.id}
-            path={`/Buy/${item.Name}`}
-            element={<AuctionPlace />}
-          />
-        ))}
-        <Route path="/Marketplace" element={<MarketPlace />}></Route>
-        <Route path="/owned" element={<Owned />}></Route>
-        <Route path="/Policy" element={<PrivacyPolicy />}></Route>
-      </Routes>
-    );
-  };
+  // const renderLoader = () => {
+  //   return (
+  //     <Loader>
+  //       <div
+  //         aria-label="Orange and tan hamster running in a metal wheel"
+  //         role="img"
+  //         className="wheel-and-hamster"
+  //       >
+  //         <div className="wheel"></div>
+  //         <div className="hamster">
+  //           <div className="hamster__body">
+  //             <div className="hamster__head">
+  //               <div className="hamster__ear"></div>
+  //               <div className="hamster__eye"></div>
+  //               <div className="hamster__nose"></div>
+  //             </div>
+  //             <div className="hamster__limb hamster__limb--fr"></div>
+  //             <div className="hamster__limb hamster__limb--fl"></div>
+  //             <div className="hamster__limb hamster__limb--br"></div>
+  //             <div className="hamster__limb hamster__limb--bl"></div>
+  //             <div className="hamster__tail"></div>
+  //           </div>
+  //         </div>
+  //         <div className="spoke"></div>
+  //       </div>
+  //       <p>Loading...</p>
+  //     </Loader>
+  //   );
+  // };
 
   return (
     <>
       <WalletContext.Provider value={{ userAccount, setUserAccount }}>
         <BrowserRouter>
-          {loading === true ? (
-            renderLoader()
-          ) : (
-            <>
-              <Nav /> {renderRoutes()}
-            </>
-          )}
+          <Nav />
+          <Routes>
+            <Route exact path={"/"} element={<Main />} />
+            <Route path="*" element={<Error />} />
+            {data.map((item) => (
+              <Route
+                key={item.id}
+                exact
+                path={`/Buy/${item.Name}`}
+                element={<AuctionPlace />}
+              />
+            ))}
+            <Route exact path="/marketplace" element={<MarketPlace />}></Route>
+            <Route exact path="/owned" element={<Owned />}></Route>
+            <Route exact path="/policy" element={<PrivacyPolicy />}></Route>
+          </Routes>
         </BrowserRouter>
       </WalletContext.Provider>
     </>
