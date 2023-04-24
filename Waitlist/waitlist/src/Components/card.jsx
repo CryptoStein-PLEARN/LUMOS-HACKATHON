@@ -1,30 +1,36 @@
-import React, {useState} from "react";
-import styled from "styled-components";
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 import M from "../assets/copia-100.png";
 export default function Card() {
-  const [email, setEmail] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
-
+  const [email, setEmail] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [loader, setLoader] = useState(false);
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-  }
+  };
   const handleSubscribe = async () => {
+    setLoader(true);
     if (!email) {
-      setErrorMsg('Please enter your email');
+      setErrorMsg("Please enter your email");
+      setLoader(false);
       return;
     }
-    
+
     const isValidEmail = /\S+@\S+\.\S+/.test(email);
     if (!isValidEmail) {
-      setErrorMsg('Please enter a valid email address');
+      setErrorMsg("Please enter a valid email address");
+      setLoader(false);
       return;
     }
 
     try {
-      const response = await axios.post("https://plearn-backend.onrender.com/preregistration", { email });
+      const response = await axios.post(
+        "https://plearn-backend.onrender.com/preregistration",
+        { email }
+      );
+      setLoader(false);
       setSuccessMsg(response.data.message);
       setErrorMsg("");
     } catch (error) {
@@ -34,8 +40,9 @@ export default function Card() {
         setErrorMsg("An error occurred while pre-registering");
       }
       setSuccessMsg("");
+      setLoader(false);
     }
-  }
+  };
   return (
     <div class="card">
       <div class="cta logo-thumbnail">
@@ -55,7 +62,9 @@ export default function Card() {
             onChange={handleEmailChange}
           />
 
-          <button onClick={handleSubscribe}>subscribe</button>
+          <button onClick={handleSubscribe}>
+            {loader ? "......" : "SUBSCRIBE"}
+          </button>
         </div>
         {errorMsg && <p className="error">{errorMsg}</p>}
         {successMsg && <p className="success">{successMsg}</p>}

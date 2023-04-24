@@ -4,13 +4,14 @@ import axios from "axios";
 import { ColorRing } from "react-loader-spinner";
 import WalletContext from "../contexts/WalletContext";
 import Navbtn from "./Navbtn";
+import { useNavigate } from "react-router-dom";
 
 export default function Nav() {
   // const [userAccount, setUserAccount] = useState(null);
   const [connButtonText, setConnButtonText] = useState("Connect Wallet");
   const [isLoading, setIsLoading] = useState(false);
   const { userAccount, setUserAccount } = useContext(WalletContext);
-
+  const nav = useNavigate();
   // const provider = new ethers.providers.Web3Provider(window.ethereum);
   const connectWalletHandler = () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
@@ -45,13 +46,14 @@ export default function Nav() {
         const path = item.name.replace(/\s+/g, "");
         return (
           <li className="nav-item" key={item.name}>
-            <a
+            <div
               className="nav-link active"
-              aria-current="page"
-              href={`/${item.name === "Home" ? "" : path.toLowerCase()}`}
+              onClick={() => {
+                nav(`/${item.name === "Home" ? "" : path.toLowerCase()}`);
+              }}
             >
               {item.name}
-            </a>
+            </div>
           </li>
         );
       });

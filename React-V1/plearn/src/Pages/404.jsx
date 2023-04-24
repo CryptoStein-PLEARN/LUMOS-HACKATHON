@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import Footer from "../components/Footer";
 export default React.memo(function Error({ Navv }) {
   return (
     <Container>
@@ -66,6 +66,7 @@ export default React.memo(function Error({ Navv }) {
         <div className="leg leg-right"></div>
         <div className="schoolbag"></div>
       </div>
+      <Footer />
     </Container>
   );
 });

@@ -1,12 +1,10 @@
 import React from "react";
-import Header from "../Components/Header";
 import styled from "styled-components";
 import Card from "../Components/card";
 
 export default function Main() {
   return (
     <Container>
-      {/* <Header /> */}
       <Card />
     </Container>
   );
@@ -89,7 +87,6 @@ const Container = styled.div`
       --move5: inset(45% 0 6% 0);
       --move6: inset(14% 0 61% 0);
       clip-path: var(--move1);
-      content: "subscribe";
       text-transform: uppercase;
       position: absolute;
       top: 0;
