@@ -322,9 +322,9 @@ const updateBankDeposit = (req,res) => {
     const depositAmount = req.body.depositAmount;
 
     playerDetail.updateOne(
-        { userAccount: userAccount },
+        { userAccount: { $eq: userAccount } },
         { 
-            $set: { timeRemainingBeforeWithdrawal: timeRemainingBeforeWithdrawal, gameCoins: gameCoins, bankDeposit: depositAmount },
+            $set: { timeRemainingBeforeWithdrawal: { $eq: timeRemainingBeforeWithdrawal }, gameCoins: { $eq: gameCoins }, bankDeposit: { $eq: depositAmount } },
         },
         (err) => {
             if(err) {
