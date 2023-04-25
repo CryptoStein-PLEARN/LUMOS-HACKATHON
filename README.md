@@ -124,7 +124,7 @@ Land is owned by a landowner if it has been bought. The landowner may choose to 
 
 <!-- Deployed Dapp URL -->
 ## :link: Deployed Dapp URL 
-  (https://incredible-liger-fb1306.netlify.app/)
+  [(https://incredible-liger-fb1306.netlify.app/)](https://plearngame.netlify.app/)
 
 <img width="1440" alt="Screenshot 2023-04-25 at 18 22 18" src="https://user-images.githubusercontent.com/107268440/234283446-d4277760-ab4f-446e-9e37-f2b0c729b548.png">
 
