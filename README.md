@@ -34,7 +34,6 @@
   * [Deployed Dapp URL](#link-Deployed-Dapp-URL)
   * [Screenshots](#camera-screenshots)
   * [Tech Stack](#space_invader-tech-stack)
-  * [Features](#dart-features)
   * [Color Reference](#art-color-reference)
   * [Environment Variables](#key-environment-variables)
 - [Getting Started](#toolbox-getting-started)
@@ -205,21 +204,6 @@ Land is owned by a landowner if it has been bought. The landowner may choose to 
 </details>
 
   
-  
-  
-  
-  
-  
-<!-- Features -->
-## :dart: Features
-
-
-
-#### Game's Dynamics: 
-
-![x_gJH7jyw9_SBu2f8XUsmJz_8S2CjKPM9-t7_8gUX9GxKe5Q7oakzhFV3sOAwix7Oxu82uhzugYPKcChFllFLjpUY0Yod5UpBgBiLvO_nqXJK7u6sBkcC3HcrPEN](https://user-images.githubusercontent.com/107268440/193425187-3c618e03-b63f-4ebe-a24c-5f714ac7bee9.png)
-
-
 
 ---
 #### Stages of a proposal
