@@ -1,13 +1,8 @@
 
 <div align="center">
-  
-<img width="523" alt="Screenshot 2022-09-18 at 11 37 50" src="https://user-images.githubusercontent.com/107268440/190895791-a0937a0d-daa0-40cf-8996-b3d6e551be9d.png">
 
-  <h1>PLEARN</h1>
-  
-  <h1>PLAY.LEARN.EARN</h1>
-  
- 
+<img src="https://user-images.githubusercontent.com/107268440/234258232-868289ad-d799-481f-b15a-3b8cfc159d27.jpg" width=30% height=30%>
+
   
 <!-- Badges -->
 <p>
