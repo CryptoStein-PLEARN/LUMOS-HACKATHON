@@ -382,7 +382,7 @@ To deploy this project run
 ## :handshake: Contact
 
   - Email: adm.cryptostein@gmail.com
-  - Twitter: @stein_crypto
+  - Twitter: @CryptoStein2022
 
 
   <!-- Useful Links -->
