@@ -64,7 +64,7 @@ export default function Header() {
                 </button>
               </div>
 
-              <div className="hero__intro-stats">
+              {/* <div className="hero__intro-stats">
                 <div className="hero__intro-stats-item animated-box mss">
                   <div className="hero__intro-stats-spacer"></div>
                   <div>
@@ -95,7 +95,7 @@ export default function Header() {
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="hero__nft-placeholder">
               <div className="hero__nft-placeholder-img ims"></div>

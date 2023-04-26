@@ -4,15 +4,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Nav from "./components/Nav";
 import WalletContext from "./contexts/WalletContext";
 import Animate from "./components/Routes/Animate";
-import Loader from "./components/Loader";
 
 export default React.memo(function App() {
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 1500);
-  }, []);
   const [userAccount, setUserAccount] = useState(null);
   useEffect(() => {
     if (localStorage.length !== 0) {

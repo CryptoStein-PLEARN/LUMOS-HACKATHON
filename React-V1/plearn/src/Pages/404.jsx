@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 export default React.memo(function Error() {
   const location = useLocation();
@@ -10,6 +10,7 @@ export default React.memo(function Error() {
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
+  const nav = useNavigate();
   return (
     <>
       {showLoader ? (
@@ -26,7 +27,12 @@ export default React.memo(function Error() {
                   </span>
                 </div>
                 <span class="text">
-                  <a className="link" href="/">
+                  <a
+                    className="link"
+                    onClick={() => {
+                      nav("/");
+                    }}
+                  >
                     Don't get lost
                   </a>
                 </span>

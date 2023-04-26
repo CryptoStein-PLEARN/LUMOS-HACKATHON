@@ -1,7 +1,6 @@
 import GameSection from "../components/GameSection";
 import Header from "../components/Header";
-import React, { lazy, Suspense, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { lazy, Suspense } from "react";
 import Loader from "../components/Loader";
 import BreadCrums from "../components/BreadCrums";
 // import Litepaper from "../components/Litepaper";

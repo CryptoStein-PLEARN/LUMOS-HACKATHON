@@ -12,6 +12,7 @@ export default function Nav() {
   const [isLoading, setIsLoading] = useState(false);
   const { userAccount, setUserAccount } = useContext(WalletContext);
   const nav = useNavigate();
+
   // const provider = new ethers.providers.Web3Provider(window.ethereum);
   const connectWalletHandler = () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
@@ -39,7 +40,7 @@ export default function Nav() {
     // { name: "Trading" },
     // { name: "NFT" },
   ];
-  
+
   const Navcomp = () => {
     const listItems = useMemo(() => {
       return nav_list.map((item) => {
@@ -75,7 +76,9 @@ export default function Nav() {
         .then((res) => {
           setConnButtonText("Wallet Connected");
           localStorage.setItem("1", userAccount);
-          alert(res.data.message);
+          const resp = res.data.message;
+
+          alert(localStorage.length !== 0 ? "You're Logged in!" : resp);
           setIsLoading(false);
         })
         .catch((error) => {
