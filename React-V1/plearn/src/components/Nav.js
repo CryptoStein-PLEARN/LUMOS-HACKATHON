@@ -105,7 +105,13 @@ export default function Nav() {
         <div className="container-fluid">
           <div className="logo-thumbnail navbar-brand logo-custom-css">
             {" "}
-            <img src={logo_plearn} alt="Bootstrap" />
+            <img
+              src={logo_plearn}
+              onClick={() => {
+                nav("/");
+              }}
+              alt="Bootstrap"
+            />
           </div>
           <button
             type="button"
