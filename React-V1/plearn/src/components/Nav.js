@@ -37,9 +37,9 @@ export default function Nav() {
     { name: "Owned" },
     { name: "Tokenomics" },
     // { name: "Trading" },
-    { name: "NFT" },
+    // { name: "NFT" },
   ];
-
+  
   const Navcomp = () => {
     const listItems = useMemo(() => {
       return nav_list.map((item) => {

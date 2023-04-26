@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import bg from "../assets/Logo.png";
+import { useNavigate } from "react-router-dom";
 export default React.memo(function Footer() {
+  const nav = useNavigate();
   return (
     <Container>
       <footer id="qodef-page-footer" role="contentinfo">
@@ -55,31 +57,61 @@ export default React.memo(function Footer() {
                           id="menu-item-3147"
                           className="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-3147"
                         >
-                          <a href="/">Home</a>
+                          <a
+                            onClick={() => {
+                              nav("/");
+                            }}
+                          >
+                            Home
+                          </a>
                         </li>
                         <li
                           id="menu-item-3148"
                           className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3148"
                         >
-                          <a href="/about-me/">About</a>
+                          <a
+                            onClick={() => {
+                              nav("//about-me");
+                            }}
+                          >
+                            About
+                          </a>
                         </li>
                         <li
                           id="menu-item-3149"
                           className="menu-item menu-item-type-post_type menu-item-object-esports-team menu-item-3149"
                         >
-                          <a href="/esports-team/frosters/">Tokenomics</a>
+                          <a
+                            onClick={() => {
+                              nav("/Tokenomics");
+                            }}
+                          >
+                            Tokenomics
+                          </a>
                         </li>
                         <li
                           id="menu-item-3150"
                           className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3150"
                         >
-                          <a href="/Policy">Privacy Policy</a>
+                          <a
+                            onClick={() => {
+                              nav("/Policy");
+                            }}
+                          >
+                            Privacy Policy
+                          </a>
                         </li>
                         <li
                           id="menu-item-3151"
                           className="menu-item menu-item-type-post_type menu-item-object-page menu-item-3151"
                         >
-                          <a href="/blog/right-sidebar/">Blog</a>
+                          <a
+                            onClick={() => {
+                              nav("/Blog");
+                            }}
+                          >
+                            Blog
+                          </a>
                         </li>
                       </ul>
                     </div>

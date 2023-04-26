@@ -1,6 +1,8 @@
 import GameSection from "../components/GameSection";
 import Header from "../components/Header";
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import Loader from "../components/Loader";
 import BreadCrums from "../components/BreadCrums";
 // import Litepaper from "../components/Litepaper";
 // import Hype from "./components/Hype";
@@ -10,22 +12,23 @@ const Toke = lazy(() => import("../components/toke"));
 const Faq = lazy(() => import("../components/Faq"));
 const CTAsection = lazy(() => import("../components/CTAsection"));
 const Footer = lazy(() => import("../components/Footer"));
+
 export default React.memo(function Main() {
   return (
     <>
       <div>
-        <div className="vidbg">
-          <Header />
-          <GameSection />
-          <BreadCrums />
-          <Suspense>
+        <Suspense fallback={<Loader></Loader>}>
+          <div className="vidbg">
+            <Header />
+            <GameSection />
+            <BreadCrums />
             <ShowCase style={{ marginTop: "10vw" }} />
             <Toke />
             <Faq />
             <CTAsection />
-          </Suspense>
-        </div>
-        <Footer />
+          </div>
+          <Footer />
+        </Suspense>
       </div>
     </>
   );
