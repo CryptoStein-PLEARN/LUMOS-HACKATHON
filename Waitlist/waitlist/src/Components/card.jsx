@@ -50,7 +50,7 @@ export default function Card() {
         <h1> Learn the basics of finance for investing! all this BY PLAYING</h1>
         <p class="description"></p>
         <p class="price">
-          Join the waiting ist to be among the first 100 to try out PLEARN for
+          Join the waitlist to be among the first 100 to try out PLEARN for
           the first time
         </p>
         <div className="flex w-full dark:bg-gray-800">
