@@ -1,13 +1,8 @@
 
 <div align="center">
-  
-<img width="523" alt="Screenshot 2022-09-18 at 11 37 50" src="https://user-images.githubusercontent.com/107268440/190895791-a0937a0d-daa0-40cf-8996-b3d6e551be9d.png">
 
-  <h1>PLEARN</h1>
-  
-  <h1>PLAY.LEARN.EARN</h1>
-  
- 
+<img src="https://user-images.githubusercontent.com/107268440/234258232-868289ad-d799-481f-b15a-3b8cfc159d27.jpg" width=40% height=40%>
+
   
 <!-- Badges -->
 <p>
@@ -39,7 +34,6 @@
   * [Deployed Dapp URL](#link-Deployed-Dapp-URL)
   * [Screenshots](#camera-screenshots)
   * [Tech Stack](#space_invader-tech-stack)
-  * [Features](#dart-features)
   * [Color Reference](#art-color-reference)
   * [Environment Variables](#key-environment-variables)
 - [Getting Started](#toolbox-getting-started)
@@ -60,9 +54,6 @@
 
 <!-- About the Project -->
 ## :star2: About the Project
-
-<img width="898" alt="Screenshot 2022-10-04 at 20 14 58" src="https://user-images.githubusercontent.com/107268440/193894942-220ef8fe-c4ba-43fa-9be1-966b489edc42.png">
-
 
 
 After conducting a thorough research, we found that youth lack the basic skills and knowledge to make financial decisions which means that there is a great need to promote financial capability among the young. Introducing financial literacy in a fun and a more engaging way through PLEARN could help youth minimise the costs incurred in managing their financial products, improve their financial safety net in the event of emergencies, and strengthen their financial security. The gap that exists between the amount of financial responsibility given to the young and their demonstrated ability to manage financial decisions and take advantage of financial opportunities, is rapidly widening. Unless significant action is taken to alter this and enable youth to make savvy financial decisions, financial illiteracy will remain an obstacle to youth’ financial security.
@@ -132,9 +123,9 @@ Land is owned by a landowner if it has been bought. The landowner may choose to 
 
 <!-- Deployed Dapp URL -->
 ## :link: Deployed Dapp URL 
-  (https://incredible-liger-fb1306.netlify.app/)
+  [(https://incredible-liger-fb1306.netlify.app/)](https://plearngame.netlify.app/)
 
-![WhatsApp Image 2022-10-30 at 21 02 35](https://user-images.githubusercontent.com/107268440/200332413-d0e9b430-8995-452b-8b5c-2e1aed178872.jpeg)
+<img width="1440" alt="Screenshot 2023-04-25 at 18 22 18" src="https://user-images.githubusercontent.com/107268440/234283446-d4277760-ab4f-446e-9e37-f2b0c729b548.png">
 
 
 <!-- Screenshots -->
@@ -213,21 +204,6 @@ Land is owned by a landowner if it has been bought. The landowner may choose to 
 </details>
 
   
-  
-  
-  
-  
-  
-<!-- Features -->
-## :dart: Features
-
-
-
-#### Game's Dynamics: 
-
-![x_gJH7jyw9_SBu2f8XUsmJz_8S2CjKPM9-t7_8gUX9GxKe5Q7oakzhFV3sOAwix7Oxu82uhzugYPKcChFllFLjpUY0Yod5UpBgBiLvO_nqXJK7u6sBkcC3HcrPEN](https://user-images.githubusercontent.com/107268440/193425187-3c618e03-b63f-4ebe-a24c-5f714ac7bee9.png)
-
-
 
 ---
 #### Stages of a proposal
@@ -406,7 +382,7 @@ To deploy this project run
 ## :handshake: Contact
 
   - Email: adm.cryptostein@gmail.com
-  - Twitter: @stein_crypto
+  - Twitter: @CryptoStein2022
 
 
   <!-- Useful Links -->
@@ -415,7 +391,7 @@ To deploy this project run
    
    <!-- Demo -->
   - ## :cinema: Demo
-  https://youtu.be/n8BcZJr1C8s
+  https://youtu.be/DOPCZDODpaU
   
 <!-- Acknowledgments -->
 ## :gem: Acknowledgements

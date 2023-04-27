@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import data from "../utils/owned";
+import Loader from "../components/Loader";
+import { useLocation } from "react-router-dom";
 export default function Owned() {
   const [time, setTime] = useState(2 * 60 * 60);
   const startTime = useRef(Date.now());
@@ -30,83 +32,94 @@ export default function Owned() {
       </button>
     );
   };
-
+  const location = useLocation();
+  const [showLoader, setShowLoader] = useState(false);
+  useEffect(() => {
+    setShowLoader(true);
+    setTimeout(() => setShowLoader(false), 1000);
+  }, [location]);
   return (
-    <Container>
-      <div className="container">
-        <div className="left">
-          <h1>Collection</h1>
-          <p>Cool Collection you own!</p>
-        </div>
-      </div>
-      <div className="CardsL">
-        <div className="market">
-          {data.map((Category) => (
-            <div className="marketplace__item" key={Category.id}>
-              <div className="marketplace__image">
-                <img
-                  width="378"
-                  height="390"
-                  src={Category.ImgUri}
-                  className="imgT"
-                  alt=""
-                />
-              </div>
-              <div className="marketplace__meta">
-                <div className="marketplace__meta-item">
-                  <div className="marketplace__meta-author">
-                    <h3 className="marketplace__meta-title">
-                      <a href="index.html" className="">
-                        {Category.Name}
-                      </a>
-                    </h3>
+    <>
+      {showLoader ? (
+        <Loader />
+      ) : (
+        <Container>
+          <div className="container">
+            <div className="left">
+              <h1>Collection</h1>
+              <p>Cool Collection you own!</p>
+            </div>
+          </div>
+          <div className="CardsL">
+            <div className="market">
+              {data.map((Category) => (
+                <div className="marketplace__item" key={Category.id}>
+                  <div className="marketplace__image">
+                    <img
+                      width="378"
+                      height="390"
+                      src={Category.ImgUri}
+                      className="imgT"
+                      alt=""
+                    />
+                  </div>
+                  <div className="marketplace__meta">
+                    <div className="marketplace__meta-item">
+                      <div className="marketplace__meta-author">
+                        <h3 className="marketplace__meta-title">
+                          <a href="index.html" className="">
+                            {Category.Name}
+                          </a>
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="marketplace_go-to">
+                    <div className="Mid">
+                      <button disabled className=" dis">
+                        OWNED
+                      </button>
+                      <button className="Btn">Sell item</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className="marketplace__item">
+                <div className="OnSale"> </div>
+                <div className="marketplace__image">
+                  <img
+                    width="378"
+                    height="390"
+                    src="https://cdn.dribbble.com/users/383277/screenshots/18055765/media/e5fc935b60035305099554810357012a.png?compress=1&resize=400x300"
+                    className="imgT"
+                    alt=""
+                  />
+                </div>
+                <div className="marketplace__meta">
+                  <div className="marketplace__meta-item">
+                    <div className="marketplace__meta-author">
+                      <h3 className="marketplace__meta-title">
+                        <a href="index.html" className="">
+                          DIRTY DEAD PIRATE
+                        </a>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                <div className="marketplace_go-to">
+                  <div className="Mid">
+                    <button disabled className=" dis">
+                      OWNED
+                    </button>
+                    <CountdownButton initialTimeLeft={50} />
                   </div>
                 </div>
               </div>
-              <div className="marketplace_go-to">
-                <div className="Mid">
-                  <button disabled className=" dis">
-                    OWNED
-                  </button>
-                  <button className="Btn">Sell item</button>
-                </div>
-              </div>
-            </div>
-          ))}
-          <div className="marketplace__item">
-            <div className="OnSale"> </div>
-            <div className="marketplace__image">
-              <img
-                width="378"
-                height="390"
-                src="https://cdn.dribbble.com/users/383277/screenshots/18055765/media/e5fc935b60035305099554810357012a.png?compress=1&resize=400x300"
-                className="imgT"
-                alt=""
-              />
-            </div>
-            <div className="marketplace__meta">
-              <div className="marketplace__meta-item">
-                <div className="marketplace__meta-author">
-                  <h3 className="marketplace__meta-title">
-                    <a href="index.html" className="">
-                      DIRTY DEAD PIRATE
-                    </a>
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div className="marketplace_go-to">
-              <div className="Mid">
-                <button disabled className=" dis">
-                  OWNED
-                </button>
-                <CountdownButton initialTimeLeft={50} />
-              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </Container>
+        </Container>
+      )}
+    </>
   );
 }
 const Container = styled.section`

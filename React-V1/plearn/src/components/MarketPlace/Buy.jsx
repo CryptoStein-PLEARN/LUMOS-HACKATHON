@@ -1,66 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import SortingTab from "../SortingTab";
+import Loader from "../Loader";
+import { useLocation } from "react-router-dom";
 export default React.memo(function Buy() {
   const price = useSelector((state) => state.Blog.price);
   const Name = useSelector((state) => state.Blog.Name);
   const desc = useSelector((state) => state.Blog.desc);
   const Category = useSelector((state) => state.Blog.Category);
+  const location = useLocation();
+  const [showLoader, setShowLoader] = useState(false);
+  useEffect(() => {
+    setShowLoader(true);
+    setTimeout(() => setShowLoader(false), 500);
+  }, [location]);
   return (
-    <Container>
-      <SortingTab />
-      <div className="head container">
-        <div className="right ">
-          <div className="blockMain">
-            <div className="Imgblock">
-              <div className="Image">
-                <img
-                  src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-list15-img-1.jpg"
-                  alt=""
-                />
-              </div>
-              <div className="imgGrid">
-                <div className="img1">
-                  <img
-                    src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-single-17-img-1.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="img1">
-                  <img
-                    src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-single-17-img-2.jpg"
-                    alt=""
-                  />
-                </div>
-                <div className="img1">
-                  <img
-                    src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-single-17-img-3.jpg"
-                    alt=""
-                  />
+    <>
+      {showLoader ? (
+        <Loader />
+      ) : (
+        <Container>
+          <SortingTab />
+          <div className="head container">
+            <div className="right ">
+              <div className="blockMain">
+                <div className="Imgblock">
+                  <div className="Image">
+                    <img
+                      src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-list15-img-1.jpg"
+                      alt=""
+                    />
+                  </div>
+                  <div className="imgGrid">
+                    <div className="img1">
+                      <img
+                        src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-single-17-img-1.jpg"
+                        alt=""
+                      />
+                    </div>
+                    <div className="img1">
+                      <img
+                        src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-single-17-img-2.jpg"
+                        alt=""
+                      />
+                    </div>
+                    <div className="img1">
+                      <img
+                        src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-single-17-img-3.jpg"
+                        alt=""
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <div className="left">
+              <h1 className="name">{Name}</h1>
+              <span className="price">{price}</span>
+              <div className="description">
+                <p className="desc">{desc}</p>
+              </div>
+              <div className="Categor">
+                <h2>Category :</h2>
+                <span className="ca">{Category}</span>
+              </div>
+              <div className="buyNow">
+                <button>
+                  <span>Buy Now!</span>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className="left">
-          <h1 className="name">{Name}</h1>
-          <span className="price">{price}</span>
-          <div className="description">
-            <p className="desc">{desc}</p>
-          </div>
-          <div className="Categor">
-            <h2>Category :</h2>
-            <span className="ca">{Category}</span>
-          </div>
-          <div className="buyNow">
-            <button>
-              <span>Buy Now!</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </Container>
+        </Container>
+      )}
+    </>
   );
 });
 const Container = styled.div`

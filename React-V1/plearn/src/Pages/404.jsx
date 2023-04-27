@@ -1,73 +1,95 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Footer from "../components/Footer";
-export default React.memo(function Error({ Navv }) {
+import { useLocation, useNavigate } from "react-router-dom";
+import Loader from "../components/Loader";
+export default React.memo(function Error() {
+  const location = useLocation();
+  const [showLoader, setShowLoader] = useState(false);
+  useEffect(() => {
+    setShowLoader(true);
+    setTimeout(() => setShowLoader(false), 500);
+  }, [location]);
+  const nav = useNavigate();
   return (
-    <Container>
-      <div className="flex">
-        <h1>Hey,Looks Like You are Lost..?</h1>
-        <button>
-          <div class="blackhole">
-            <span class="ring">
-              <span class="block"></span>
-            </span>
-          </div>
-          <span class="text">
-            <a className="link" href="/">
-              Don't get lost
-            </a>
-          </span>
-        </button>
-      </div>
-      <div className="box-of-star1">
-        <div className="star star-position1"></div>
-        <div className="star star-position2"></div>
-        <div className="star star-position3"></div>
-        <div className="star star-position4"></div>
-        <div className="star star-position5"></div>
-        <div className="star star-position6"></div>
-        <div className="star star-position7"></div>
-      </div>
-      <div className="box-of-star2">
-        <div className="star star-position1"></div>
-        <div className="star star-position2"></div>
-        <div className="star star-position3"></div>
-        <div className="star star-position4"></div>
-        <div className="star star-position5"></div>
-        <div className="star star-position6"></div>
-        <div className="star star-position7"></div>
-      </div>
-      <div className="box-of-star3">
-        <div className="star star-position1"></div>
-        <div className="star star-position2"></div>
-        <div className="star star-position3"></div>
-        <div className="star star-position4"></div>
-        <div className="star star-position5"></div>
-        <div className="star star-position6"></div>
-        <div className="star star-position7"></div>
-      </div>
-      <div className="box-of-star4">
-        <div className="star star-position1"></div>
-        <div className="star star-position2"></div>
-        <div className="star star-position3"></div>
-        <div className="star star-position4"></div>``
-        <div className="star star-position5"></div>
-        <div className="star star-position6"></div>
-        <div className="star star-position7"></div>
-      </div>
-      <div className="astronaut" data-js="astro">
-        <div className="head"></div>
-        <div className="arm arm-left"></div>
-        <div className="arm arm-right"></div>
-        <div className="body">
-          <div className="panel"></div>
-        </div>
-        <div className="leg leg-left"></div>
-        <div className="leg leg-right"></div>
-        <div className="schoolbag"></div>
-      </div>
-      <Footer />
-    </Container>
+    <>
+      {showLoader ? (
+        <Loader />
+      ) : (
+        <>
+          <Container>
+            <div className="flex">
+              <h1>Hey,Looks Like You are Lost..?</h1>
+              <button>
+                <div class="blackhole">
+                  <span class="ring">
+                    <span class="block"></span>
+                  </span>
+                </div>
+                <span class="text">
+                  <a
+                    className="link"
+                    onClick={() => {
+                      nav("/");
+                    }}
+                  >
+                    Don't get lost
+                  </a>
+                </span>
+              </button>
+            </div>
+            <div className="box-of-star1">
+              <div className="star star-position1"></div>
+              <div className="star star-position2"></div>
+              <div className="star star-position3"></div>
+              <div className="star star-position4"></div>
+              <div className="star star-position5"></div>
+              <div className="star star-position6"></div>
+              <div className="star star-position7"></div>
+            </div>
+            <div className="box-of-star2">
+              <div className="star star-position1"></div>
+              <div className="star star-position2"></div>
+              <div className="star star-position3"></div>
+              <div className="star star-position4"></div>
+              <div className="star star-position5"></div>
+              <div className="star star-position6"></div>
+              <div className="star star-position7"></div>
+            </div>
+            <div className="box-of-star3">
+              <div className="star star-position1"></div>
+              <div className="star star-position2"></div>
+              <div className="star star-position3"></div>
+              <div className="star star-position4"></div>
+              <div className="star star-position5"></div>
+              <div className="star star-position6"></div>
+              <div className="star star-position7"></div>
+            </div>
+            <div className="box-of-star4">
+              <div className="star star-position1"></div>
+              <div className="star star-position2"></div>
+              <div className="star star-position3"></div>
+              <div className="star star-position4"></div>``
+              <div className="star star-position5"></div>
+              <div className="star star-position6"></div>
+              <div className="star star-position7"></div>
+            </div>
+            <div className="astronaut" data-js="astro">
+              <div className="head"></div>
+              <div className="arm arm-left"></div>
+              <div className="arm arm-right"></div>
+              <div className="body">
+                <div className="panel"></div>
+              </div>
+              <div className="leg leg-left"></div>
+              <div className="leg leg-right"></div>
+              <div className="schoolbag"></div>
+            </div>
+          </Container>
+          <Footer />
+        </>
+      )}{" "}
+    </>
   );
 });
 const Container = styled.div`

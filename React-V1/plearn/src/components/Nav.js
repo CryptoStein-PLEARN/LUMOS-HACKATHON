@@ -12,6 +12,7 @@ export default function Nav() {
   const [isLoading, setIsLoading] = useState(false);
   const { userAccount, setUserAccount } = useContext(WalletContext);
   const nav = useNavigate();
+
   // const provider = new ethers.providers.Web3Provider(window.ethereum);
   const connectWalletHandler = () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
@@ -37,7 +38,7 @@ export default function Nav() {
     { name: "Owned" },
     { name: "Tokenomics" },
     // { name: "Trading" },
-    { name: "NFT" },
+    // { name: "NFT" },
   ];
 
   const Navcomp = () => {
@@ -75,7 +76,9 @@ export default function Nav() {
         .then((res) => {
           setConnButtonText("Wallet Connected");
           localStorage.setItem("1", userAccount);
-          alert(res.data.message);
+          const resp = res.data.message;
+
+          alert(localStorage.length !== 0 ? "You're Logged in!" : resp);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -105,7 +108,13 @@ export default function Nav() {
         <div className="container-fluid">
           <div className="logo-thumbnail navbar-brand logo-custom-css">
             {" "}
-            <img src={logo_plearn} alt="Bootstrap" />
+            <img
+              src={logo_plearn}
+              onClick={() => {
+                nav("/");
+              }}
+              alt="Bootstrap"
+            />
           </div>
           <button
             type="button"
