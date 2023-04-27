@@ -8,10 +8,6 @@ export default React.memo(function Footer() {
     <Container>
       <footer id="qodef-page-footer" role="contentinfo">
         <div id="qodef-page-footer-top-area">
-          {/* <div
-            class="sender-form-field"
-            data-sender-form-id="lgi9os7zdb2wwd45y2v"
-          ></div> */}
           <div
             id="qodef-page-footer-top-area-inner"
             className="qodef-content-full-width"

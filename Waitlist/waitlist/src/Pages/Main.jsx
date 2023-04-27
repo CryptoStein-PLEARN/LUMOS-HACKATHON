@@ -11,9 +11,23 @@ export default function Main() {
 }
 const Container = styled.div`
   display: flex;
+  margin-top: 10vh;
   input {
     border-width: 0px;
     background: none;
+  }
+  .link {
+    position: absolute;
+    bottom: 5%;
+    color: grey;
+    .p {
+      color: grey;
+      text-decoration: underline;
+    }
+    .p:hover {
+      color: black;
+      cursor: pointer;
+    }
   }
   .w-full {
     border-radius: 14px;
@@ -175,7 +189,7 @@ const Container = styled.div`
 
   .img {
     width: 40%;
-    height: 100%;
+    height: 100vh;
     background-image: url("https://assets.euromoneydigital.com/dims4/default/a0deac3/2147483647/strip/false/crop/960x891+0+0/resize/960x891!/quality/90/?url=http%3A%2F%2Feuromoney-brightspot.s3.amazonaws.com%2Fc9%2Fdf%2F84a11085419a91a833c4bd4c69fb%2Fbitcoin-dollar-960.jpg");
     background-size: cover;
     background-repeat: no-repeat;
@@ -194,7 +208,8 @@ const Container = styled.div`
       margin: 0 auto;
 
       h1 {
-        font-size: 2.5em;
+        font-size: 30px;
+        line-height: 30px !important;
       }
 
       .description {
@@ -245,7 +260,19 @@ const Container = styled.div`
   @media (max-height: 764px) {
     .card {
       max-height: 100%;
-      height: 640px;
+      height: 100vh;
     }
+  }
+  .error,
+  .success {
+    font-size: 20px;
+    margin-top: 10px;
+    font-weight: light;
+  }
+  .error {
+    color: red;
+  }
+  .success {
+    color: green;
   }
 `;

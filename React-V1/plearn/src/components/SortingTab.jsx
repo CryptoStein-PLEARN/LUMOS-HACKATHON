@@ -5,11 +5,11 @@ import { setSearchQuery } from "../Store/Slice/userSlice";
 
 export default React.memo(function SortingTab({ ShopState }) {
   const dispatch = useDispatch();
-  const Name = useSelector((state) => state.Blog.Name);
+  var Name = useSelector((state) => state.Blog.Name);
   if (Name !== "") {
     ShopState = true;
   }
-
+  Name = `Buy /  ${Name}`;
   const handleSearch = (event) => {
     dispatch(setSearchQuery(event.target.value));
   };
@@ -58,7 +58,7 @@ export default React.memo(function SortingTab({ ShopState }) {
       </div>
       <>
         <div className="details">
-          <span> Home / Shop / Buy / {Name}</span>
+          <span> Home / Shop / {Name !== "" ? Name : ""}</span>
         </div>
       </>
     </Container>

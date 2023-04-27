@@ -1,11 +1,24 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import Header from "../Components/Header";
 
 export default function PrivacyPolicy() {
+  const nav = useNavigate();
   return (
     <Container>
       <div className="blog">
+        <button
+          onClick={() => {
+            nav("/");
+          }}
+        >
+          <span class="circle1"></span>
+          <span class="circle2"></span>
+          <span class="circle3"></span>
+          <span class="circle4"></span>
+          <span class="circle5"></span>
+          <span class="text">Home</span>
+        </button>
         <h1>Privacy Policy for Cryptostein S.r.l. Waitlist Contact Form</h1>
         <p>
           {" "}
@@ -80,23 +93,75 @@ export default function PrivacyPolicy() {
         <h4>Contact Us</h4>
         <p>
           If you have any questions or concerns about this Privacy Policy,
-          please contact us at social@cryptostein.org
+          please contact us at{" "}
+          <a href="mailto:social@cryptostein.org" className="li">
+            {" "}
+            social@cryptostein.org
+          </a>
         </p>
       </div>
     </Container>
   );
 }
 const Container = styled.div`
-  background: radial-gradient(
-    140% 107.13% at 50% 10%,
-    transparent 37.41%,
-    #63e 110.27%,
-    #000 100%
-  );
+  background: black;
   color: white;
-  h1 {
-    margin-top: 0;
-    margin-bottom: 2rem;
+  width: 100vw;
+  .text {
+    font-size: 15px;
+  }
+  button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    color: white;
+    background-color: #171717;
+    padding: 0.5em 2.5em;
+    border: none;
+    border-radius: 0.6rem;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  button span:not(:nth-child(6)) {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 20px;
+    width: 20px;
+    background-color: #0c66ed;
+    border-radius: 50%;
+    transition: 0.6s ease;
+  }
+
+  button span:nth-child(6) {
+    position: relative;
+  }
+
+  button span:nth-child(1) {
+    transform: translate(-3.3em, -4em);
+  }
+
+  button span:nth-child(2) {
+    transform: translate(-6em, 1.3em);
+  }
+
+  button span:nth-child(3) {
+    transform: translate(-0.2em, 1.8em);
+  }
+
+  button span:nth-child(4) {
+    transform: translate(3.5em, 1.4em);
+  }
+
+  button span:nth-child(5) {
+    transform: translate(3.5em, -3.8em);
+  }
+
+  button:hover span:not(:nth-child(6)) {
+    transform: translate(-50%, -50%) scale(4);
+    transition: 1.5s ease;
   }
   .blog {
     padding: 10rem;
