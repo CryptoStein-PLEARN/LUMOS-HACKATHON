@@ -63,11 +63,11 @@ export default function Card() {
   };
 
   return (
-    <div class="card">
+    <>
       <div class="cta logo-thumbnail">
         <img src={M} className="" alt="" />
-        <h1> Learn the basics of finance for investing! all this BY PLAYING</h1>
-        <p class="description"></p>
+        <h3> Learn the basics of finance for investing!</h3>
+        <h1>ALL THIS BY PLAYING</h1>
         <p class="price">
           Join the waiting list to be among the first 100 to try out PLEARN for
           the first time
@@ -104,7 +104,6 @@ export default function Card() {
           </span>
         </span> */}
       </div>
-      <div class="img"></div>
-    </div>
+    </>
   );
 }

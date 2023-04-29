@@ -11,7 +11,8 @@ export default function Main() {
 }
 const Container = styled.div`
   display: flex;
-  margin-top: 10vh;
+  margin-top: 5vh;
+  justify-content: center;
   input {
     border-width: 0px;
     background: none;
@@ -44,11 +45,8 @@ const Container = styled.div`
     display: flex;
     overflow: hidden;
   }
-  p {
-    color: black;
-  }
+
   .cta {
-    width: 60%;
     padding: 32px;
     text-align: center;
     display: flex;
@@ -63,6 +61,10 @@ const Container = styled.div`
       margin: 0 0 16px 0;
       text-transform: uppercase;
     }
+    h3 {
+      text-transform: uppercase;
+      margin: 0;
+    }
 
     .description {
       font-size: 1.25em;
@@ -72,6 +74,9 @@ const Container = styled.div`
     .price {
       display: flex;
       align-items: center;
+      max-width: 55%;
+      font-weight: 200;
+      font-size: 18px;
     }
 
     .amount {
