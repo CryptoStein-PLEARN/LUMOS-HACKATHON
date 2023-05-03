@@ -60,6 +60,7 @@ const Container = styled.div`
     h1 {
       margin: 0 0 16px 0;
       text-transform: uppercase;
+      font-weight: 500;
     }
     h3 {
       text-transform: uppercase;
@@ -78,7 +79,19 @@ const Container = styled.div`
       font-weight: 200;
       font-size: 18px;
     }
+    @media only screen and (max-width: 680px) {
+      .price {
+        max-width: 100% !important;
+      }
+      h1 {
+        font-size: 24px !important;
+      }
+      h3 {
+        font-size: 14px !important;
 
+        margin-bottom: 10px;
+      }
+    }
     .amount {
       font-size: 2em;
       margin-left: 8px;

@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import data from "../utils/owned";
 import Loader from "../components/Loader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 export default function Owned() {
   const [time, setTime] = useState(2 * 60 * 60);
   const startTime = useRef(Date.now());
-
+  const nav = useNavigate();
   const CountdownButton = ({ initialTimeLeft }) => {
     const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 
@@ -84,7 +84,12 @@ export default function Owned() {
                   </div>
                 </div>
               ))}
-              <div className="marketplace__item">
+              <div
+                className="marketplace__item"
+                onClick={() => {
+                  nav("/bid");
+                }}
+              >
                 <div className="OnSale"> </div>
                 <div className="marketplace__image">
                   <img
@@ -99,9 +104,7 @@ export default function Owned() {
                   <div className="marketplace__meta-item">
                     <div className="marketplace__meta-author">
                       <h3 className="marketplace__meta-title">
-                        <a href="index.html" className="">
-                          DIRTY DEAD PIRATE
-                        </a>
+                        DIRTY DEAD PIRATE
                       </h3>
                     </div>
                   </div>

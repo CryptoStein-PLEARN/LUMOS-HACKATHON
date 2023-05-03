@@ -6,10 +6,15 @@ import { setSearchQuery } from "../Store/Slice/userSlice";
 export default React.memo(function SortingTab({ ShopState }) {
   const dispatch = useDispatch();
   var Name = useSelector((state) => state.Blog.Name);
-  if (Name !== "") {
+  var BidName = useSelector((state) => state.Bid.Name);
+  if (Name !== "" || BidName !== "") {
     ShopState = true;
   }
-  Name = `Buy /  ${Name}`;
+  if (BidName !== " ") {
+    Name = `Bid /  ${BidName}`;
+  } else {
+    Name = `Buy /  ${Name}`;
+  }
   const handleSearch = (event) => {
     dispatch(setSearchQuery(event.target.value));
   };
