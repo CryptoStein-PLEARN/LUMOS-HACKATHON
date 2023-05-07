@@ -11,7 +11,7 @@ export default React.memo(function App() {
     if (localStorage.length !== 0) {
       setUserAccount(localStorage.getItem("1"));
     }
-  }, [localStorage.length != 0]);
+  }, [localStorage.length !== 0]);
   // const handleUserAccountChange = (newUserAccount) => {
   //   setUserAccount(newUserAccount);
   // };

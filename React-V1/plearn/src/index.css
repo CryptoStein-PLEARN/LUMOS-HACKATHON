@@ -74,7 +74,12 @@ body {
   max-height: 80px;
   object-fit: cover;
 }
-
+.logo-thumbnail .round { 
+  width: 50px;
+    height: 50px;
+  border-radius: 100%;
+  object-fit: cover;
+}
 .navbar {
   border-bottom: 1px solid #ffffff2e;
 }
@@ -220,6 +225,9 @@ h1 {
   color: #f0f2f6;
   font-size: 46px;
   line-height: 58px;
+}
+.nav-link{
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 480px) {
@@ -1813,4 +1821,10 @@ font-size: 22px;
   background-repeat: no-repeat !important;
   background-size: cover !important;
   background: black;
+}
+.react-tabs__tab:focus:after{
+  display: none;
+}
+.react-tabs__tab {
+  margin: 15px;
 }
