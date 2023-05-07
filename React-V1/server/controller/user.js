@@ -9,6 +9,7 @@ const energyDetail = require("../model/energy");
 const lfDetail = require("../model/lifeInsurance");
 const {bankLoan, bankDeposit} = require("../model/bank");
 const preRegistrationDetail = require("../model/preregistration");
+const entrepreneurshipDetail = require("../model/entrepreneurship");
 
 const app = express();
 
@@ -94,11 +95,12 @@ const saveDetails = (req,res) => {
     const playerName = req.body.playerName;
     const selectedCharacter = req.body.selectedCharacter;
     const characterName = req.body.characterName;
+    const gameCoins = req.body.gameCoins;
 
     playerDetail.updateOne(
         { userAccount: userAccount },
         { 
-            $set: { playerName: playerName, characterID: selectedCharacter },
+            $set: { playerName: playerName, characterID: selectedCharacter, gameCoins: gameCoins },
             $push: { ownedCharacters: characterName }
         },
         (err) => {
@@ -370,4 +372,34 @@ const updateBankDeposit = (req,res) => {
     )
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit};
+const getEntrepreneurshipBusiness = (req,res) => {
+    const {level} = req.params;
+    entrepreneurshipDetail.findOne({level: level}, (err, business) => {
+        if(business)
+        {
+            res.send(business);
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
+const checkAnswer = (req,res) => {
+    const {level, selectedAnswerIndex, playerAnswer} = req.params;
+
+    entrepreneurshipDetail.findOne({level: level}, (err, business) => {
+        if(business)
+        {
+            res.send(business.details[selectedAnswerIndex]);
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+
+}
+
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
