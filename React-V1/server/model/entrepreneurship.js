@@ -96,6 +96,134 @@ const Record1 = {
     ]
   };
 entrepreneurshipDetail.upsert(Record1);
+
+const Record2 = {
+  level: 2,
+  businessTitle: "Eco-Friendly Cleaning Service",
+  businessDescription: "The use of traditional cleaning products and methods can harm the environment and contribute to air and water pollution. Many individuals and businesses are looking for more eco-friendly alternatives. An eco-friendly cleaning service that uses non-toxic and biodegradable cleaning products and methods to provide a safer and healthier cleaning experience. This service will also educate clients on the benefits of eco-friendly cleaning and provide tips on how to maintain a clean and sustainable environment.",
+  details: [
+    {
+      questionNumber: "Q1",
+      question: "What is the main problem with traditional cleaning products?",
+      options: [
+        { optionNumber: "A", option: "They are too expensive" },
+        { optionNumber: "B", option: "They are difficult to find in stores" },
+        { optionNumber: "C", option: "They contain harsh chemicals that can harm the environment and health" },
+        { optionNumber: "D", option: "They are not effective at cleaning" },
+      ],
+      correctAnswer: "They contain harsh chemicals that can harm the environment and health",
+    },
+    {
+      questionNumber: "Q2",
+      question: "What does an eco-friendly cleaning service prioritize in their operations?",
+      options: [
+        { optionNumber: "A", option: "Using harsh chemicals to ensure a thorough clean" },
+        { optionNumber: "B", option: "Using single-use cleaning products for convenience" },
+        { optionNumber: "C", option: "Using sustainable cleaning practices and natural, non-toxic products" },
+        { optionNumber: "D", option: "None of the above" },
+      ],
+      correctAnswer: "Using sustainable cleaning practices and natural, non-toxic products",
+    },
+    {
+      questionNumber: "Q3",
+      question: "What is a potential benefit of using an eco-friendly cleaning service?",
+      options: [
+        { optionNumber: "A", option: "Lower cost compared to traditional cleaning services" },
+        { optionNumber: "B", option: "More thorough cleaning of surfaces" },
+        { optionNumber: "C", option: "Minimizing environmental impact and potential health risks" },
+        { optionNumber: "D", option: "Faster cleaning time" },
+      ],
+      correctAnswer: "Minimizing environmental impact and potential health risks",
+    },
+    {
+      questionNumber: "Q4",
+      question: "What is the unique value proposition of the Eco-Friendly Cleaning Service?",
+      options: [
+        { optionNumber: "A", option: "Offering free cleaning supplies to customers" },
+        { optionNumber: "B", option: "Providing eco-friendly and non-toxic cleaning solutions" },
+        { optionNumber: "C", option: "Offering a 24/7 cleaning service" },
+        { optionNumber: "D", option: "Providing a free trial of the cleaning service" },
+      ],
+      correctAnswer: "Providing eco-friendly and non-toxic cleaning solutions",
+    },
+    {
+      questionNumber: "Q5",
+      question: "How will the Eco-Friendly Cleaning Service generate revenue?",
+      options: [
+        { optionNumber: "A", option: "Through selling cleaning supplies to customers" },
+        { optionNumber: "B", option: "Through monthly subscription plans" },
+        { optionNumber: "C", option: "Through offering free cleaning services" },
+        { optionNumber: "D", option: "Through selling advertising space on their cleaning equipment" },
+      ],
+      correctAnswer: "Through monthly subscription plans",
+    }
+  ]
+};
+entrepreneurshipDetail.upsert(Record2);
+
+const Record3 = {
+  level: 3,
+  businessTitle: "Social media marketing agency",
+  businessDescription: "This business involves managing social media accounts for other businesses and creating content to increase their online presence.",
+  details: [
+    {
+      questionNumber: "Q1",
+      question: "What is the primary goal of a social media marketing agency?",
+      options: [
+        { optionNumber: "A", option: "To increase social media followers" },
+        { optionNumber: "B", option: "To drive website traffic" },
+        { optionNumber: "C", option: "To generate leads and sales" },
+        { optionNumber: "D", option: "To improve search engine optimization" },
+      ],
+      correctAnswer: "To generate leads and sales",
+    },
+    {
+      questionNumber: "Q2",
+      question: "Which social media platform has the largest user base as of 2021?",
+      options: [
+        { optionNumber: "A", option: "Facebook" },
+        { optionNumber: "B", option: "Instagram" },
+        { optionNumber: "C", option: "TikTok" },
+        { optionNumber: "D", option: "Twitter" },
+      ],
+      correctAnswer: "Facebook",
+    },
+    {
+      questionNumber: "Q3",
+      question: "What is the purpose of a social media content calendar?",
+      options: [
+        { optionNumber: "A", option: "To track social media metrics" },
+        { optionNumber: "B", option: "To schedule social media posts" },
+        { optionNumber: "C", option: "To create social media graphics" },
+        { optionNumber: "D", option: "To analyze social media trends" },
+      ],
+      correctAnswer: "To schedule social media posts",
+    },
+    {
+      questionNumber: "Q4",
+      question: "What is the recommended frequency for posting on social media platforms?",
+      options: [
+        { optionNumber: "A", option: "Once a week" },
+        { optionNumber: "B", option: "Once a day" },
+        { optionNumber: "C", option: "Twice a day" },
+        { optionNumber: "D", option: "Twice a week" },
+      ],
+      correctAnswer: "Once a day",
+    },
+    {
+      questionNumber: "Q5",
+      question: "What is a key performance indicator (KPI) in social media marketing?",
+      options: [
+        { optionNumber: "A", option: "Number of social media followers" },
+        { optionNumber: "B", option: "Number of social media likes" },
+        { optionNumber: "C", option: "Engagement rate" },
+        { optionNumber: "D", option: "All of the above" },
+      ],
+      correctAnswer: "Engagement rate",
+    }
+  ]
+};
+entrepreneurshipDetail.upsert(Record3);
   
 
 module.exports = entrepreneurshipDetail;
