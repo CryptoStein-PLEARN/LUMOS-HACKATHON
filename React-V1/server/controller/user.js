@@ -116,20 +116,18 @@ const saveDetails = (req,res) => {
 
 //For inserting characters in the DB
 const insertCharacters = async () => {
-    // await characterDetail.upsert({ characterName: "Character1", cost: 10, unlockLevel: 1 });
-    // await characterDetail.upsert({ characterName: "Character2", cost: 10, unlockLevel: 1 });
-    await characterDetail.upsert({ characterName: "Character3", cost: 0, unlockLevel: 1 });
-    await characterDetail.upsert({ characterName: "Character4", cost: 0, unlockLevel: 1 });
-    await characterDetail.upsert({ characterName: "Character5", cost: 10, unlockLevel: 2 });
-    await characterDetail.upsert({ characterName: "Character6", cost: 10, unlockLevel: 2 });
-    await characterDetail.upsert({ characterName: "Character7", cost: 10, unlockLevel: 3 });
-    await characterDetail.upsert({ characterName: "Character8", cost: 10, unlockLevel: 3 });
-    await characterDetail.upsert({ characterName: "Character9", cost: 10, unlockLevel: 4 });
-    await characterDetail.upsert({ characterName: "Character10", cost: 10, unlockLevel: 4 });
-    await characterDetail.upsert({ characterName: "Character11", cost: 10, unlockLevel: 5 });
-    await characterDetail.upsert({ characterName: "Character12", cost: 10, unlockLevel: 5 });
-    await characterDetail.upsert({ characterName: "Character13", cost: 10, unlockLevel: 6 });
-    await characterDetail.upsert({ characterName: "Character14", cost: 10, unlockLevel: 6 });
+    await characterDetail.upsert({ characterName: "Character3", description: "Lorem Ipsum", cost: 0, unlockLevel: 1 });
+    await characterDetail.upsert({ characterName: "Character4", description: "Lorem Ipsum", cost: 0, unlockLevel: 1 });
+    await characterDetail.upsert({ characterName: "Tony", description: "Lorem Ipsum", cost: 10, unlockLevel: 2 });
+    await characterDetail.upsert({ characterName: "Steve", description: "Lorem Ipsum", cost: 10, unlockLevel: 2 });
+    await characterDetail.upsert({ characterName: "Bruce", description: "Lorem Ipsum", cost: 10, unlockLevel: 3 });
+    await characterDetail.upsert({ characterName: "Thor", description: "Lorem Ipsum", cost: 10, unlockLevel: 3 });
+    await characterDetail.upsert({ characterName: "Rhodey", description: "Lorem Ipsum", cost: 10, unlockLevel: 4 });
+    await characterDetail.upsert({ characterName: "Natasha", description: "Lorem Ipsum", cost: 10, unlockLevel: 4 });
+    await characterDetail.upsert({ characterName: "Wanda", description: "Lorem Ipsum", cost: 10, unlockLevel: 5 });
+    await characterDetail.upsert({ characterName: "Jane", description: "Lorem Ipsum", cost: 10, unlockLevel: 5 });
+    await characterDetail.upsert({ characterName: "Pepper", description: "Lorem Ipsum", cost: 10, unlockLevel: 6 });
+    await characterDetail.upsert({ characterName: "Peggy", description: "Lorem Ipsum", cost: 10, unlockLevel: 6 });
 }
 insertCharacters();
 

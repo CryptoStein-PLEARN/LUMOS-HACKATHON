@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 // Table for saving Character data
 const characterDetailSchema = new mongoose.Schema({
     characterName: {type: String, unique: true},
+    description: {type: String},
     cost: {type: Number},
     unlockLevel: {type: Number},
 });
