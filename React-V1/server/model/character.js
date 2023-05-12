@@ -6,6 +6,7 @@ const characterDetailSchema = new mongoose.Schema({
     description: {type: String},
     cost: {type: Number},
     unlockLevel: {type: Number},
+    ImgUri: {type: String}
 });
 
 characterDetailSchema.statics.upsert = async function (record) {

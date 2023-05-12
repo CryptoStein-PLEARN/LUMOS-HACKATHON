@@ -7,6 +7,7 @@ import Cards from "./MarketPlace/Cards";
 
 export default React.memo(function CardLoader(props) {
   const data = props.data;
+  console.log(data);
 
   return (
     <div>
@@ -20,7 +21,7 @@ export default React.memo(function CardLoader(props) {
         className="mySwiper"
       >
         {data.map((card) => (
-          <SwiperSlide key={card.id}>
+          <SwiperSlide key={card._id}>
             <Cards data={card} />
           </SwiperSlide>
         ))}

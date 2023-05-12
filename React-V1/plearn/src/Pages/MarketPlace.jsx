@@ -7,13 +7,41 @@ import { useSelector } from "react-redux";
 import Category from "../components/MarketPlace/Category";
 import Loader from "../components/Loader";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
+
 export default React.memo(function MarketPlace() {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
+  const [characters, setCharacters] = useState([])
   useEffect(() => {
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
+
+  useEffect(() => {
+    async function fetchCharacters() {
+      try {
+        const response = await axios.get('https://plearn-backend.onrender.com/getCharacterDetails');
+        const charactersWithCategory = response.data.map(item => ({
+          ...item,
+          category: "Characters"
+        }));
+        setCharacters(charactersWithCategory);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  
+    fetchCharacters();
+  }, []);
+
+  const charactersByCategory = characters.reduce((acc, curr) => {
+    if (!acc[curr.category]) {
+      acc[curr.category] = [];
+    }
+    acc[curr.category].push(curr);
+    return acc;
+  }, {});
 
   const filterActive = useSelector((state) => state.tools.filterActive);
   const card = useSelector((state) => state.tools.cards);
@@ -33,25 +61,23 @@ export default React.memo(function MarketPlace() {
     return (
       <>
         <div className="left">
-          {Object.entries(cardsByCategory).map(
-            ([categoryName, categoryCards]) => (
-              <div className="Mainfold" key={categoryName}>
-                <div className="Head">
-                  <h1>{categoryName}</h1>
-                  <div
-                    className="span"
-                    onClick={() => {
-                      SetShop(false);
-                    }}
-                  >
-                    View all
-                  </div>
-                </div>
-                <CardLoader data={categoryCards} />
-              </div>
-            )
-          )}
+  {Object.entries(charactersByCategory).map(([categoryName, categoryCards]) => (
+    <div className="Mainfold" key={categoryName}>
+      <div className="Head">
+        <h1>{categoryName}</h1>
+        <div
+          className="span"
+          onClick={() => {
+            SetShop(false);
+          }}
+        >
+          View all
         </div>
+      </div>
+      <CardLoader data={categoryCards} />
+    </div>
+  ))}
+</div>
       </>
     );
   });

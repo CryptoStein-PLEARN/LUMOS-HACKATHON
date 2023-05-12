@@ -116,18 +116,18 @@ const saveDetails = (req,res) => {
 
 //For inserting characters in the DB
 const insertCharacters = async () => {
-    await characterDetail.upsert({ characterName: "Character3", description: "Lorem Ipsum", cost: 0, unlockLevel: 1 });
-    await characterDetail.upsert({ characterName: "Character4", description: "Lorem Ipsum", cost: 0, unlockLevel: 1 });
-    await characterDetail.upsert({ characterName: "Tony", description: "Lorem Ipsum", cost: 10, unlockLevel: 2 });
-    await characterDetail.upsert({ characterName: "Steve", description: "Lorem Ipsum", cost: 10, unlockLevel: 2 });
-    await characterDetail.upsert({ characterName: "Bruce", description: "Lorem Ipsum", cost: 10, unlockLevel: 3 });
-    await characterDetail.upsert({ characterName: "Thor", description: "Lorem Ipsum", cost: 10, unlockLevel: 3 });
-    await characterDetail.upsert({ characterName: "Rhodey", description: "Lorem Ipsum", cost: 10, unlockLevel: 4 });
-    await characterDetail.upsert({ characterName: "Natasha", description: "Lorem Ipsum", cost: 10, unlockLevel: 4 });
-    await characterDetail.upsert({ characterName: "Wanda", description: "Lorem Ipsum", cost: 10, unlockLevel: 5 });
-    await characterDetail.upsert({ characterName: "Jane", description: "Lorem Ipsum", cost: 10, unlockLevel: 5 });
-    await characterDetail.upsert({ characterName: "Pepper", description: "Lorem Ipsum", cost: 10, unlockLevel: 6 });
-    await characterDetail.upsert({ characterName: "Peggy", description: "Lorem Ipsum", cost: 10, unlockLevel: 6 });
+    await characterDetail.upsert({ characterName: "Character3", description: "Lorem Ipsum", cost: 0, unlockLevel: 1, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character3.png' });
+    await characterDetail.upsert({ characterName: "Character4", description: "Lorem Ipsum", cost: 0, unlockLevel: 1, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character4.png'});
+    await characterDetail.upsert({ characterName: "Tony", description: "Lorem Ipsum", cost: 10, unlockLevel: 2, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character5.jpeg' });
+    await characterDetail.upsert({ characterName: "Steve", description: "Lorem Ipsum", cost: 10, unlockLevel: 2, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character6.jpeg' });
+    await characterDetail.upsert({ characterName: "Bruce", description: "Lorem Ipsum", cost: 10, unlockLevel: 3, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character7.jpeg' });
+    await characterDetail.upsert({ characterName: "Thor", description: "Lorem Ipsum", cost: 10, unlockLevel: 3, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character8.jpeg' });
+    await characterDetail.upsert({ characterName: "Rhodey", description: "Lorem Ipsum", cost: 10, unlockLevel: 4, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character9.jpeg' });
+    await characterDetail.upsert({ characterName: "Natasha", description: "Lorem Ipsum", cost: 10, unlockLevel: 4, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character10.jpeg' });
+    await characterDetail.upsert({ characterName: "Wanda", description: "Lorem Ipsum", cost: 10, unlockLevel: 5, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character11.jpeg' });
+    await characterDetail.upsert({ characterName: "Jane", description: "Lorem Ipsum", cost: 10, unlockLevel: 5, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character12.jpeg' });
+    await characterDetail.upsert({ characterName: "Pepper", description: "Lorem Ipsum", cost: 10, unlockLevel: 6, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character13.jpeg' });
+    await characterDetail.upsert({ characterName: "Peggy", description: "Lorem Ipsum", cost: 10, unlockLevel: 6, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character14.jpeg' });
 }
 insertCharacters();
 

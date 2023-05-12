@@ -1,48 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import coin from "../../assets/MarketPlace/A (5).png";
 import { useDispatch } from "react-redux";
 import { SetBlog } from "../../Store/Slice/Cardslice";
 import { useNavigate } from "react-router-dom";
+
 export default React.memo(function Cards(props) {
-  const { Category, Name, id, ImgUri, desc, price, buy } = props.data;
+  const { category, characterName, _id, ImgUri, description, cost, unlockLevel, buy } = props.data;
+  
   const nav = useNavigate();
   const dispatch = useDispatch();
   const HandleClick = async () => {
     try {
       await dispatch(
         SetBlog({
-          Category: Category,
-          Name: Name,
-          price: price,
-          id: id,
+          Category: category,
+          Name: characterName,
+          cost: cost,
+          id: _id,
           ImgUri: ImgUri,
-          desc: desc,
+          desc: description,
         })
       );
       // await console.log(Name);
-      nav(`/Buy/${Name}`);
+      nav(`/Buy/${characterName}`);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
+    
     <Container>
-      <div key={Category} className="card">
+      <div key={category} className="card">
         <>
           <div className="type">
             <img className="icon" src={coin} height="30px" />
-            <p>{price} ETH</p>
+            <p>{cost} ETH</p>
           </div>
           <div
             className="ImgWrap"
-            id={id}
+            id={_id}
             style={{ background: `url(${ImgUri})` }}
           ></div>
           <div className="card-body">
-            <h1>{Name}</h1>
-            <p className="desp">{desc}</p>
+            <h1>{characterName}</h1>
+            <p className="desp">{description}</p>
+            <p className="desp">Unlock Level: {unlockLevel}</p>
             <div className="details"></div>
             <div className="product">
               <a
