@@ -11,6 +11,7 @@ export default function Nav() {
   const [connButtonText, setConnButtonText] = useState("Connect Wallet");
   const [isLoading, setIsLoading] = useState(false);
   const { userAccount, setUserAccount } = useContext(WalletContext);
+  const [ playerLevel, setPlayerLevel ] = useState(1);
   const nav = useNavigate();
 
   // const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -73,10 +74,12 @@ export default function Nav() {
       setIsLoading(true);
       axios
         .post("https://plearn-backend.onrender.com/", { userAccount })
+        // .post("http://localhost:8080/", {userAccount})
         .then((res) => {
           setConnButtonText("Wallet Connected");
           localStorage.setItem("1", userAccount);
           const resp = res.data.message;
+          setPlayerLevel(res.data.playerLevel)
 
           alert(localStorage.length !== 0 ? "You're Logged in!" : resp);
           setIsLoading(false);
@@ -131,6 +134,9 @@ export default function Nav() {
             </ul>
             <div className="flx ">
               <Navbtn />
+              <div>
+                Player level: {playerLevel}
+              </div>
               <div
                 className="nav-link btn  px-3 py-2  wltBtn"
                 onClick={connectWalletHandler}
