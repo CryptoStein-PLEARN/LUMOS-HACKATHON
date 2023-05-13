@@ -45,14 +45,24 @@ const preRegisterUser = (req,res) => {
 //For registering the user in 'metamask_login_table' and 'player_detail_table' through website.
 const registerUser = (req,res) => {
     const {userAccount} = req.body;
-    var playerLevel;
+    // var level;
+    // var gameCoins;
     userDetail.findOne({userAccount: userAccount}, (err, user) => {
         if(user)
         {
             playerDetail.findOne({userAccount: userAccount}, (err, player) => {
-                playerLevel = player;
+                if(player)
+                {
+                    const level = player.level;
+                    const gameCoins = player.gameCoins;
+                    res.send({message: "User already registered" + " " + userAccount, level, gameCoins});
+                }
+                else
+                {
+                    res.send(err);
+                }
             })
-            res.send({message: "User already registered" + " " + userAccount, playerLevel});
+            
         }
         else
         {
@@ -70,7 +80,9 @@ const registerUser = (req,res) => {
                 }
                 else
                 {
-                    res.send({message: "Successfully Registered!" + " " + userAccount, playerLevel});
+                    const level = player.level;
+                    const gameCoins = player.gameCoins;
+                    res.send({message: "Successfully Registered!" + " " + userAccount, level, gameCoins});
                     player.save(); // Saving the user in 'player_detail_table' as well.
                 }
             });

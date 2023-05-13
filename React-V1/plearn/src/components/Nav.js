@@ -12,6 +12,7 @@ export default function Nav() {
   const [isLoading, setIsLoading] = useState(false);
   const { userAccount, setUserAccount } = useContext(WalletContext);
   const [ playerLevel, setPlayerLevel ] = useState(1);
+  const [ gameCoins, setGameCoins] = useState(0);
   const nav = useNavigate();
 
   // const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -79,7 +80,8 @@ export default function Nav() {
           setConnButtonText("Wallet Connected");
           localStorage.setItem("1", userAccount);
           const resp = res.data.message;
-          setPlayerLevel(res.data.playerLevel)
+          setPlayerLevel(res.data.level)
+          setGameCoins(res.data.gameCoins)
 
           alert(localStorage.length !== 0 ? "You're Logged in!" : resp);
           setIsLoading(false);
@@ -136,6 +138,9 @@ export default function Nav() {
               <Navbtn />
               <div>
                 Player level: {playerLevel}
+              </div>
+              <div>
+                Game Coins: {gameCoins}
               </div>
               <div
                 className="nav-link btn  px-3 py-2  wltBtn"
