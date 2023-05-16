@@ -3,13 +3,14 @@ import styled from "styled-components";
 import HeaderPfp from "./HeaderPfp";
 import homeBg from "../../assets/MarketPlace/COVER-17.jpg";
 export default React.memo(function Header() {
+  
   return (
     <Container className="p-5" style={{ background: `url(${homeBg})` }}>
       <div className="w-full  rounded-md bg-center bg-cover flex flex-col justify-center px-4">
-        <h1 className="mb-4">
+        <h1 className="mb-4 display-5">
           Welcome to <br /> Plearns' Marketplace - <br /> ready to help you find
           your right match.{" "}
-          <p className="mt-4">
+          <p className="mt-4 h-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione.
           </p>
         </h1>
@@ -27,9 +28,6 @@ const Container = styled.div`
     font-family: Rubik, sans-serif;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 50px;
-    line-height: 1.1em;
     margin: 25px 0;
     -ms-word-wrap: break-word;
     word-wrap: break-word;

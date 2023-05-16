@@ -25,7 +25,7 @@ export default React.memo(function SortingTab({ ShopState }) {
       </div>
       <div
         className="wrapper"
-        style={{ display: `${ShopState ? "None" : "Inherit"}` }}
+        style={{ display: `${ShopState ? "None" : "Inherit "}` }}
       >
         <div className="input-wrapper">
           <button className="icon">

@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import data from "../../utils/data";
 const initialState = {
-  cards: data,
+  cards: [],
   filteredCards: [],
   searchQuery: "",
   sortBy: "",
@@ -10,6 +10,9 @@ const Tools = createSlice({
   name: "Tool",
   initialState,
   reducers: {
+    updateCards(state, action) {
+      state.cards = action.payload;
+    },
     filterCards(state, action) {
       if (action.payload === "All" && state.searchQuery.length === 0) {
         state.filteredCards = data;
@@ -36,5 +39,6 @@ const Tools = createSlice({
   },
 });
 
-export const { filterCards, setSearchQuery, setSortBy } = Tools.actions;
+export const { filterCards, setSearchQuery, setSortBy, updateCards } =
+  Tools.actions;
 export { Tools };
