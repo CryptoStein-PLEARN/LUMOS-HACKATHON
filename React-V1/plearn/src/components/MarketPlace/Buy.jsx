@@ -8,11 +8,11 @@ import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default React.memo(function Buy() {
-  var cost = 0;
-  var characterName = "";
-  var description = "";
-  var unlockLevel = 0;
-  var _id = 0;
+  let cost = 0;
+  let characterName = "";
+  let description = "";
+  let unlockLevel = 0;
+  let _id = 0;
   const location = useLocation();
   const path = location.pathname;
   const pathArray = path.split("/");
@@ -22,17 +22,17 @@ export default React.memo(function Buy() {
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
+    getDetails();
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
 
-  const BuyCharacter = async () => {
+  const getDetails = async() => {
     const userDetails = {
       userAccount: "0x9087225508ea0287ed47d881e9639ef2d42cda1a",
       userLevel: 2,
       userGameCoins: 680,
     };
-    // axios.post(`https://plearn-backend.onrender.com/buyCharacter/${name}`, userDetails)
     await axios
       .post(`http://localhost:8080/buyCharacter/${name}`, userDetails)
       .then((response) => {
@@ -47,6 +47,11 @@ export default React.memo(function Buy() {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  const BuyCharacter = async () => {
+    
+      getDetails();
   };
 
   return (
@@ -101,7 +106,7 @@ export default React.memo(function Buy() {
               </div>
               <div className="buyNow">
                 {/* {level}; */}
-                <button>
+                <button onClick={BuyCharacter}>
                   <span>Buy Now!</span>
                 </button>
               </div>
