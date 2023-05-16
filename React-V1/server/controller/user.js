@@ -207,6 +207,21 @@ const buyCharacter = (req, res) => {
     })
 }
 
+const getOwnedCharacters = (req,res) => {
+    const {userAccount} = req.params;
+
+    playerDetail.findOne({userAccount: userAccount}, (err, player) => {
+        if(player)
+        {
+            res.send(player.ownedCharacters);
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
 //For adding houses in the DB.
 const insertHouses = async () => {
     await houseDetail.upsert({ houseID: 0, houseName: "House1", cost: 600, insurancePrice: 100, taxPrice: 100, energyGain: 20});
@@ -462,4 +477,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, buyCharacter, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, buyCharacter, getOwnedCharacters, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};

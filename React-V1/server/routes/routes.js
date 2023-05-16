@@ -13,6 +13,7 @@ const {updateLFDetails} = require("../controller/user");
 const {getLoanList} = require("../controller/user");
 const {updateBankLoan} = require("../controller/user");
 const {buyCharacter} = require("../controller/user");
+const {getOwnedCharacters} = require("../controller/user");
 
 router.post("/preregistration", preRegisterUser);
 
@@ -25,6 +26,8 @@ router.post('/saveDetails', saveDetails);
 router.get('/getCharacterDetails', getCharacterDetails);
 
 router.post('/buyCharacter/:characterName', buyCharacter);
+
+router.get('/getOwnedCharacters/:userAccount', getOwnedCharacters);
 
 router.get('/getHouseList', getHouseList);
 
