@@ -3,18 +3,49 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import axios from "axios";
+
 export default React.memo(function Buy() {
+  
   const price = useSelector((state) => state.Blog.price);
   const Name = useSelector((state) => state.Blog.Name);
   const desc = useSelector((state) => state.Blog.desc);
   const Category = useSelector((state) => state.Blog.Category);
   const location = useLocation();
+  const path = location.pathname;
+  const pathArray = path.split("/");
+  const name = pathArray[pathArray.length - 1];
+  // console.log(name);
   const [showLoader, setShowLoader] = useState(false);
+
   useEffect(() => {
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
+
+  const BuyCharacter = async () => {
+    const userDetails = {
+      userAccount: "0x9087225508ea0287ed47d881e9639ef2d42cda1a",
+      userLevel: 2,
+      userGameCoins: 680
+    }
+    // axios.post(`https://plearn-backend.onrender.com/buyCharacter/${name}`, userDetails)
+    await axios.post(`http://localhost:8080/buyCharacter/${name}`, userDetails)
+    .then(response => {
+      console.log(response.data);
+      const cost = response.data.cost;
+      const characterName = response.data.characterName;
+      const description = response.data.description;
+      const unlockLevel = response.data.description;
+      const _id = response.data._id;
+      // const category = response.data.category;
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
   return (
     <>
       {showLoader ? (
@@ -66,7 +97,7 @@ export default React.memo(function Buy() {
                 <span className="ca">{Category}</span>
               </div>
               <div className="buyNow">
-                <button>
+                <button onClick={BuyCharacter}>
                   <span>Buy Now!</span>
                 </button>
               </div>

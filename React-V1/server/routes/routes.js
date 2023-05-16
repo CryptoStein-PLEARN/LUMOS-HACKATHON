@@ -12,6 +12,7 @@ const {updateEnergyDetails} = require("../controller/user");
 const {updateLFDetails} = require("../controller/user");
 const {getLoanList} = require("../controller/user");
 const {updateBankLoan} = require("../controller/user");
+const {buyCharacter} = require("../controller/user");
 
 router.post("/preregistration", preRegisterUser);
 
@@ -22,6 +23,8 @@ router.get('/playerdetail/:playerAccount', getPlayer)
 router.post('/saveDetails', saveDetails);
 
 router.get('/getCharacterDetails', getCharacterDetails);
+
+router.post('/buyCharacter/:characterName', buyCharacter);
 
 router.get('/getHouseList', getHouseList);
 

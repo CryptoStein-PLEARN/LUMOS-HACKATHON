@@ -161,6 +161,52 @@ const getCharacterDetails = (req, res) => {
     });
 }
 
+const buyCharacter = (req, res) => {
+    const characterName = req.params.characterName;
+
+    var {userAccount, userLevel, userGameCoins} = req.body;
+
+    characterDetail.findOne({characterName: characterName}, (err, character) => {
+        if(character)
+        {
+            if(userLevel >= character.unlockLevel)
+            {
+                if(userGameCoins >= character.cost)
+                {
+                    userGameCoins = userGameCoins - character.cost;
+                    playerDetail.updateOne(
+                        { userAccount: userAccount },
+                        {
+                            $set: {gameCoins: userGameCoins},
+                            $push: { ownedCharacters: characterName }
+                        },
+                        (err) => {
+                            if(err) {
+                                console.error(err);
+                                return res.send(err);
+                            }
+                            res.send(character);
+                            //Update the Game from here somehow
+                        }
+                    );
+                }
+                else
+                {
+                    res.send({message: "You need more game coins to unlock this character."})
+                }
+            }
+            else
+            {
+                res.send({message: "You can buy this character at level" + character.unlockLevel});
+            }
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
 //For adding houses in the DB.
 const insertHouses = async () => {
     await houseDetail.upsert({ houseID: 0, houseName: "House1", cost: 600, insurancePrice: 100, taxPrice: 100, energyGain: 20});
@@ -416,4 +462,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, buyCharacter, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
