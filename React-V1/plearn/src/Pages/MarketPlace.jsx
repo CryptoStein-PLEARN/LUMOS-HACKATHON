@@ -3,16 +3,18 @@ import CardLoader from "../components/CardLoader";
 import Header from "../components/MarketPlace/Header";
 import SortingTab from "../components/SortingTab";
 import Cards from "../components/MarketPlace/Cards";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Category from "../components/MarketPlace/Category";
 import Loader from "../components/Loader";
 import { useLocation } from "react-router-dom";
+import { updateCards } from "../Store/Slice/userSlice";
 import axios from "axios";
 
 export default React.memo(function MarketPlace() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const [showLoader, setShowLoader] = useState(false);
-  const [characters, setCharacters] = useState([])
+  // const [characters, setCharacters] = useState([]);
   useEffect(() => {
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
@@ -21,27 +23,30 @@ export default React.memo(function MarketPlace() {
   useEffect(() => {
     async function fetchCharacters() {
       try {
-        const response = await axios.get('https://plearn-backend.onrender.com/getCharacterDetails');
-        const charactersWithCategory = response.data.map(item => ({
+        const response = await axios.get(
+          "https://plearn-backend.onrender.com/getCharacterDetails"
+        );
+        const charactersWithCategory = response.data.map((item) => ({
           ...item,
-          category: "Characters"
+          category: "Characters",
         }));
-        setCharacters(charactersWithCategory);
+        console.log(charactersWithCategory);
+        dispatch(updateCards(charactersWithCategory));
       } catch (error) {
         console.log(error);
       }
     }
-  
+
     fetchCharacters();
   }, []);
 
-  const charactersByCategory = characters.reduce((acc, curr) => {
-    if (!acc[curr.category]) {
-      acc[curr.category] = [];
-    }
-    acc[curr.category].push(curr);
-    return acc;
-  }, {});
+  // const charactersByCategory = characters.reduce((acc, curr) => {
+  //   if (!acc[curr.category]) {
+  //     acc[curr.category] = [];
+  //   }
+  //   acc[curr.category].push(curr);
+  //   return acc;
+  // }, {});
 
   const filterActive = useSelector((state) => state.tools.filterActive);
   const card = useSelector((state) => state.tools.cards);
@@ -49,7 +54,7 @@ export default React.memo(function MarketPlace() {
   const cardData = filterActive ? filteredCards : card;
   const [ShopState, SetShop] = useState(true);
   const Root = React.memo(() => {
-    const cardsByCategory = card.reduce((accumulator, currentCard) => {
+    const charactersByCategory = card.reduce((accumulator, currentCard) => {
       const category = currentCard.Category;
       if (!accumulator[category]) {
         accumulator[category] = [];
@@ -61,23 +66,25 @@ export default React.memo(function MarketPlace() {
     return (
       <>
         <div className="left">
-  {Object.entries(charactersByCategory).map(([categoryName, categoryCards]) => (
-    <div className="Mainfold" key={categoryName}>
-      <div className="Head">
-        <h1>{categoryName}</h1>
-        <div
-          className="span"
-          onClick={() => {
-            SetShop(false);
-          }}
-        >
-          View all
+          {Object.entries(charactersByCategory).map(
+            ([categoryName, categoryCards]) => (
+              <div className="Mainfold" key={categoryName}>
+                <div className="Head">
+                  <h1>{categoryName}</h1>
+                  <div
+                    className="span"
+                    onClick={() => {
+                      SetShop(false);
+                    }}
+                  >
+                    View all
+                  </div>
+                </div>
+                <CardLoader data={categoryCards} />
+              </div>
+            )
+          )}
         </div>
-      </div>
-      <CardLoader data={categoryCards} />
-    </div>
-  ))}
-</div>
       </>
     );
   });

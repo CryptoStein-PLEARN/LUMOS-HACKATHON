@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
@@ -8,11 +8,33 @@ import Cards from "./MarketPlace/Cards";
 export default React.memo(function CardLoader(props) {
   const data = props.data;
   console.log(data);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [num, setNum] = useState(3);
 
+  useEffect(() => {
+    function handleResize() {
+      setViewportWidth(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    if (viewportWidth > 1100) {
+      setNum(3);
+    }
+    if (viewportWidth < 1100) {
+      setNum(2);
+    }
+    if (viewportWidth <= 700) {
+      setNum(1);
+    }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [viewportWidth]);
   return (
     <div>
       <Swiper
-        slidesPerView={3}
+        slidesPerView={num}
         spaceBetween={30}
         pagination={{
           clickable: true,

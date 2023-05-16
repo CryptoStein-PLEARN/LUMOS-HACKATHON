@@ -4,19 +4,21 @@ import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
 import { useLocation, useParams } from "react-router-dom";
+
 import axios from "axios";
 
 export default React.memo(function Buy() {
-  
-  const price = useSelector((state) => state.Blog.price);
-  const Name = useSelector((state) => state.Blog.Name);
-  const desc = useSelector((state) => state.Blog.desc);
-  const Category = useSelector((state) => state.Blog.Category);
+  var cost = 0;
+  var characterName = "";
+  var description = "";
+  var unlockLevel = 0;
+  var _id = 0;
   const location = useLocation();
   const path = location.pathname;
   const pathArray = path.split("/");
   const name = pathArray[pathArray.length - 1];
   // console.log(name);
+  var category = "";
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
@@ -28,23 +30,24 @@ export default React.memo(function Buy() {
     const userDetails = {
       userAccount: "0x9087225508ea0287ed47d881e9639ef2d42cda1a",
       userLevel: 2,
-      userGameCoins: 680
-    }
+      userGameCoins: 680,
+    };
     // axios.post(`https://plearn-backend.onrender.com/buyCharacter/${name}`, userDetails)
-    await axios.post(`http://localhost:8080/buyCharacter/${name}`, userDetails)
-    .then(response => {
-      console.log(response.data);
-      const cost = response.data.cost;
-      const characterName = response.data.characterName;
-      const description = response.data.description;
-      const unlockLevel = response.data.description;
-      const _id = response.data._id;
-      // const category = response.data.category;
-    })
-    .catch(error => {
-      console.log(error);
-    })
-  }
+    await axios
+      .post(`http://localhost:8080/buyCharacter/${name}`, userDetails)
+      .then((response) => {
+        console.log(response.data);
+        cost = response.data.cost;
+        characterName = response.data.characterName;
+        description = response.data.description;
+        unlockLevel = response.data.description;
+        _id = response.data._id;
+        category = response.data.category;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -87,17 +90,18 @@ export default React.memo(function Buy() {
               </div>
             </div>
             <div className="left">
-              <h1 className="name">{Name}</h1>
-              <span className="price">{price}</span>
+              <h1 className="name">{characterName}</h1>
+              <span className="price">{cost}</span>
               <div className="description">
-                <p className="desc">{desc}</p>
+                <p className="desc">{description}</p>
               </div>
               <div className="Categor">
                 <h2>Category :</h2>
-                <span className="ca">{Category}</span>
+                <span className="ca">{category}</span>
               </div>
               <div className="buyNow">
-                <button onClick={BuyCharacter}>
+                {/* {level}; */}
+                <button>
                   <span>Buy Now!</span>
                 </button>
               </div>

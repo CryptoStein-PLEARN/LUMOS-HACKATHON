@@ -136,8 +136,19 @@ width: 100%;
 }
  .shopAll{
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 50px;
  }
+ @media only screen and (max-width: 1200px) {
+  .shopAll {
+    grid-template-columns: 1fr 1fr ;
+  }
+}
+@media only screen and (max-width: 800px) {
+  .shopAll {
+    grid-template-columns: 1fr;
+  }
+}
  .Mainfold{
   display: flex;
   flex-direction: column;

@@ -1828,3 +1828,10 @@ font-size: 22px;
 .react-tabs__tab {
   margin: 15px;
 }
+
+@media only screen and (max-width: 800px) {
+  .imgl{
+    display: none;
+  }
+  
+}
