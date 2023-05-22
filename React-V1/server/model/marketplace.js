@@ -16,6 +16,7 @@ const marketplaceSchema = new mongoose.Schema({
         description: {type: String},
         cost: {type: Number},
         imgUri: {type: String},
+        unlockLevel: {type: Number}
         // CurrentOwner:
     }]
 });
@@ -44,21 +45,24 @@ const Record1 = {
             name: "Tony",
             description: "Lorem Ipsum",
             cost: 10,
-            imgUri: "https://i.imgur.com/wWzXpzE.png"
+            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            unlockLevel: 1,
         },
         {
             id: 1,
             name: "Steve",
             description: "Lorem Ipsum",
             cost: 20,
-            imgUri: "https://i.imgur.com/wWzXpzE.png"
+            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            unlockLevel: 2,
         },
         {
             id: 2,
             name: "Bruce",
             description: "Lorem Ipsum",
             cost: 30,
-            imgUri: "https://i.imgur.com/wWzXpzE.png"
+            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            unlockLevel: 3,
         }
     ]
 }
