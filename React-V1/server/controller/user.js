@@ -10,6 +10,7 @@ const lfDetail = require("../model/lifeInsurance");
 const {bankLoan, bankDeposit} = require("../model/bank");
 const preRegistrationDetail = require("../model/preregistration");
 const entrepreneurshipDetail = require("../model/entrepreneurship");
+const marketplaceDetail = require("../model/marketplace");
 
 const app = express();
 
@@ -148,15 +149,15 @@ const insertCharacters = async () => {
 insertCharacters();
 
 const getCharacterDetails = (req, res) => {
-    characterDetail.find({}, (err, characters) => {
+    marketplaceDetail.find({}, (err, category) => {
         if(err) 
         {
           console.error(err);
         }
         else
         {
-          res.send(characters);
-          console.log(characters);
+          res.send(category);
+          console.log(category);
         }
     });
 }

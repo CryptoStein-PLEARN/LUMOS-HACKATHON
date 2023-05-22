@@ -24,14 +24,15 @@ export default React.memo(function MarketPlace() {
     async function fetchCharacters() {
       try {
         const response = await axios.get(
-          "https://plearn-backend.onrender.com/getCharacterDetails"
+          // "https://plearn-backend.onrender.com/getCharacterDetails"
+          "http://localhost:8080/getCharacterDetails"
         );
-        const charactersWithCategory = response.data.map((item) => ({
-          ...item,
-          category: "Characters",
-        }));
-        console.log(charactersWithCategory);
-        dispatch(updateCards(charactersWithCategory));
+        // const charactersWithCategory = response.data.map((item) => ({
+        //   ...item,
+        //   category: "Characters",
+        // }));
+        console.log(response.data);
+        dispatch(updateCards(response.data));
       } catch (error) {
         console.log(error);
       }
