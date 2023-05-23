@@ -7,7 +7,8 @@ import Cards from "./MarketPlace/Cards";
 
 export default React.memo(function CardLoader(props) {
   const data = props.data;
-  console.log(data);
+  const category = props.cat;
+  console.log(category);
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [num, setNum] = useState(3);
 

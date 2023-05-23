@@ -82,7 +82,6 @@ export default function Nav() {
           const resp = res.data.message;
           setPlayerLevel(res.data.level)
           setGameCoins(res.data.gameCoins)
-
           alert(localStorage.length !== 0 ? "You're Logged in!" : resp);
           setIsLoading(false);
         })

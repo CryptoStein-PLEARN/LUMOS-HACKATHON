@@ -8,6 +8,7 @@ import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default React.memo(function Buy() {
+  const data = useState({});
   let cost = 0;
   let characterName = "";
   let description = "";
@@ -27,7 +28,7 @@ export default React.memo(function Buy() {
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
 
-  const getDetails = async() => {
+  const getDetails = async () => {
     const userDetails = {
       userAccount: "0x9087225508ea0287ed47d881e9639ef2d42cda1a",
       userLevel: 2,
@@ -47,13 +48,10 @@ export default React.memo(function Buy() {
       .catch((error) => {
         console.log(error);
       });
-  }
-
-  const BuyCharacter = async () => {
-    
-      getDetails();
   };
-
+  useEffect(() => {
+    console.log(localStorage.getItem(1));
+  });
   return (
     <>
       {showLoader ? (
@@ -106,7 +104,7 @@ export default React.memo(function Buy() {
               </div>
               <div className="buyNow">
                 {/* {level}; */}
-                <button onClick={BuyCharacter}>
+                <button onClick={getDetails}>
                   <span>Buy Now!</span>
                 </button>
               </div>

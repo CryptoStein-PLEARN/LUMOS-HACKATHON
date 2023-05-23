@@ -26,11 +26,7 @@ export default React.memo(function MarketPlace() {
         const response = await axios.get(
           "https://plearn-backend.onrender.com/getCharacterDetails"
         );
-        const charactersWithCategory = response.data.map((item) => ({
-          ...item,
-          category: "Characters",
-        }));
-        console.log(charactersWithCategory);
+        const charactersWithCategory = response.data;
         dispatch(updateCards(charactersWithCategory));
       } catch (error) {
         console.log(error);
@@ -54,41 +50,42 @@ export default React.memo(function MarketPlace() {
   const cardData = filterActive ? filteredCards : card;
   const [ShopState, SetShop] = useState(true);
   const Root = React.memo(() => {
-    const charactersByCategory = card.reduce((accumulator, currentCard) => {
-      const category = currentCard.Category;
-      if (!accumulator[category]) {
-        accumulator[category] = [];
-      }
-      accumulator[category].push(currentCard);
-      return accumulator;
-    }, {});
+    // const charactersByCategory = card.reduce((accumulator, currentCard) => {
+    //   const category = currentCard.Category;
+    //   if (!accumulator[category]) {
+    //     accumulator[category] = [];
+    //   }
+    //   accumulator[category].push(currentCard);
+    //   return accumulator;
+    // }, {});
 
     return (
       <>
         <div className="left">
-          {Object.entries(charactersByCategory).map(
-            ([categoryName, categoryCards]) => (
-              <div className="Mainfold" key={categoryName}>
-                <div className="Head">
-                  <h1>{categoryName}</h1>
-                  <div
-                    className="span"
-                    onClick={() => {
-                      SetShop(false);
-                    }}
-                  >
-                    View all
-                  </div>
+          {Object.entries(card).map(([category, { details }]) => (
+            <div className="Mainfold" key={category}>
+              <div className="Head">
+                <h1>{card[category].category}</h1>
+                <div
+                  className="span"
+                  onClick={() => {
+                    SetShop(false);
+                  }}
+                >
+                  View all
                 </div>
-                <CardLoader data={categoryCards} />
               </div>
-            )
-          )}
+              <CardLoader data={details} cat={card[category].category} />
+            </div>
+          ))}
         </div>
       </>
     );
   });
 
+  // need to set data in other variables also..
+  // need to put data filteration as global.
+  // need to remove all local data
   return (
     <>
       {showLoader ? (

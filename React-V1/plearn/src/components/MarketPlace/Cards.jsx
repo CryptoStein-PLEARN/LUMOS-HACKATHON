@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import coin from "../../assets/MarketPlace/A (5).png";
 import { useDispatch } from "react-redux";
@@ -6,33 +6,30 @@ import { SetBlog } from "../../Store/Slice/Cardslice";
 import { useNavigate } from "react-router-dom";
 
 export default React.memo(function Cards(props) {
-  const { category, characterName, _id, ImgUri, description, cost, unlockLevel, buy } = props.data;
-  
+  const { name, id, imgUri, description, cost, unlockLevel, _id } = props.data;
   const nav = useNavigate();
   const dispatch = useDispatch();
   const HandleClick = async () => {
     try {
       await dispatch(
         SetBlog({
-          Category: category,
-          Name: characterName,
+          Name: name,
           cost: cost,
-          id: _id,
-          ImgUri: ImgUri,
+          id: id,
+          ImgUri: imgUri,
           desc: description,
         })
       );
       // await console.log(Name);
-      nav(`/Buy/${characterName}`);
+      nav(`/Buy/${name}`);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    
     <Container>
-      <div key={category} className="card">
+      <div key={_id} className="card">
         <>
           <div className="type">
             <img className="icon" src={coin} height="30px" />
@@ -40,11 +37,11 @@ export default React.memo(function Cards(props) {
           </div>
           <div
             className="ImgWrap"
-            id={_id}
-            style={{ background: `url(${ImgUri})` }}
+            id={id}
+            style={{ background: `url(${imgUri})` }}
           ></div>
           <div className="card-body">
-            <h1>{characterName}</h1>
+            <h1>{name}</h1>
             <p className="desp">{description}</p>
             <p className="desp">Unlock Level: {unlockLevel}</p>
             <div className="details"></div>
