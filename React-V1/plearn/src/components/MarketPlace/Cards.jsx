@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 
 export default React.memo(function Cards(props) {
   const { name, id, imgUri, description, cost, unlockLevel, _id } = props.data;
+  const category = props.category;
+  console.log(category);
+  console.log(name);
   const nav = useNavigate();
   const dispatch = useDispatch();
   const HandleClick = async () => {
@@ -21,7 +24,7 @@ export default React.memo(function Cards(props) {
         })
       );
       // await console.log(Name);
-      nav(`/Buy/${name}`);
+      nav(`/Buy/${category + "/" + name}`);
     } catch (error) {
       console.error(error);
     }

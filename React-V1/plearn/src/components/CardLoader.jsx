@@ -8,7 +8,7 @@ import Cards from "./MarketPlace/Cards";
 export default React.memo(function CardLoader(props) {
   const data = props.data;
   const category = props.cat;
-  console.log(category);
+
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   const [num, setNum] = useState(3);
 
@@ -45,7 +45,7 @@ export default React.memo(function CardLoader(props) {
       >
         {data.map((card) => (
           <SwiperSlide key={card._id}>
-            <Cards data={card} />
+            <Cards data={card} category={category} />
           </SwiperSlide>
         ))}
       </Swiper>

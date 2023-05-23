@@ -18,8 +18,10 @@ export default React.memo(function Buy() {
   const path = location.pathname;
   const pathArray = path.split("/");
   const name = pathArray[pathArray.length - 1];
+  console.log(name);
+  const category = pathArray[pathArray.length - 2];
   // console.log(name);
-  var category = "";
+  console.log(category);
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
@@ -43,7 +45,6 @@ export default React.memo(function Buy() {
         description = response.data.description;
         unlockLevel = response.data.description;
         _id = response.data._id;
-        category = response.data.category;
       })
       .catch((error) => {
         console.log(error);

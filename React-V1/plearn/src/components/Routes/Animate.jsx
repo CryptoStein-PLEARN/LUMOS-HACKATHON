@@ -8,6 +8,8 @@ import PrivacyPolicy from "../../Pages/PrivacyPolicy";
 import Error from "../../Pages/404";
 import Main from "../../Pages/Main";
 import ItemonBid from "../../Pages/ItemonBid";
+
+//need to create routes from db and make dynamic routes
 export default function Animate() {
   const location = useLocation();
   return (
@@ -18,7 +20,7 @@ export default function Animate() {
         <Route
           key={item.id}
           exact
-          path={`/Buy/${item.Name}`}
+          path={`/Buy/characters/${item.Name}`}
           element={<Buy />}
         />
       ))}
