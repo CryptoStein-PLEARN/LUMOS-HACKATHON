@@ -45,9 +45,9 @@ const preRegisterUser = (req,res) => {
 
 //For registering the user in 'metamask_login_table' and 'player_detail_table' through website.
 const registerUser = (req,res) => {
-    const {userAccount} = req.body;
-    // var level;
-    // var gameCoins;
+    const {userAccount, category} = req.body;
+    // res.send(req.body);
+
     userDetail.findOne({userAccount: userAccount}, (err, user) => {
         if(user)
         {
@@ -56,7 +56,17 @@ const registerUser = (req,res) => {
                 {
                     const level = player.level;
                     const gameCoins = player.gameCoins;
-                    res.send({message: "User already registered" + " " + userAccount, level, gameCoins});
+                    marketplaceDetail.findOne({category: category}, (err, category) => {
+                        if(category)
+                        {
+                            const details = category.details;
+                            res.send({message: "User already registered" + " " + userAccount, level, gameCoins, details});
+                        }
+                        else
+                        {
+                            res.send({message: "Category not found"});
+                        }
+                    })
                 }
                 else
                 {
@@ -148,7 +158,7 @@ const insertCharacters = async () => {
 }
 insertCharacters();
 
-const getCharacterDetails = (req, res) => {
+const getMarketplaceDetails = (req, res) => {
     marketplaceDetail.find({}, (err, category) => {
         if(err) 
         {
@@ -157,53 +167,60 @@ const getCharacterDetails = (req, res) => {
         else
         {
           res.send(category);
-          console.log(category);
+        //   console.log(category);
         }
     });
 }
 
-const buyCharacter = (req, res) => {
-    const characterName = req.params.characterName;
+const buyFromMarketplace = (req, res) => {
+    var {userAccount, userLevel, userGameCoins, category, name} = req.body;
 
-    var {userAccount, userLevel, userGameCoins} = req.body;
-
-    characterDetail.findOne({characterName: characterName}, (err, character) => {
-        if(character)
+    marketplaceDetail.findOne({category: category}, (err, category) => {
+        if(category)
         {
-            if(userLevel >= character.unlockLevel)
+            const item = category.details.find(item => item.name === name);
+            if(item)
             {
-                if(userGameCoins >= character.cost)
+                if(userLevel >= item.unlockLevel)
                 {
-                    userGameCoins = userGameCoins - character.cost;
-                    playerDetail.updateOne(
-                        { userAccount: userAccount },
-                        {
-                            $set: {gameCoins: userGameCoins},
-                            $push: { ownedCharacters: characterName }
-                        },
-                        (err) => {
-                            if(err) {
-                                console.error(err);
-                                return res.send(err);
+                    if(userGameCoins >= item.cost)
+                    {
+                        userGameCoins = userGameCoins - item.cost;
+                        playerDetail.updateOne(
+                            { userAccount: userAccount },
+                            {
+                                $set: {gameCoins: userGameCoins},
+                                $push: { ownedCharacters: name }
+                            },
+                            (err) => 
+                            {
+                                if(err) 
+                                {
+                                    console.error(err);
+                                    return res.send(err);
+                                }
+                                res.send({message: "Transaction Successful", item});          
                             }
-                            res.send(character);
-                            //Update the Game from here somehow
-                        }
-                    );
+                        );
+                    }
+                    else
+                    {
+                        res.send({message: "You need more game coins to unlock this character."})
+                    }
                 }
                 else
                 {
-                    res.send({message: "You need more game coins to unlock this character."})
+                    res.send({message: "You can buy this character at level " + item.unlockLevel})
                 }
             }
             else
             {
-                res.send({message: "You can buy this character at level" + character.unlockLevel});
+                res.send({message: "Item Not found"});
             }
         }
         else
         {
-            res.send(err);
+            res.send({message: "Category not found"});
         }
     })
 }
@@ -478,4 +495,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getCharacterDetails, getOwnedCharacters, buyCharacter, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedCharacters, buyFromMarketplace, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};

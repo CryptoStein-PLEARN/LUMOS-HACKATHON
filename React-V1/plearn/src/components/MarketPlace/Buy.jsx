@@ -8,51 +8,84 @@ import { useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default React.memo(function Buy() {
+  const [ playerLevel, setPlayerLevel ] = useState(1);
+  const [ gameCoins, setGameCoins] = useState(0);
+  const [ characterName, setCharacterName ] = useState("");
+  const [ description, setDescription ] = useState("");
+  const [ unlockLevel, setUnlockLevel ] = useState();
+  const [ cost, setCost ] = useState()
+  const [ successMessage, setSuccessMessage ] = useState("");
+
   const data = useState({});
-  let cost = 0;
-  let characterName = "";
-  let description = "";
-  let unlockLevel = 0;
-  let _id = 0;
+  // let cost = 0;
+  // let characterName = "fff";
+  // let description = "";
+  // let unlockLevel = 0;
+  // let _id = 0;
   const location = useLocation();
   const path = location.pathname;
   const pathArray = path.split("/");
   const name = pathArray[pathArray.length - 1];
-  console.log(name);
   const category = pathArray[pathArray.length - 2];
   // console.log(name);
-  console.log(category);
+  // console.log(category);
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
-    getDetails();
+    getDetails(); //To fetch gamecoins and player level through useraccount and to fetch item detail through category and name
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
 
   const getDetails = async () => {
+    const itemDetails = {
+      userAccount: localStorage.getItem(1),
+      category: category,
+    }
+    // axios.post("https://plearn-backend.onrender.com/", itemDetails)
+    axios.post("http://localhost:8080/", itemDetails)
+    .then((response) => {
+      setGameCoins(response.data.gameCoins)
+      setPlayerLevel(response.data.level);
+
+      const foundItem = response.data.details.find(item => item.name === name);
+      if (foundItem) 
+      {
+        setCharacterName(foundItem.name);
+        setDescription(foundItem.description);
+        setUnlockLevel(foundItem.unlockLevel);
+        setCost(foundItem.cost);
+      } 
+      else 
+      {
+        console.log("Item not found.");
+      }
+    })
+  }
+
+  const BuyCharacter = async () => {
     const userDetails = {
-      userAccount: "0x9087225508ea0287ed47d881e9639ef2d42cda1a",
-      userLevel: 2,
-      userGameCoins: 680,
+      userAccount: localStorage.getItem(1),
+      userLevel: playerLevel,
+      userGameCoins: gameCoins,
+      category: category,
+      name: name
     };
     await axios
-      .post(`http://localhost:8080/buyCharacter/${name}`, userDetails)
+      .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
       .then((response) => {
-        console.log(response.data);
-        cost = response.data.cost;
-        characterName = response.data.characterName;
-        description = response.data.description;
-        unlockLevel = response.data.description;
-        _id = response.data._id;
+        setSuccessMessage(response.data.message);
+        // cost = response.data.cost;
+        // characterName = response.data.characterName;
+        // description = response.data.description;
+        // unlockLevel = response.data.description;
+        // _id = response.data._id;
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  useEffect(() => {
-    console.log(localStorage.getItem(1));
-  });
+
   return (
     <>
       {showLoader ? (
@@ -94,8 +127,11 @@ export default React.memo(function Buy() {
               </div>
             </div>
             <div className="left">
+              <span>Player Level: {playerLevel}</span>
+              <span>Gamecoins: {gameCoins}</span>
               <h1 className="name">{characterName}</h1>
-              <span className="price">{cost}</span>
+              <span className="price">Cost: {cost}</span>
+              <span className="price">Unlock level: {unlockLevel}</span>
               <div className="description">
                 <p className="desc">{description}</p>
               </div>
@@ -105,9 +141,12 @@ export default React.memo(function Buy() {
               </div>
               <div className="buyNow">
                 {/* {level}; */}
-                <button onClick={getDetails}>
+                <button onClick={BuyCharacter}>
                   <span>Buy Now!</span>
                 </button>
+              </div>
+              <div>
+                {successMessage}
               </div>
             </div>
           </div>

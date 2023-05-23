@@ -4,7 +4,7 @@ const router = express();
 const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer} = require("../controller/user");
 const {getPlayer} = require("../controller/user");
 const {saveDetails} = require("../controller/user");
-const {getCharacterDetails} = require("../controller/user");
+const {getMarketplaceDetails} = require("../controller/user");
 const {getHouseList} = require("../controller/user");
 const {updateHouseDetails} = require("../controller/user")
 const {getEnergyList} = require("../controller/user");
@@ -12,7 +12,7 @@ const {updateEnergyDetails} = require("../controller/user");
 const {updateLFDetails} = require("../controller/user");
 const {getLoanList} = require("../controller/user");
 const {updateBankLoan} = require("../controller/user");
-const {buyCharacter} = require("../controller/user");
+const {buyFromMarketplace} = require("../controller/user");
 const {getOwnedCharacters} = require("../controller/user");
 
 router.post("/preregistration", preRegisterUser);
@@ -23,9 +23,9 @@ router.get('/playerdetail/:playerAccount', getPlayer)
 
 router.post('/saveDetails', saveDetails);
 
-router.get('/getCharacterDetails', getCharacterDetails);
+router.get('/getMarketplaceDetails', getMarketplaceDetails);
 
-router.post('/buyCharacter/:characterName', buyCharacter);
+router.post('/buyFromMarketplace', buyFromMarketplace);
 
 router.get('/getOwnedCharacters/:userAccount', getOwnedCharacters);
 
