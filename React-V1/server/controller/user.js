@@ -173,7 +173,7 @@ const getMarketplaceDetails = (req, res) => {
 }
 
 const buyFromMarketplace = (req, res) => {
-    var {userAccount, userLevel, userGameCoins, category, name} = req.body;
+    var {userAccount, userLevel, userGameCoins, category, name, itemID} = req.body;
 
     marketplaceDetail.findOne({category: category}, (err, category) => {
         if(category)
@@ -190,7 +190,7 @@ const buyFromMarketplace = (req, res) => {
                             { userAccount: userAccount },
                             {
                                 $set: {gameCoins: userGameCoins},
-                                $push: { ownedCharacters: name }
+                                $push: { ownedCharacters: itemID }
                             },
                             (err) => 
                             {

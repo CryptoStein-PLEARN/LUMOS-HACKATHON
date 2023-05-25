@@ -10,7 +10,8 @@ import axios from "axios";
 export default React.memo(function Buy() {
   const [ playerLevel, setPlayerLevel ] = useState(1);
   const [ gameCoins, setGameCoins] = useState(0);
-  const [ characterName, setCharacterName ] = useState("");
+  const [ itemName, setItemName ] = useState("");
+  const [ itemID, setItemID ] = useState(-1);
   const [ description, setDescription ] = useState("");
   const [ unlockLevel, setUnlockLevel ] = useState();
   const [ cost, setCost ] = useState()
@@ -51,7 +52,8 @@ export default React.memo(function Buy() {
       const foundItem = response.data.details.find(item => item.name === name);
       if (foundItem) 
       {
-        setCharacterName(foundItem.name);
+        setItemID(foundItem.id);
+        setItemName(foundItem.name);
         setDescription(foundItem.description);
         setUnlockLevel(foundItem.unlockLevel);
         setCost(foundItem.cost);
@@ -69,9 +71,11 @@ export default React.memo(function Buy() {
       userLevel: playerLevel,
       userGameCoins: gameCoins,
       category: category,
-      name: name
+      name: name,
+      itemID: itemID,
     };
     await axios
+    
       .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
       .then((response) => {
         setSuccessMessage(response.data.message);
@@ -129,7 +133,7 @@ export default React.memo(function Buy() {
             <div className="left">
               <span>Player Level: {playerLevel}</span>
               <span>Gamecoins: {gameCoins}</span>
-              <h1 className="name">{characterName}</h1>
+              <h1 className="name">{itemName}</h1>
               <span className="price">Cost: {cost}</span>
               <span className="price">Unlock level: {unlockLevel}</span>
               <div className="description">
