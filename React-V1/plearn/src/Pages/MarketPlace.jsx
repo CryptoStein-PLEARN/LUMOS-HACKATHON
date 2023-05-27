@@ -24,8 +24,8 @@ export default React.memo(function MarketPlace() {
     async function fetchCharacters() {
       try {
         const response = await axios.get(
-          // "https://plearn-backend.onrender.com/getCharacterDetails"
-          "http://localhost:8080/getMarketplaceDetails"
+          "https://plearn-backend.onrender.com/getMarketplaceDetails"
+          // "http://localhost:8080/getMarketplaceDetails"
         );
         const charactersWithCategory = response.data;
         dispatch(updateCards(charactersWithCategory));

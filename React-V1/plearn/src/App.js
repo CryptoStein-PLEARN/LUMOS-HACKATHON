@@ -19,8 +19,8 @@ export default React.memo(function App() {
     async function fetchDataFromMarketplace() {
       try {
         const response = await axios.get(
-          // "https://plearn-backend.onrender.com/getMarketplaceDetails"
-          "http://localhost:8080/getMarketplaceDetails"
+          "https://plearn-backend.onrender.com/getMarketplaceDetails"
+          // "http://localhost:8080/getMarketplaceDetails"
         );
         const charactersWithCategory = response.data;
         console.log(response.data);

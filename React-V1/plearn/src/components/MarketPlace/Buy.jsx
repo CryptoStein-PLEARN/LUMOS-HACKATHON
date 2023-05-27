@@ -43,8 +43,8 @@ export default React.memo(function Buy() {
       userAccount: localStorage.getItem(1),
       category: category,
     }
-    // axios.post("https://plearn-backend.onrender.com/", itemDetails)
-    axios.post("http://localhost:8080/", itemDetails)
+    axios.post("https://plearn-backend.onrender.com/", itemDetails)
+    // axios.post("http://localhost:8080/", itemDetails)
     .then((response) => {
       setGameCoins(response.data.gameCoins)
       setPlayerLevel(response.data.level);
@@ -75,8 +75,8 @@ export default React.memo(function Buy() {
       itemID: itemID,
     };
     await axios
-    
-      .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
+      .post("https://plearn-backend.onrender.com/buyFromMarketplace", userDetails)
+      // .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
       .then((response) => {
         setSuccessMessage(response.data.message);
         // cost = response.data.cost;
