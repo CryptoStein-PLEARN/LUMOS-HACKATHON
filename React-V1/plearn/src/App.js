@@ -30,8 +30,25 @@ export default React.memo(function App() {
       }
     }
 
+    
     fetchDataFromMarketplace();
   }, []);
+
+  useEffect(() => {
+    async function fetchOwnedNFTs(){
+      try {
+        // const response = await axios.get(`https://plearn-backend.onrender.com/getOwnedCharacters/${localStorage.getItem(1)}`);
+        const response = await axios.get(`http://localhost:8080/getOwnedCharacters/${localStorage.getItem(1)}`)
+        // const ownedNFTs = response.data;
+        console.log(response.data);
+      }
+      catch(error){
+        console.log(error);
+      }
+    }
+
+    fetchOwnedNFTs();
+  },[]);
 
   return (
     <>

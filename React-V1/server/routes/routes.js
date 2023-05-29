@@ -27,7 +27,7 @@ router.get('/getMarketplaceDetails', getMarketplaceDetails);
 
 router.post('/buyFromMarketplace', buyFromMarketplace);
 
-router.get('/getOwnedCharacters/:userAccount', getOwnedCharacters);
+router.get('/getOwnedCharacters/:userAccount', getOwnedCharacters); //Change the name from characters to generic - items
 
 router.get('/getHouseList', getHouseList);
 

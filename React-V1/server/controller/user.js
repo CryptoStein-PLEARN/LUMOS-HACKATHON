@@ -228,15 +228,22 @@ const buyFromMarketplace = (req, res) => {
 const getOwnedCharacters = (req,res) => {
     const {userAccount} = req.params;
 
-    playerDetail.findOne({userAccount: userAccount}, (err, player) => {
-        if(player)
-        {
-            res.send(player.ownedCharacters);
-        }
-        else
-        {
+    playerDetail.findOne({userAccount: userAccount}, async (err, player) => {
+        if (player) {
+            const characterIds = player.ownedCharacters.map((character) => Number(character));
+      
+            const characterDetails = await marketplaceDetail.aggregate([
+                { $match: { category: "characters" }},
+                { $match: { "details.id": { $in: characterIds } } },
+                { $unwind: "$details" },
+                { $match: { "details.id": { $in: characterIds } } }
+            ]).exec();
+      
+            const extractedDetails = characterDetails.map((doc) => doc.details);
+            res.send(extractedDetails);
+          } else {
             res.send(err);
-        }
+          }
     })
 }
 
