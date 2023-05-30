@@ -186,11 +186,12 @@ const buyFromMarketplace = (req, res) => {
                     if(userGameCoins >= item.cost)
                     {
                         userGameCoins = userGameCoins - item.cost;
+                        // const categoryKey = `ownedNFTs.${req.body.category}`;
                         playerDetail.updateOne(
                             { userAccount: userAccount },
                             {
                                 $set: {gameCoins: userGameCoins},
-                                $push: { ownedCharacters: itemID }
+                                $push: { [`ownedNFTs.${req.body.category}`]: itemID }
                             },
                             (err) => 
                             {
@@ -225,25 +226,32 @@ const buyFromMarketplace = (req, res) => {
     })
 }
 
-const getOwnedCharacters = (req,res) => {
+const getOwnedNFTs = (req,res) => {
     const {userAccount} = req.params;
 
     playerDetail.findOne({userAccount: userAccount}, async (err, player) => {
         if (player) {
-            const characterIds = player.ownedCharacters.map((character) => Number(character));
-      
-            const characterDetails = await marketplaceDetail.aggregate([
-                { $match: { category: "characters" }},
-                { $match: { "details.id": { $in: characterIds } } },
-                { $unwind: "$details" },
-                { $match: { "details.id": { $in: characterIds } } }
-            ]).exec();
-      
-            const extractedDetails = characterDetails.map((doc) => doc.details);
-            res.send(extractedDetails);
-          } else {
+            const ownedNFTs = player.ownedNFTs;
+const nftFields = Object.keys(ownedNFTs);
+const nftIds = nftFields.reduce((ids, field) => [...ids, ...ownedNFTs[field]], []);
+
+const nftDetails = await marketplaceDetail.aggregate([
+  { $match: { category: { $in: nftFields } } },
+  { $unwind: "$details" },
+  { $match: { $expr: { $and: [
+    { $in: ["$details.id", nftIds] },
+  ] } } },
+  { $addFields: { "details.category": "$category" } }
+]).exec();
+
+const extractedDetails = nftDetails.map((doc) => doc.details);
+res.send(extractedDetails);
+
+        } 
+        else 
+        {
             res.send(err);
-          }
+        }
     })
 }
 
@@ -502,4 +510,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedCharacters, buyFromMarketplace, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};

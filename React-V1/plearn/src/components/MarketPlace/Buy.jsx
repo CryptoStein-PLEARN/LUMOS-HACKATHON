@@ -65,7 +65,7 @@ export default React.memo(function Buy() {
     })
   }
 
-  const BuyCharacter = async () => {
+  const BuyNFTs = async () => {
     const userDetails = {
       userAccount: localStorage.getItem(1),
       userLevel: playerLevel,
@@ -75,8 +75,8 @@ export default React.memo(function Buy() {
       itemID: itemID,
     };
     await axios
-      .post("https://plearn-backend.onrender.com/buyFromMarketplace", userDetails)
-      // .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
+      // .post("https://plearn-backend.onrender.com/buyFromMarketplace", userDetails)
+      .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
       .then((response) => {
         setSuccessMessage(response.data.message);
         // cost = response.data.cost;
@@ -145,7 +145,7 @@ export default React.memo(function Buy() {
               </div>
               <div className="buyNow">
                 {/* {level}; */}
-                <button onClick={BuyCharacter}>
+                <button onClick={BuyNFTs}>
                   <span>Buy Now!</span>
                 </button>
               </div>
