@@ -3,75 +3,40 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
-import { useLocation, useParams } from "react-router-dom";
-
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 
-export default React.memo(function Buy() {
-  const [ playerLevel, setPlayerLevel ] = useState(1);
-  const [ gameCoins, setGameCoins] = useState(0);
-  const [ itemName, setItemName ] = useState("");
-  const [ itemID, setItemID ] = useState(-1);
-  const [ description, setDescription ] = useState("");
-  const [ unlockLevel, setUnlockLevel ] = useState();
-  const [ cost, setCost ] = useState()
-  const [ successMessage, setSuccessMessage ] = useState("");
-
+export default React.memo(function Buy({ ds }) {
+  console.log(ds);
+  const [playerLevel, setPlayerLevel] = useState(1);
+  const [gameCoins, setGameCoins] = useState(10);
+  const itemName = ds.name;
+  const itemID = ds.id;
+  const description = ds.description;
+  const unlockLevel = ds.unlockLevel;
+  const cost = ds.cost;
+  const [successMessage, setSuccessMessage] = useState("");
   const data = useState({});
-  // let cost = 0;
-  // let characterName = "fff";
-  // let description = "";
-  // let unlockLevel = 0;
-  // let _id = 0;
   const location = useLocation();
   const path = location.pathname;
   const pathArray = path.split("/");
-  const name = pathArray[pathArray.length - 1];
   const category = pathArray[pathArray.length - 2];
-  // console.log(name);
-  // console.log(category);
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
-    getDetails(); //To fetch gamecoins and player level through useraccount and to fetch item detail through category and name
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
 
-  const getDetails = async () => {
-    const itemDetails = {
-      userAccount: localStorage.getItem(1),
-      category: category,
-    }
-    axios.post("https://plearn-backend.onrender.com/", itemDetails)
-    // axios.post("http://localhost:8080/", itemDetails)
-    .then((response) => {
-      setGameCoins(response.data.gameCoins)
-      setPlayerLevel(response.data.level);
-
-      const foundItem = response.data.details.find(item => item.name === name);
-      if (foundItem) 
-      {
-        setItemID(foundItem.id);
-        setItemName(foundItem.name);
-        setDescription(foundItem.description);
-        setUnlockLevel(foundItem.unlockLevel);
-        setCost(foundItem.cost);
-      } 
-      else 
-      {
-        console.log("Item not found.");
-      }
-    })
-  }
-
+  // Set coins value correclty for each user
+  // Set data inside the Buy NFT function if the transaction is sucesfull using the UseState for each item that will be update
+  // such as game coins left and item purchase state --> can purchase only one item
   const BuyNFTs = async () => {
     const userDetails = {
       userAccount: localStorage.getItem(1),
       userLevel: playerLevel,
       userGameCoins: gameCoins,
       category: category,
-      name: name,
       itemID: itemID,
     };
     await axios
@@ -79,11 +44,7 @@ export default React.memo(function Buy() {
       .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
       .then((response) => {
         setSuccessMessage(response.data.message);
-        // cost = response.data.cost;
-        // characterName = response.data.characterName;
-        // description = response.data.description;
-        // unlockLevel = response.data.description;
-        // _id = response.data._id;
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -149,9 +110,7 @@ export default React.memo(function Buy() {
                   <span>Buy Now!</span>
                 </button>
               </div>
-              <div>
-                {successMessage}
-              </div>
+              <div>{successMessage}</div>
             </div>
           </div>
         </Container>

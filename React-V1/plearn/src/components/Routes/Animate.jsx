@@ -8,22 +8,27 @@ import PrivacyPolicy from "../../Pages/PrivacyPolicy";
 import Error from "../../Pages/404";
 import Main from "../../Pages/Main";
 import ItemonBid from "../../Pages/ItemonBid";
+import { useSelector } from "react-redux";
 
 //need to create routes from db and make dynamic routes
 export default function Animate() {
   const location = useLocation();
+  const card = useSelector((state) => state.tools.cards);
   return (
     <Routes location={location} key={location.pathname}>
       <Route exact path={"/"} element={<Main />} />
       <Route path="*" element={<Error />} />
-      {data.map((item) => (
-        <Route
-          key={item.id}
-          exact
-          path={`/Buy/characters/${item.Name}`}
-          element={<Buy />}
-        />
-      ))}
+      {Object.entries(card).map(([category, { details }]) =>
+        details.map((ds) => (
+          <Route
+            key={details.id}
+            exact
+            path={`/Buy/${card[category].category}/${ds.name}`}
+            element={<Buy ds={ds} />}
+          />
+        ))
+      )}
+
       <Route exact path="/Bid" element={<ItemonBid></ItemonBid>}></Route>
       <Route exact path="/marketplace" element={<MarketPlace />}></Route>
       <Route exact path="/owned" element={<Owned />}></Route>

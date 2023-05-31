@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import data from "../../utils/data";
 const initialState = {
   cards: [],
   filteredCards: [],
@@ -15,10 +14,10 @@ const Tools = createSlice({
     },
     filterCards(state, action) {
       if (action.payload === "All" && state.searchQuery.length === 0) {
-        state.filteredCards = data;
+        state.filteredCards = state.cards;
       } else {
         state.filteredCards = state.cards.filter(
-          (card) => card.Category === action.payload
+          (card) => card.category === action.payload
         );
       }
       state.filterActive = true;
@@ -26,19 +25,17 @@ const Tools = createSlice({
     setSearchQuery(state, action) {
       state.searchQuery = action.payload;
       state.filterActive = true;
-      state.filteredCards = state.cards.filter(
-        (card) =>
-          card.Name.toLowerCase().includes(action.payload.toLowerCase()) ||
-          card.Category.toLowerCase().includes(action.payload.toLowerCase())
-      );
-    },
-
-    setSortBy(state, action) {
-      state.sortBy = action.payload;
+      state.filteredCards = state.cards.filter((card) => {
+        return (
+          card.details.some((detail) => {
+            return detail.name.toLowerCase() === action.payload.toLowerCase();
+          }) ||
+          card.category.toLowerCase().includes(action.payload.toLowerCase())
+        );
+      });
     },
   },
 });
 
-export const { filterCards, setSearchQuery, setSortBy, updateCards } =
-  Tools.actions;
+export const { filterCards, setSearchQuery, updateCards } = Tools.actions;
 export { Tools };

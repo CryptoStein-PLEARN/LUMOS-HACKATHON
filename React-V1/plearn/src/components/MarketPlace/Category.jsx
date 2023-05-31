@@ -5,19 +5,19 @@ import { filterCards } from "../../Store/Slice/userSlice";
 
 export default React.memo(function Category() {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => {
-    const allCategories = state.tools.cards.map((card) => card.Category);
-    return ["All", ...new Set(allCategories)];
-  });
+  const categories = useSelector((state) => state.tools.cards);
   const handleFilterClick = (category) => {
     dispatch(filterCards(category));
   };
   return (
     <div>
       <Cat className="categories">
-        {categories.map((category) => (
-          <button key={category} onClick={() => handleFilterClick(category)}>
-            {category}
+        {Object.entries(categories).map(([category, { details }]) => (
+          <button
+            key={categories[category].category}
+            onClick={() => handleFilterClick(categories[category].category)}
+          >
+            {categories[category].category}
           </button>
         ))}
       </Cat>

@@ -37,7 +37,7 @@ export default function Nav() {
     { name: "Home" },
     { name: "About" },
     { name: "MarketPlace" },
-    { name: "Owned" },
+
     { name: "Tokenomics" },
     // { name: "Trading" },
     // { name: "NFT" },
@@ -48,20 +48,22 @@ export default function Nav() {
       return nav_list.map((item) => {
         const path = item.name.replace(/\s+/g, "");
         return (
-          <li className="nav-item" key={item.name}>
-            <div
-              className="nav-link active"
-              onClick={() => {
-                nav(`/${item.name === "Home" ? "" : path.toLowerCase()}`);
-              }}
-            >
-              {item.name}
-            </div>
-          </li>
+          <>
+            <li className="nav-item" key={item.name}>
+              <div
+                className="nav-link active"
+                onClick={() => {
+                  nav(`/${item.name === "Home" ? "" : path.toLowerCase()}`);
+                }}
+              >
+                {item.name}
+              </div>
+            </li>
+          </>
         );
       });
     }, []);
-    return <ul className="navbar-nav mb-2 mb-lg-0 me-auto">{listItems}</ul>;
+    return listItems;
   };
 
   // update account, will cause component re-render
@@ -129,8 +131,25 @@ export default function Nav() {
             <i className="fas fa-bars"></i>
           </button>
           <div className="collapse navbar-collapse" id="navbarCollapse">
-            <Navcomp />
             <ul className="navbar-nav mb-2 mb-lg-0 me-auto">
+              <Navcomp />
+              <li
+                style={{
+                  display: `${
+                    connButtonText === "Wallet Connected" ? "block" : "none"
+                  }`,
+                }}
+                className="nav-item"
+              >
+                <div
+                  className="nav-link"
+                  onClick={() => {
+                    nav(`/owned`);
+                  }}
+                >
+                  Owned
+                </div>
+              </li>
               <li className="nav-item "></li>
             </ul>
             <div className="flx ">

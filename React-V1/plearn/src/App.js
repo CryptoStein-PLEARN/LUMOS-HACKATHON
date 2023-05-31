@@ -5,16 +5,19 @@ import Nav from "./components/Nav";
 import WalletContext from "./contexts/WalletContext";
 import Animate from "./components/Routes/Animate";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { updateCards } from "./Store/Slice/userSlice";
+import { useDispatch } from "react-redux";
 
 export default React.memo(function App() {
   const [userAccount, setUserAccount] = useState(null);
+
   useEffect(() => {
     if (localStorage.length !== 0) {
       setUserAccount(localStorage.getItem("1"));
     }
   }, [localStorage.length !== 0]);
   const dispatch = useDispatch();
+
   useEffect(() => {
     async function fetchDataFromMarketplace() {
       try {
@@ -22,33 +25,34 @@ export default React.memo(function App() {
           "https://plearn-backend.onrender.com/getMarketplaceDetails"
           // "http://localhost:8080/getMarketplaceDetails"
         );
-        const charactersWithCategory = response.data;
         console.log(response.data);
-        // dispatch(updateCards(charactersWithCategory));
+
+        dispatch(updateCards(response.data));
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchDataFromMarketplace();
+  }, []);
+
+  useEffect(() => {
+    async function fetchOwnedNFTs() {
+      try {
+        const response = await axios.get(
+          `https://plearn-backend.onrender.com/getOwnedNFTs/${localStorage.getItem(
+            1
+          )}`
+        );
+        // const response = await axios.get(`http://localhost:8080/getOwnedNFTs/${localStorage.getItem(1)}`)
+        // const ownedNFTs = response.data;
+        console.log(response.data);
       } catch (error) {
         console.log(error);
       }
     }
 
-    
-    fetchDataFromMarketplace();
-  }, []);
-
-  useEffect(() => {
-    async function fetchOwnedNFTs(){
-      try {
-        const response = await axios.get(`https://plearn-backend.onrender.com/getOwnedNFTs/${localStorage.getItem(1)}`);
-        // const response = await axios.get(`http://localhost:8080/getOwnedNFTs/${localStorage.getItem(1)}`)
-        // const ownedNFTs = response.data;
-        console.log(response.data);
-      }
-      catch(error){
-        console.log(error);
-      }
-    }
-
     fetchOwnedNFTs();
-  },[]);
+  }, []);
 
   return (
     <>

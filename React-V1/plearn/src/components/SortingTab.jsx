@@ -7,14 +7,8 @@ export default React.memo(function SortingTab({ ShopState }) {
   const dispatch = useDispatch();
   var Name = useSelector((state) => state.Blog.Name);
   var BidName = useSelector((state) => state.Bid.Name);
-  if (Name !== "" || BidName !== "") {
-    ShopState = true;
-  }
-  if (BidName !== " ") {
-    Name = `Bid /  ${BidName}`;
-  } else {
-    Name = `Buy /  ${Name}`;
-  }
+  const card = useSelector((state) => state.tools.cards);
+
   const handleSearch = (event) => {
     dispatch(setSearchQuery(event.target.value));
   };
@@ -63,7 +57,7 @@ export default React.memo(function SortingTab({ ShopState }) {
       </div>
       <>
         <div className="details">
-          <span> Home / Shop / {Name !== "" ? Name : ""}</span>
+          <span> Home / Shop {Name !== "" ? `/${Name}` : ""}</span>
         </div>
       </>
     </Container>
