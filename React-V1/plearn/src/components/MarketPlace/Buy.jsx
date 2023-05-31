@@ -30,12 +30,13 @@ export default React.memo(function Buy({ ds }) {
   }, [location]);
 
   const getUserDetails = async () => {
-    const userAccount = localStorage.getItem(1);
+    const userDetails = {
+      userAccount: localStorage.getItem(1),
+    }
 
-    axios.post("https://plearn-backend.onrender.com/", userAccount)
-    // axios.post("http://localhost:8080/", userAccount)
+    // axios.post("https://plearn-backend.onrender.com/", userDetails)
+    axios.post("http://localhost:8080/", userDetails)
     .then((response) => {
-      console.log(response.data);
       setPlayerLevel(response.data.level);
       setGameCoins(response.data.gameCoins);
     })
@@ -58,6 +59,7 @@ export default React.memo(function Buy({ ds }) {
       .then((response) => {
         setSuccessMessage(response.data.message);
         console.log(response.data);
+        setGameCoins(response.data.userGameCoins);
       })
       .catch((error) => {
         console.log(error);
