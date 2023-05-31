@@ -24,9 +24,22 @@ export default React.memo(function Buy({ ds }) {
   const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
+    getUserDetails();
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
+
+  const getUserDetails = async () => {
+    const userAccount = localStorage.getItem(1);
+
+    axios.post("https://plearn-backend.onrender.com/", userAccount)
+    // axios.post("http://localhost:8080/", userAccount)
+    .then((response) => {
+      console.log(response.data);
+      setPlayerLevel(response.data.level);
+      setGameCoins(response.data.gameCoins);
+    })
+  }
 
   // Set coins value correclty for each user
   // Set data inside the Buy NFT function if the transaction is sucesfull using the UseState for each item that will be update
@@ -40,8 +53,8 @@ export default React.memo(function Buy({ ds }) {
       itemID: itemID,
     };
     await axios
-      // .post("https://plearn-backend.onrender.com/buyFromMarketplace", userDetails)
-      .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
+      .post("https://plearn-backend.onrender.com/buyFromMarketplace", userDetails)
+      // .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
       .then((response) => {
         setSuccessMessage(response.data.message);
         console.log(response.data);

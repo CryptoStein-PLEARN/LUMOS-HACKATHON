@@ -64,7 +64,7 @@ const registerUser = (req,res) => {
                         }
                         else
                         {
-                            res.send({message: "Category not found"});
+                            res.send({message: "Category not found", level, gameCoins});
                         }
                     })
                 }
