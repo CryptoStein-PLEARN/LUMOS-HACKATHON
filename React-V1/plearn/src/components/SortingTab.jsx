@@ -64,7 +64,7 @@ export default React.memo(function SortingTab({ ShopState }) {
   );
 });
 const Container = styled.div`
-  padding-top: 10vh;
+  padding-top: 2vh;
   display: flex;
   justify-content: space-between;
   align-items: baseline;

@@ -1811,16 +1811,19 @@ font-size: 22px;
   flex-direction: column;
   align-items: center; 
 }
-.Markt .left {
+.Markt .left { 
   max-width: 85vw;
   min-width: 85vw;
 }
-.MainFs{
-  background-attachment: fixed !important;
-  background-position: center !important;
+.blu{
+  background-image: url('https://www.blocktrain.info/bottomCut.png');
+  background-attachment: bottom !important;
+  background-position: bottom !important;
   background-repeat: no-repeat !important;
-  background-size: cover !important;
-  background: black;
+  background-size: cover !important; 
+}
+.MainFs{ 
+  background-color: #000; 
 }
 .react-tabs__tab:focus:after{
   display: none;

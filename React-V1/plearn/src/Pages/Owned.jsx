@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import data from "../utils/owned";
 import Loader from "../components/Loader";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 export default function Owned() {
   const [time, setTime] = useState(2 * 60 * 60);
   const startTime = useRef(Date.now());
+  const card = useSelector((state) => state.Owned.data);
   const nav = useNavigate();
   const CountdownButton = ({ initialTimeLeft }) => {
     const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
@@ -36,7 +37,7 @@ export default function Owned() {
   const [showLoader, setShowLoader] = useState(false);
   useEffect(() => {
     setShowLoader(true);
-    setTimeout(() => setShowLoader(false), 1000);
+    setTimeout(() => setShowLoader(false), 2000);
   }, [location]);
   return (
     <>
@@ -52,13 +53,13 @@ export default function Owned() {
           </div>
           <div className="CardsL">
             <div className="market">
-              {data.map((Category) => (
+              {card.map((Category) => (
                 <div className="marketplace__item" key={Category.id}>
                   <div className="marketplace__image">
                     <img
                       width="378"
                       height="390"
-                      src={Category.ImgUri}
+                      src={Category.imgUri}
                       className="imgT"
                       alt=""
                     />
@@ -68,7 +69,7 @@ export default function Owned() {
                       <div className="marketplace__meta-author">
                         <h3 className="marketplace__meta-title">
                           <a href="index.html" className="">
-                            {Category.Name}
+                            {Category.name}
                           </a>
                         </h3>
                       </div>

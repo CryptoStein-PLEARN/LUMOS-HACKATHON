@@ -46,9 +46,6 @@ export default React.memo(function MarketPlace() {
     );
   });
 
-  // need to set data in other variables also..
-  // need to put data filteration as global.
-  // need to remove all local data
   return (
     <>
       {showLoader ? (

@@ -33,7 +33,7 @@ export default React.memo(function CardLoader(props) {
     };
   }, [viewportWidth]);
   return (
-    <div>
+    <div className="blu">
       <Swiper
         slidesPerView={num}
         spaceBetween={30}

@@ -158,8 +158,7 @@ width: 100%;
  }
  .Mainfold .span {
   display: inline-block;
-  cursor: pointer;
-
+  cursor: pointer; 
   vertical-align: bottom;
   white-space: nowrap;
 }

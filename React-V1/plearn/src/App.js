@@ -7,10 +7,11 @@ import Animate from "./components/Routes/Animate";
 import axios from "axios";
 import { updateCards } from "./Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
+import { SetOwned } from "./Store/Slice/Owned";
 
 export default React.memo(function App() {
   const [userAccount, setUserAccount] = useState(null);
-
+  const [OwnedData, setOwnedData] = useState({});
   useEffect(() => {
     if (localStorage.length !== 0) {
       setUserAccount(localStorage.getItem("1"));
@@ -43,9 +44,9 @@ export default React.memo(function App() {
             1
           )}`
         );
+        dispatch(SetOwned(response.data));
         // const response = await axios.get(`http://localhost:8080/getOwnedNFTs/${localStorage.getItem(1)}`)
         // const ownedNFTs = response.data;
-        console.log(response.data);
       } catch (error) {
         console.log(error);
       }

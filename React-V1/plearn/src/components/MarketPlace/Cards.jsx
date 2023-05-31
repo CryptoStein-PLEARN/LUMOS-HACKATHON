@@ -167,11 +167,7 @@ const Container = styled.div`
   }
   .card {
     align-self: center;
-    background: linear-gradient(
-      0deg,
-      rgba(40, 44, 52, 1) 0%,
-      rgba(17, 0, 32, 0.5) 100%
-    );
+    background: #111314;
     box-shadow: 0 7px 20px 5px #00000088;
     border-radius: 0.7rem;
     backdrop-filter: blur(7px);
