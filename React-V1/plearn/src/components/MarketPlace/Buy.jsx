@@ -34,8 +34,8 @@ export default React.memo(function Buy({ ds }) {
       userAccount: localStorage.getItem(1),
     }
 
-    // axios.post("https://plearn-backend.onrender.com/", userDetails)
-    axios.post("http://localhost:8080/", userDetails)
+    axios.post("https://plearn-backend.onrender.com/", userDetails)
+    // axios.post("http://localhost:8080/", userDetails)
     .then((response) => {
       setPlayerLevel(response.data.level);
       setGameCoins(response.data.gameCoins);
