@@ -46,7 +46,6 @@ const preRegisterUser = (req,res) => {
 //For registering the user in 'metamask_login_table' and 'player_detail_table' through website.
 const registerUser = (req,res) => {
     const {userAccount, category} = req.body;
-    // res.send(req.body);
 
     userDetail.findOne({userAccount: userAccount}, (err, user) => {
         if(user)
@@ -64,7 +63,7 @@ const registerUser = (req,res) => {
                         }
                         else
                         {
-                            res.send({message: "Category not found"});
+                            res.send({message: "Category not found", level, gameCoins});
                         }
                     })
                 }
@@ -178,7 +177,7 @@ const buyFromMarketplace = (req, res) => {
     marketplaceDetail.findOne({category: category}, (err, category) => {
         if(category)
         {
-            const item = category.details.find(item => item.name === name);
+            const item = category.details.find(item => item.id === itemID);
             if(item)
             {
                 if(userLevel >= item.unlockLevel)
@@ -186,7 +185,6 @@ const buyFromMarketplace = (req, res) => {
                     if(userGameCoins >= item.cost)
                     {
                         userGameCoins = userGameCoins - item.cost;
-                        // const categoryKey = `ownedNFTs.${req.body.category}`;
                         playerDetail.updateOne(
                             { userAccount: userAccount },
                             {
@@ -200,7 +198,7 @@ const buyFromMarketplace = (req, res) => {
                                     console.error(err);
                                     return res.send(err);
                                 }
-                                res.send({message: "Transaction Successful", item});          
+                                res.send({message: "Transaction Successful", item, userGameCoins});          
                             }
                         );
                     }
