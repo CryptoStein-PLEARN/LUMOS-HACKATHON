@@ -45,7 +45,7 @@ const Record1 = {
             name: "Steve",
             description: "Lorem Ipsum",
             cost: 20,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Steve.jpeg?updatedAt=1685704483948",
             unlockLevel: 2,
         },
 
@@ -54,7 +54,7 @@ const Record1 = {
             name: "Bruce",
             description: "Lorem Ipsum",
             cost: 30,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Bruce.jpeg?updatedAt=1685704484347",
             unlockLevel: 3,
         },
 
@@ -63,7 +63,7 @@ const Record1 = {
             name: "Thor",
             description: "Lorem Ipsum",
             cost: 40,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Thor.jpeg?updatedAt=1685704484293",
             unlockLevel: 4,
         },
 
@@ -72,7 +72,7 @@ const Record1 = {
             name: "Rhodey",
             description: "Lorem Ipsum",
             cost: 50,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Rhodey.jpeg?updatedAt=1685704484317",
             unlockLevel: 5,
         },
 
@@ -81,7 +81,7 @@ const Record1 = {
             name: "Natasha",
             description: "Lorem Ipsum",
             cost: 70,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Natasha.jpeg?updatedAt=1685704484706",
             unlockLevel: 7,
         },
 
@@ -90,7 +90,7 @@ const Record1 = {
             name: "Wanda",
             description: "Lorem Ipsum",
             cost: 70,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Wanda.jpeg?updatedAt=1685704483325",
             unlockLevel: 7,
         },
 
@@ -99,16 +99,16 @@ const Record1 = {
             name: "Jane",
             description: "Lorem Ipsum",
             cost: 70,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Jane.jpeg?updatedAt=1685704483456",
             unlockLevel: 6,
         },
-        
+
         {
             id: 9,
             name: "Peggy",
             description: "Lorem Ipsum",
             cost: 70,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Peggy.jpeg?updatedAt=1685704484891",
             unlockLevel: 7,
         }
     ]
@@ -123,7 +123,7 @@ const Record2 = {
             name: "Dice 1",
             description: "Lorem Ipsum",
             cost: 10,
-            imgUri: "https://i.imgur.com/wWzXpzE.png"
+            imgUri: "https://ik.imagekit.io/temporary/RnB.avif?updatedAt=1685704813304"
         }
     ]
 }
