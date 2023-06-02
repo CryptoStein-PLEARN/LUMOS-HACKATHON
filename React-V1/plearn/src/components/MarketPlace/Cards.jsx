@@ -53,7 +53,7 @@ export default React.memo(function Cards(props) {
                   HandleClick();
                 }}
               >
-                Buy now
+                View Details
               </a>
             </div>
           </div>

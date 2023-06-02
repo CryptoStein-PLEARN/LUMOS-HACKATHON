@@ -10,11 +10,13 @@ export default React.memo(function Buy({ ds }) {
   console.log(ds);
   const [playerLevel, setPlayerLevel] = useState(1);
   const [gameCoins, setGameCoins] = useState(10);
+  const [itemAvailable, setItemAvailable] = useState(ds.itemAvailable);
   const itemName = ds.name;
   const itemID = ds.id;
   const description = ds.description;
   const unlockLevel = ds.unlockLevel;
   const cost = ds.cost;
+  const imgUri = ds.imgUri;
   const [successMessage, setSuccessMessage] = useState("");
   const data = useState({});
   const location = useLocation();
@@ -42,9 +44,6 @@ export default React.memo(function Buy({ ds }) {
     })
   }
 
-  // Set coins value correclty for each user
-  // Set data inside the Buy NFT function if the transaction is sucesfull using the UseState for each item that will be update
-  // such as game coins left and item purchase state --> can purchase only one item
   const BuyNFTs = async () => {
     const userDetails = {
       userAccount: localStorage.getItem(1),
@@ -60,6 +59,8 @@ export default React.memo(function Buy({ ds }) {
         setSuccessMessage(response.data.message);
         console.log(response.data);
         setGameCoins(response.data.userGameCoins);
+        setItemAvailable(response.data.item.itemAvailable);
+          // Set the global state of 'itemAvailable' after successful transaction
       })
       .catch((error) => {
         console.log(error);
@@ -79,11 +80,12 @@ export default React.memo(function Buy({ ds }) {
                 <div className="Imgblock">
                   <div className="Image">
                     <img
-                      src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-list15-img-1.jpg"
+                      // src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-list15-img-1.jpg"
+                      src={imgUri}
                       alt=""
                     />
                   </div>
-                  <div className="imgGrid">
+                  {/* <div className="imgGrid">
                     <div className="img1">
                       <img
                         src="https://artorias.qodeinteractive.com/wp-content/uploads/2022/10/product-single-17-img-1.jpg"
@@ -102,7 +104,7 @@ export default React.memo(function Buy({ ds }) {
                         alt=""
                       />
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
@@ -120,10 +122,13 @@ export default React.memo(function Buy({ ds }) {
                 <span className="ca">{category}</span>
               </div>
               <div className="buyNow">
-                {/* {level}; */}
-                <button onClick={BuyNFTs}>
-                  <span>Buy Now!</span>
-                </button>
+                {itemAvailable ? (
+                  <button onClick={BuyNFTs}>
+                    <span>Buy Now!</span>
+                  </button>
+                ) : (
+                  <p>Item Not available for buying</p>
+                )}
               </div>
               <div>{successMessage}</div>
             </div>

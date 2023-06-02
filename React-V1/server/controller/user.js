@@ -185,22 +185,53 @@ const buyFromMarketplace = (req, res) => {
                     if(userGameCoins >= item.cost)
                     {
                         userGameCoins = userGameCoins - item.cost;
-                        playerDetail.updateOne(
-                            { userAccount: userAccount },
+                        item.itemAvailable = false;
+                        marketplaceDetail.updateOne(
+                            { category: req.body.category },
+                            
                             {
-                                $set: {gameCoins: userGameCoins},
-                                $push: { [`ownedNFTs.${req.body.category}`]: itemID }
+                                $set: { [`details.${item.id - 2}.itemAvailable`]: false }
                             },
-                            (err) => 
+                            (err) =>
                             {
-                                if(err) 
+                                if(err)
                                 {
-                                    console.error(err);
-                                    return res.send(err);
+                                    console.log(err);
                                 }
-                                res.send({message: "Transaction Successful", item, userGameCoins});          
+                                playerDetail.updateOne(
+                                    { userAccount: userAccount },
+                                    {
+                                        $set: {gameCoins: userGameCoins},
+                                        $push: { [`ownedNFTs.${req.body.category}`]: itemID }
+                                    },
+                                    (err) => 
+                                    {
+                                        if(err) 
+                                        {
+                                            console.error(err);
+                                            return res.send(err);
+                                        }
+                                        res.send({message: "Transaction Successful", item, userGameCoins});          
+                                    }
+                                );
                             }
-                        );
+                        )
+                        // playerDetail.updateOne(
+                        //     { userAccount: userAccount },
+                        //     {
+                        //         $set: {gameCoins: userGameCoins},
+                        //         $push: { [`ownedNFTs.${req.body.category}`]: itemID }
+                        //     },
+                        //     (err) => 
+                        //     {
+                        //         if(err) 
+                        //         {
+                        //             console.error(err);
+                        //             return res.send(err);
+                        //         }
+                        //         res.send({message: "Transaction Successful", item, userGameCoins});          
+                        //     }
+                        // );
                     }
                     else
                     {

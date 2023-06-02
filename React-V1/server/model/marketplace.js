@@ -16,7 +16,8 @@ const marketplaceSchema = new mongoose.Schema({
         description: {type: String},
         cost: {type: Number},
         imgUri: {type: String},
-        unlockLevel: {type: Number}
+        unlockLevel: {type: Number},
+        itemAvailable: {type: Boolean, default: true},  //  false - Not available(sold); true - Available
         // CurrentOwner:
     }]
 });
