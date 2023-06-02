@@ -42,79 +42,70 @@ const Record1 = {
     details: [
         {
             id: 2,
-            name: "Tony",
-            description: "Lorem Ipsum",
-            cost: 10,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
-            unlockLevel: 1,
-        },
-        {
-            id: 3,
             name: "Steve",
             description: "Lorem Ipsum",
             cost: 20,
             imgUri: "https://i.imgur.com/wWzXpzE.png",
             unlockLevel: 2,
         },
+
         {
-            id: 4,
+            id: 3,
             name: "Bruce",
             description: "Lorem Ipsum",
             cost: 30,
             imgUri: "https://i.imgur.com/wWzXpzE.png",
             unlockLevel: 3,
         },
+
         {
-            id: 5,
+            id: 4,
             name: "Thor",
             description: "Lorem Ipsum",
             cost: 40,
             imgUri: "https://i.imgur.com/wWzXpzE.png",
             unlockLevel: 4,
         },
+
         {
-            id: 6,
+            id: 5,
             name: "Rhodey",
             description: "Lorem Ipsum",
             cost: 50,
             imgUri: "https://i.imgur.com/wWzXpzE.png",
             unlockLevel: 5,
         },
+
         {
-            id: 7,
+            id: 6,
             name: "Natasha",
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://i.imgur.com/wWzXpzE.png",
             unlockLevel: 7,
         },
+
         {
-            id: 8,
+            id: 7,
             name: "Wanda",
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://i.imgur.com/wWzXpzE.png",
             unlockLevel: 7,
         },
+
         {
-            id: 9,
+            id: 8,
             name: "Jane",
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://i.imgur.com/wWzXpzE.png",
             unlockLevel: 6,
         },
+        
         {
-            id: 10,
-            name: "Pepper",
-            description: "Lorem Ipsum",
-            cost: 70,
-            imgUri: "https://i.imgur.com/wWzXpzE.png",
-            unlockLevel: 7,
-        },
-        {
-            id: 11,
-            name: "Bruce",
+            id: 9,
+            name: "Peggy",
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://i.imgur.com/wWzXpzE.png",

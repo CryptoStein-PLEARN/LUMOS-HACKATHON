@@ -230,21 +230,20 @@ const getOwnedNFTs = (req,res) => {
     playerDetail.findOne({userAccount: userAccount}, async (err, player) => {
         if (player) {
             const ownedNFTs = player.ownedNFTs;
-const nftFields = Object.keys(ownedNFTs);
-const nftIds = nftFields.reduce((ids, field) => [...ids, ...ownedNFTs[field]], []);
+            const nftFields = Object.keys(ownedNFTs);
+            const nftIds = nftFields.reduce((ids, field) => [...ids, ...ownedNFTs[field]], []);
 
-const nftDetails = await marketplaceDetail.aggregate([
-  { $match: { category: { $in: nftFields } } },
-  { $unwind: "$details" },
-  { $match: { $expr: { $and: [
-    { $in: ["$details.id", nftIds] },
-  ] } } },
-  { $addFields: { "details.category": "$category" } }
-]).exec();
+            const nftDetails = await marketplaceDetail.aggregate([
+                { $match: { category: { $in: nftFields } } },
+                { $unwind: "$details" },
+                { $match: { $expr: { $and: [
+                    { $in: ["$details.id", nftIds] },
+                ] } } },
+                { $addFields: { "details.category": "$category" } }
+            ]).exec();
 
-const extractedDetails = nftDetails.map((doc) => doc.details);
-res.send(extractedDetails);
-
+            const extractedDetails = nftDetails.map((doc) => doc.details);
+            res.send(extractedDetails);
         } 
         else 
         {
