@@ -177,16 +177,12 @@ const buyFromMarketplace = async (req, res) => {
 
         const categoryData = await marketplaceDetail.findOne({ category: category });
         if (categoryData) {
-            const item = categoryData.details.find(item => item.id === itemID);
+            var item = categoryData.details.find(item => item.id === itemID);
 
             if (item) {
                 if (userLevel >= item.unlockLevel) {
                     if (userGameCoins >= item.cost) {
                         userGameCoins = userGameCoins - item.cost;
-
-                        console.log(`Setting itemAvailable to false for item ${item.id - 2}`);
-                        console.log(`Setting currentOwner to ${userAccount} for item ${item.id - 2}`);
-                        console.log(`Pushing transactionDetails for item ${item.id - 2}`);
                         
                         const updateResult = await marketplaceDetail.updateOne(
                             { category: req.body.userDetails.category },
@@ -205,13 +201,10 @@ const buyFromMarketplace = async (req, res) => {
                                     //     currentOwner: userAccount
                                     // }
                                 },
-                                // $push: {
-                                //     [`details.${item.id - 2}`]: 
-                                //     {
-                                //         transactions: req.body.transactionDetails
-                                //     }
-                                // }
-                            }
+                                $push: {
+                                    [`details.${item.id - 2}.transactions`]: req.body.transactionDetails
+                                },
+                            },
                         );
 
                         if (updateResult.nModified === 0) {
@@ -222,15 +215,15 @@ const buyFromMarketplace = async (req, res) => {
                             { userAccount: userAccount },
                             {
                                 $set: { gameCoins: userGameCoins },
-                                $push: { [`ownedNFTs.${req.body.category}`]: itemID }
-                            }
+                                $push: { [`ownedNFTs.${req.body.userDetails.category}`]: itemID }
+                            },
                         );
 
                         if (playerUpdateResult.nModified === 0) {
                             throw new Error('Player update operation failed');
                         }
 
-                        res.send({ message: "Transaction Successful", item, userGameCoins });
+                        res.send({ message: "Transaction Successful", item, userGameCoins, updateResult });
                     } else {
                         res.send({ message: "You need more game coins to unlock this character." });
                     }
