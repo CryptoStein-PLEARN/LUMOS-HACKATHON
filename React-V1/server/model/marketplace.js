@@ -21,15 +21,15 @@ const marketplaceSchema = new mongoose.Schema({
 });
 
 
-marketplaceSchema.statics.upsert = async function(record){
-    const filter = { category: record.category };
-    const update = {
-        details: record.details,
-    }
-    const options = { upsert: true, new: true };
-    const doc = await this.findOneAndUpdate(filter, update, options);
-    return doc;
-}
+// marketplaceSchema.statics.upsert = async function(record){
+//     const filter = { category: record.category };
+//     const update = {
+//         details: record.details,
+//     }
+//     const options = { upsert: true, new: true };
+//     const doc = await this.findOneAndUpdate(filter, update, options);
+//     return doc;
+// }
 
 const marketplaceDetail = new mongoose.model(
     "Marketplace_Table",
@@ -111,18 +111,9 @@ const Record1 = {
             imgUri: "https://ik.imagekit.io/temporary/Characters/Peggy.jpeg?updatedAt=1685704484891",
             unlockLevel: 7,
         },
-
-        {
-            id: 10,
-            name: "jdjdjd",
-            description: "Lorem Ipsum",
-            cost: 70,
-            imgUri: "https://ik.imagekit.io/temporary/Characters/Peggy.jpeg?updatedAt=1685704484891",
-            unlockLevel: 1,
-        }
     ]
 }
-marketplaceDetail.upsert(Record1);
+// marketplaceDetail.upsert(Record1);
 
 const Record2 = {
     category: "Dice",
@@ -136,6 +127,29 @@ const Record2 = {
         }
     ]
 }
-marketplaceDetail.upsert(Record2);
+// marketplaceDetail.upsert(Record2);
+
+const insertRecord1 = async () => {
+    const existingRecord = await marketplaceDetail.findOne({ category: Record1.category });
+    if (!existingRecord) {
+      await marketplaceDetail.create(Record1);
+      console.log("Record1 inserted");
+    } else {
+      console.log("Record1 already exists");
+    }
+  };
+  
+const insertRecord2 = async () => {
+    const existingRecord = await marketplaceDetail.findOne({ category: Record2.category });
+    if (!existingRecord) {
+      await marketplaceDetail.create(Record2);
+      console.log("Record2 inserted");
+    } else {
+      console.log("Record2 already exists");
+    }
+  };
+  
+  insertRecord1();
+  insertRecord2();
 
 module.exports = marketplaceDetail;
