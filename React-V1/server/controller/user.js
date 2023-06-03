@@ -186,20 +186,10 @@ const buyFromMarketplace = async (req, res) => {
                         
                         const updateResult = await marketplaceDetail.updateOne(
                             { category: req.body.userDetails.category },
-                            // [`details.${item.id - 2}`]:
-                            //     {
-                            //         itemAvailable: false,
-                            //         currentOwner: userAccount
-                            //     }
                             {
                                 $set: {
                                     [`details.${item.id - 2}.itemAvailable`]: false,
                                     [`details.${item.id - 2}.currentOwner`]: userAccount
-                                    // [`details.${item.id - 2}`]:
-                                    // {
-                                    //     itemAvailable: false,
-                                    //     currentOwner: userAccount
-                                    // }
                                 },
                                 $push: {
                                     [`details.${item.id - 2}.transactions`]: req.body.transactionDetails
@@ -222,8 +212,9 @@ const buyFromMarketplace = async (req, res) => {
                         if (playerUpdateResult.nModified === 0) {
                             throw new Error('Player update operation failed');
                         }
-
-                        res.send({ message: "Transaction Successful", item, userGameCoins, updateResult });
+                        
+                        var item = await categoryData.details.find(item => item.id === itemID);
+                        res.send({ message: "Transaction Successful", item, userGameCoins });
                     } else {
                         res.send({ message: "You need more game coins to unlock this character." });
                     }
