@@ -12,10 +12,9 @@ const marketplaceSchema = new mongoose.Schema({
         itemAvailable: {type: Boolean, default: true},  //  false - Not available(sold); true - Available
         currentOwner: {type: String, default: ""},
         transactions: [{
-            transactionId: { type: Number, unique: true },
             buyerAddress: { type: String },
             sellerAddress: { type: String },
-            price: { type: Number },
+            cost: { type: Number },
             timestamp: { type: Date, default: Date.now }
         }]
     }]
