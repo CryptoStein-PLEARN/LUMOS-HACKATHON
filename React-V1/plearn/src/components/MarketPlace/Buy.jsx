@@ -64,8 +64,8 @@ export default React.memo(function Buy({ ds }) {
       transactionDetails: transactionDetails,
     }
     await axios
-      // .post("https://plearn-backend.onrender.com/buyFromMarketplace", requestData)
-      .post(`http://localhost:8080/buyFromMarketplace`, requestData)
+      .post("https://plearn-backend.onrender.com/buyFromMarketplace", requestData)
+      // .post(`http://localhost:8080/buyFromMarketplace`, requestData)
       .then((response) => {
         setSuccessMessage(response.data.message);
         console.log(response.data);

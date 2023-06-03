@@ -110,6 +110,15 @@ const Record1 = {
             cost: 70,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Peggy.jpeg?updatedAt=1685704484891",
             unlockLevel: 7,
+        },
+
+        {
+            id: 10,
+            name: "jdjdjd",
+            description: "Lorem Ipsum",
+            cost: 70,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Peggy.jpeg?updatedAt=1685704484891",
+            unlockLevel: 1,
         }
     ]
 }

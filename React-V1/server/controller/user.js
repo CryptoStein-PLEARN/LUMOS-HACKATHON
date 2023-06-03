@@ -171,80 +171,84 @@ const getMarketplaceDetails = (req, res) => {
     });
 }
 
-const buyFromMarketplace = (req, res) => {
-    var {userAccount, userLevel, userGameCoins, category, itemID} = req.body.userDetails;
+const buyFromMarketplace = async (req, res) => {
+    try {
+        var { userAccount, userLevel, userGameCoins, category, itemID } = req.body.userDetails;
 
-    marketplaceDetail.findOne({category: category}, (err, category) => {
-        if(category)
-        {
-            const item = category.details.find(item => item.id === itemID);
-            if(item)
-            {
-                if(userLevel >= item.unlockLevel)
-                {
-                    if(userGameCoins >= item.cost)
-                    {
+        const categoryData = await marketplaceDetail.findOne({ category: category });
+        if (categoryData) {
+            const item = categoryData.details.find(item => item.id === itemID);
+
+            if (item) {
+                if (userLevel >= item.unlockLevel) {
+                    if (userGameCoins >= item.cost) {
                         userGameCoins = userGameCoins - item.cost;
-                        // item.itemAvailable = false;
-                        marketplaceDetail.updateOne(
-                            { category: req.body.category },
+
+                        console.log(`Setting itemAvailable to false for item ${item.id - 2}`);
+                        console.log(`Setting currentOwner to ${userAccount} for item ${item.id - 2}`);
+                        console.log(`Pushing transactionDetails for item ${item.id - 2}`);
+                        
+                        const updateResult = await marketplaceDetail.updateOne(
+                            { category: req.body.userDetails.category },
+                            // [`details.${item.id - 2}`]:
+                            //     {
+                            //         itemAvailable: false,
+                            //         currentOwner: userAccount
+                            //     }
                             {
-                                $set: { 
-                                    [`details.${item.id - 2}.itemAvailable`]: false, 
-                                    [`details.${item.id - 2}.currentOwner`]: userAccount 
+                                $set: {
+                                    [`details.${item.id - 2}.itemAvailable`]: false,
+                                    [`details.${item.id - 2}.currentOwner`]: userAccount
+                                    // [`details.${item.id - 2}`]:
+                                    // {
+                                    //     itemAvailable: false,
+                                    //     currentOwner: userAccount
+                                    // }
                                 },
-                                $push: { 
-                                    [`details.${item.id - 2}.transactions`]: req.body.transactionDetails 
-                                }
-                            },
-                            (err) =>
-                            {
-                                // console.log(`${category.details[item.id - 2]}`);
-                                if(err)
-                                {
-                                    console.log(err);
-                                    res.send(err);
-                                }
-                                playerDetail.updateOne(
-                                    { userAccount: userAccount },
-                                    {
-                                        $set: {gameCoins: userGameCoins},
-                                        $push: { [`ownedNFTs.${req.body.category}`]: itemID }
-                                    },
-                                    (err) => 
-                                    {
-                                        if(err) 
-                                        {
-                                            console.error(err);
-                                            return res.send(err);
-                                        }
-                                        res.send({message: "Transaction Successful", item, userGameCoins});          
-                                    }
-                                );
+                                // $push: {
+                                //     [`details.${item.id - 2}`]: 
+                                //     {
+                                //         transactions: req.body.transactionDetails
+                                //     }
+                                // }
                             }
-                        )
+                        );
+
+                        if (updateResult.nModified === 0) {
+                            throw new Error('Update operation failed');
+                        }
+
+                        const playerUpdateResult = await playerDetail.updateOne(
+                            { userAccount: userAccount },
+                            {
+                                $set: { gameCoins: userGameCoins },
+                                $push: { [`ownedNFTs.${req.body.category}`]: itemID }
+                            }
+                        );
+
+                        if (playerUpdateResult.nModified === 0) {
+                            throw new Error('Player update operation failed');
+                        }
+
+                        res.send({ message: "Transaction Successful", item, userGameCoins });
+                    } else {
+                        res.send({ message: "You need more game coins to unlock this character." });
                     }
-                    else
-                    {
-                        res.send({message: "You need more game coins to unlock this character."})
-                    }
+                } else {
+                    res.send({ message: "You can buy this character at level " + item.unlockLevel });
                 }
-                else
-                {
-                    res.send({message: "You can buy this character at level " + item.unlockLevel})
-                }
+            } else {
+                res.send({ message: "Item Not found" });
             }
-            else
-            {
-                res.send({message: "Item Not found"});
-            }
+        } else {
+            res.send({ message: "Category not found" });
         }
-        else
-        {
-            res.send({message: "Category not found"});
-        }
-    })
-}
+    } catch (err) {
+        console.error(err);
+        res.send(err);
+    }
+};
+
 
 const getOwnedNFTs = (req,res) => {
     const {userAccount} = req.params;
