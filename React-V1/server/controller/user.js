@@ -213,8 +213,8 @@ const buyFromMarketplace = async (req, res) => {
                             throw new Error('Player update operation failed');
                         }
                         
-                        var item = await categoryData.details.find(item => item.id === itemID);
-                        res.send({ message: "Transaction Successful", item, userGameCoins });
+                        var updatedItem = await categoryData.details.find(item => item.id === itemID);
+                        res.send({ message: "Transaction Successful", item, userGameCoins, updatedItem });
                     } else {
                         res.send({ message: "You need more game coins to unlock this character." });
                     }
