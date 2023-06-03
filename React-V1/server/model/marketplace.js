@@ -1,11 +1,3 @@
-//Make Transaction Table
-// for each item
-
-// owner
-// transfered to
-// timestamp
-
-
 const mongoose = require("mongoose");
 
 const marketplaceSchema = new mongoose.Schema({
@@ -18,9 +10,17 @@ const marketplaceSchema = new mongoose.Schema({
         imgUri: {type: String},
         unlockLevel: {type: Number},
         itemAvailable: {type: Boolean, default: true},  //  false - Not available(sold); true - Available
-        // CurrentOwner:
+        currentOwner: {type: String, default: ""},
+        transactions: [{
+            transactionId: { type: Number, unique: true },
+            buyerAddress: { type: String },
+            sellerAddress: { type: String },
+            price: { type: Number },
+            timestamp: { type: Date, default: Date.now }
+        }]
     }]
 });
+
 
 marketplaceSchema.statics.upsert = async function(record){
     const filter = { category: record.category };

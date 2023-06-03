@@ -172,7 +172,7 @@ const getMarketplaceDetails = (req, res) => {
 }
 
 const buyFromMarketplace = (req, res) => {
-    var {userAccount, userLevel, userGameCoins, category, name, itemID} = req.body;
+    var {userAccount, userLevel, userGameCoins, category, itemID} = req.body.userDetails;
 
     marketplaceDetail.findOne({category: category}, (err, category) => {
         if(category)
@@ -188,20 +188,21 @@ const buyFromMarketplace = (req, res) => {
                         item.itemAvailable = false;
                         marketplaceDetail.updateOne(
                             { category: req.body.category },
-                            
                             {
-                                $set: { [`details.${item.id - 2}.itemAvailable`]: false }
+                                $set: { [`details.${item.id - 2}.itemAvailable`]: false },
+                                $push: { [`details.${item.id - 2}.transactions`]: req.body.transactionDetails }
                             },
                             (err) =>
                             {
                                 if(err)
                                 {
                                     console.log(err);
+                                    res.send(err);
                                 }
                                 playerDetail.updateOne(
                                     { userAccount: userAccount },
                                     {
-                                        $set: {gameCoins: userGameCoins},
+                                        $set: {gameCoins: userGameCoins, currentOwner: userAccount},
                                         $push: { [`ownedNFTs.${req.body.category}`]: itemID }
                                     },
                                     (err) => 
@@ -216,22 +217,6 @@ const buyFromMarketplace = (req, res) => {
                                 );
                             }
                         )
-                        // playerDetail.updateOne(
-                        //     { userAccount: userAccount },
-                        //     {
-                        //         $set: {gameCoins: userGameCoins},
-                        //         $push: { [`ownedNFTs.${req.body.category}`]: itemID }
-                        //     },
-                        //     (err) => 
-                        //     {
-                        //         if(err) 
-                        //         {
-                        //             console.error(err);
-                        //             return res.send(err);
-                        //         }
-                        //         res.send({message: "Transaction Successful", item, userGameCoins});          
-                        //     }
-                        // );
                     }
                     else
                     {

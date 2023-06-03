@@ -52,9 +52,20 @@ export default React.memo(function Buy({ ds }) {
       category: category,
       itemID: itemID,
     };
+    const transactionDetails = {
+      buyerAddress: localStorage.getItem(1),
+      sellerAddress: ds.currentOwner,
+      cost: ds.cost,
+      timestamp: new Date()
+    };
+
+    const requestData = {
+      userDetails: userDetails,
+      transactionDetails: transactionDetails,
+    }
     await axios
-      .post("https://plearn-backend.onrender.com/buyFromMarketplace", userDetails)
-      // .post(`http://localhost:8080/buyFromMarketplace`, userDetails)
+      .post("https://plearn-backend.onrender.com/buyFromMarketplace", requestData)
+      // .post(`http://localhost:8080/buyFromMarketplace`, requestData)
       .then((response) => {
         setSuccessMessage(response.data.message);
         console.log(response.data);
