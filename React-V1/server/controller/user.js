@@ -185,15 +185,21 @@ const buyFromMarketplace = (req, res) => {
                     if(userGameCoins >= item.cost)
                     {
                         userGameCoins = userGameCoins - item.cost;
-                        item.itemAvailable = false;
+                        // item.itemAvailable = false;
                         marketplaceDetail.updateOne(
                             { category: req.body.category },
                             {
-                                $set: { [`details.${item.id - 2}.itemAvailable`]: false },
-                                $push: { [`details.${item.id - 2}.transactions`]: req.body.transactionDetails }
+                                $set: { 
+                                    [`details.${item.id - 2}.itemAvailable`]: false, 
+                                    [`details.${item.id - 2}.currentOwner`]: userAccount 
+                                },
+                                $push: { 
+                                    [`details.${item.id - 2}.transactions`]: req.body.transactionDetails 
+                                }
                             },
                             (err) =>
                             {
+                                // console.log(`${category.details[item.id - 2]}`);
                                 if(err)
                                 {
                                     console.log(err);
@@ -202,7 +208,7 @@ const buyFromMarketplace = (req, res) => {
                                 playerDetail.updateOne(
                                     { userAccount: userAccount },
                                     {
-                                        $set: {gameCoins: userGameCoins, currentOwner: userAccount},
+                                        $set: {gameCoins: userGameCoins},
                                         $push: { [`ownedNFTs.${req.body.category}`]: itemID }
                                     },
                                     (err) => 
