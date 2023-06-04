@@ -20,17 +20,6 @@ const marketplaceSchema = new mongoose.Schema({
     }]
 });
 
-
-// marketplaceSchema.statics.upsert = async function(record){
-//     const filter = { category: record.category };
-//     const update = {
-//         details: record.details,
-//     }
-//     const options = { upsert: true, new: true };
-//     const doc = await this.findOneAndUpdate(filter, update, options);
-//     return doc;
-// }
-
 const marketplaceDetail = new mongoose.model(
     "Marketplace_Table",
     marketplaceSchema,
@@ -113,7 +102,7 @@ const Record1 = {
         },
     ]
 }
-// marketplaceDetail.upsert(Record1);
+
 
 const Record2 = {
     category: "Dice",
@@ -127,29 +116,123 @@ const Record2 = {
         }
     ]
 }
-// marketplaceDetail.upsert(Record2);
 
-const insertRecord1 = async () => {
-    const existingRecord = await marketplaceDetail.findOne({ category: Record1.category });
-    if (!existingRecord) {
-      await marketplaceDetail.create(Record1);
-      console.log("Record1 inserted");
+const Records = [
+    {
+        category: "characters",
+    details: [
+        {
+            id: 2,
+            name: "Steve",
+            description: "Lorem Ipsum",
+            cost: 20,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Steve.jpeg?updatedAt=1685704483948",
+            unlockLevel: 2,
+        },
+
+        {
+            id: 3,
+            name: "Bruce",
+            description: "Lorem Ipsum",
+            cost: 30,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Bruce.jpeg?updatedAt=1685704484347",
+            unlockLevel: 3,
+        },
+
+        {
+            id: 4,
+            name: "Thor",
+            description: "Lorem Ipsum",
+            cost: 40,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Thor.jpeg?updatedAt=1685704484293",
+            unlockLevel: 4,
+        },
+
+        {
+            id: 5,
+            name: "Rhodey",
+            description: "Lorem Ipsum",
+            cost: 50,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Rhodey.jpeg?updatedAt=1685704484317",
+            unlockLevel: 5,
+        },
+
+        {
+            id: 6,
+            name: "Natasha",
+            description: "Lorem Ipsum",
+            cost: 70,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Natasha.jpeg?updatedAt=1685704484706",
+            unlockLevel: 7,
+        },
+
+        {
+            id: 7,
+            name: "Wanda",
+            description: "Lorem Ipsum",
+            cost: 70,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Wanda.jpeg?updatedAt=1685704483325",
+            unlockLevel: 7,
+        },
+
+        {
+            id: 8,
+            name: "Jane",
+            description: "Lorem Ipsum",
+            cost: 70,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Jane.jpeg?updatedAt=1685704483456",
+            unlockLevel: 6,
+        },
+
+        {
+            id: 9,
+            name: "Peggy",
+            description: "Lorem Ipsum",
+            cost: 70,
+            imgUri: "https://ik.imagekit.io/temporary/Characters/Peggy.jpeg?updatedAt=1685704484891",
+            unlockLevel: 7,
+        },
+    ]
+    },
+    {
+        category: "Dice",
+        details: [
+            {
+                id: 0,
+                name: "Dice 1",
+                description: "Lorem Ipsum",
+                cost: 10,
+                imgUri: "https://ik.imagekit.io/temporary/RnB.avif?updatedAt=1685704813304"
+            }
+        ]
+    }
+]
+
+const insertOrUpdateCategory = async (category, details) => {
+    const existingRecord = await marketplaceDetail.findOne({ category });
+  
+    if (existingRecord) {
+      const isUpdated = JSON.stringify(existingRecord.details) !== JSON.stringify(details);
+      if (isUpdated) {
+        existingRecord.details = details;
+        await existingRecord.save();
+        console.log(`Category "${category}" updated`);
+      } else {
+        console.log(`Category "${category}" already up to date`);
+      }
     } else {
-      console.log("Record1 already exists");
+      const newRecord = new marketplaceDetail({ category, details });
+      await newRecord.save();
+      console.log(`Category "${category}" inserted`);
     }
   };
   
-const insertRecord2 = async () => {
-    const existingRecord = await marketplaceDetail.findOne({ category: Record2.category });
-    if (!existingRecord) {
-      await marketplaceDetail.create(Record2);
-      console.log("Record2 inserted");
-    } else {
-      console.log("Record2 already exists");
+  const insertRecords = async () => {
+    for (const record of records) {
+      await insertOrUpdateCategory(record.category, record.details);
     }
   };
   
-  insertRecord1();
-  insertRecord2();
+  insertRecords();
 
 module.exports = marketplaceDetail;
