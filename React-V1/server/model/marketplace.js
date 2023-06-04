@@ -117,7 +117,7 @@ const Record2 = {
     ]
 }
 
-const Records = [
+const records = [
     {
         category: "characters",
     details: [
