@@ -120,7 +120,8 @@ const records = [
                 name: "Dice 1",
                 description: "Lorem Ipsum",
                 cost: 10,
-                imgUri: "https://ik.imagekit.io/temporary/RnB.avif?updatedAt=1685704813304"
+                imgUri: "https://ik.imagekit.io/temporary/RnB.avif?updatedAt=1685704813304",
+                unlockLevel: 1
             }
         ]
     }
