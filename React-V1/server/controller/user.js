@@ -216,7 +216,7 @@ const buyFromMarketplace = async (req, res) => {
                         }
                         
                         
-                        res.send({ message: "Transaction Successful", item, userGameCoins, transactions: updatedCategoryData.details[item.id - 2].transactions });
+                        res.send({ message: "Transaction Successful", userGameCoins, transactions: updatedCategoryData.details[item.id - 2].transactions, itemAvailable: updatedCategoryData.details[item.id - 2].itemAvailable });
                     } else {
                         res.send({ message: "You need more game coins to unlock this character." });
                     }

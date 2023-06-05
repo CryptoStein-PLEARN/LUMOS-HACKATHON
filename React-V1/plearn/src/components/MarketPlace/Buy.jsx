@@ -70,7 +70,7 @@ export default React.memo(function Buy({ ds }) {
         setSuccessMessage(response.data.message);
         console.log(response.data);
         setGameCoins(response.data.userGameCoins);
-        setItemAvailable(response.data.item.itemAvailable);
+        setItemAvailable(response.data.itemAvailable);
           // Set the global state of 'itemAvailable' after successful transaction
       })
       .catch((error) => {
