@@ -201,6 +201,7 @@ const buyFromMarketplace = async (req, res) => {
                         if (updateResult.nModified === 0) {
                             throw new Error('Update operation failed');
                         }
+                        const updatedCategoryData = await marketplaceDetail.findOne({ category: category });
 
                         const playerUpdateResult = await playerDetail.updateOne(
                             { userAccount: userAccount },
