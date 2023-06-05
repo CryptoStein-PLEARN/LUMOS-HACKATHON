@@ -121,14 +121,16 @@ const insertOrUpdateCategory = async (category, details) => {
     const existingRecord = await marketplaceDetail.findOne({ category });
   
     if (existingRecord) {
-      const isUpdated = JSON.stringify(existingRecord.details) !== JSON.stringify(details);
-      if (isUpdated) {
-        existingRecord.details = details;
-        await existingRecord.save();
-        console.log(`Category "${category}" updated`);
-      } else {
-        console.log(`Category "${category}" already up to date`);
+      const existingDetailsIds = existingRecord.details.map((detail) => detail.id);
+  
+      for (const detail of details) {
+        if (!existingDetailsIds.includes(detail.id)) {
+          existingRecord.details.push(detail);
+        }
       }
+  
+      await existingRecord.save();
+      console.log(`Category "${category}" updated`);
     } else {
       const newRecord = new marketplaceDetail({ category, details });
       await newRecord.save();
@@ -143,5 +145,5 @@ const insertOrUpdateCategory = async (category, details) => {
   };
   
   insertRecords();
-
-module.exports = marketplaceDetail;
+  
+  module.exports = marketplaceDetail;
