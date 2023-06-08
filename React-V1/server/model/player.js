@@ -14,7 +14,7 @@ const playerDetailSchema = new mongoose.Schema({
     level: {type: Number, default: 1},
     ownedNFTs: {
         characters: { type: [Number], default: [] },
-        dice: { type: [Number], default: [] },
+        Dice: { type: [Number], default: [] },
     },
     ownedHouseID: {type: [Number]},
     energy: {type: Number, default: 100},
