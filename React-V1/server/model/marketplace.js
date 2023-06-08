@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const marketplaceSchema = new mongoose.Schema({
-    category: {type: String, unique: true},
+    category: {type: String},
     details: [{
         id: {type: Number},
         name: {type: String},
