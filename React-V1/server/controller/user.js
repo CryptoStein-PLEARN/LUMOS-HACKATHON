@@ -175,7 +175,7 @@ const buyFromMarketplace = async (req, res) => {
     try {
         var { userAccount, userLevel, userGameCoins, category, itemID } = req.body.userDetails;
 
-        const categoryData = await marketplaceDetail.findOneAndUpdate({ category: category });
+        const categoryData = await marketplaceDetail.findOne({ category: category });
         if (categoryData) {
             var item = categoryData.details.find(item => item.id === itemID);
 
