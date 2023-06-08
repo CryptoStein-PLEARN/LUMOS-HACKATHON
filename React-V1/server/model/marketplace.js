@@ -107,7 +107,7 @@ const records = [
         category: "Dice",
         details: [
             {
-                id: 0,
+                id: 2,
                 name: "Dice 1",
                 description: "Lorem Ipsum",
                 cost: 10,
