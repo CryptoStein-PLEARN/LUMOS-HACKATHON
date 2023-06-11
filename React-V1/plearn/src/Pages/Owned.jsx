@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Loader from "../components/Loader";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 export default function Owned() {
   const [time, setTime] = useState(2 * 60 * 60);
@@ -80,7 +80,9 @@ export default function Owned() {
                       <button disabled className=" dis">
                         OWNED
                       </button>
-                      <button className="Btn">Sell item</button>
+                      <Link className="Btn" to={`/Sell/${Category.name}`}>
+                        Sell item
+                      </Link>
                     </div>
                   </div>
                 </div>

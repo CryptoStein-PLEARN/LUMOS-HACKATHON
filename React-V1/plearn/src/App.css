@@ -176,4 +176,28 @@ width: 100%;
   line-height: 0px;
   font-weight: 600;
   color: #cacaca;
+} 
+.box{
+  width: 330px;
+  height: 400px;
+  background:  #fff;
+  border: 2px solid #323232;
+  box-shadow: 4px 4px #323232;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px;
+  gap: 10px;
+  color:#282c34
+}
+ .box p,h3{
+  font-size: 14px;
+  color:#282c34}
+.box h1{
+  color: #488aec;
+  font-size: 30px;
+}
+.box h3{
+ 
 }

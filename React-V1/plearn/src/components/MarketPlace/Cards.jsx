@@ -6,7 +6,18 @@ import { SetBlog } from "../../Store/Slice/Cardslice";
 import { useNavigate } from "react-router-dom";
 
 export default React.memo(function Cards(props) {
-  const { name, id, imgUri, description, cost, unlockLevel, _id } = props.data;
+  console.log("obj");
+  console.log(props.data);
+  const {
+    name,
+    id,
+    imgUri,
+    description,
+    cost,
+    unlockLevel,
+    _id,
+    itemAvailable,
+  } = props.data;
   const category = props.category;
   const nav = useNavigate();
   const dispatch = useDispatch();
@@ -30,7 +41,7 @@ export default React.memo(function Cards(props) {
 
   return (
     <Container>
-      <div key={_id} className="card">
+      <div key={_id} className={`card ${itemAvailable ? `` : `bbc`}`}>
         <>
           <div className="type">
             <img className="icon" src={coin} height="30px" />
@@ -43,7 +54,6 @@ export default React.memo(function Cards(props) {
           ></div>
           <div className="card-body">
             <h1>{name}</h1>
-            <p className="desp">{description}</p>
             <p className="desp">Unlock Level: {unlockLevel}</p>
             <div className="details"></div>
             <div className="product">
@@ -53,7 +63,7 @@ export default React.memo(function Cards(props) {
                   HandleClick();
                 }}
               >
-                View Details
+                Buy Item
               </a>
             </div>
           </div>
@@ -73,6 +83,12 @@ const Container = styled.div`
     word-break: break-word;
     text-align: left;
     line-height: 26px;
+  }
+  .bbc {
+    filter: grayscale(1);
+    &:hover {
+      filter: grayscale(0.8);
+    }
   }
   .btn {
     --border-color: linear-gradient(-45deg, #ffae00, #7e03aa, #00fffb);
@@ -168,19 +184,14 @@ const Container = styled.div`
   .card {
     align-self: center;
     background: #111314;
-    box-shadow: 0 7px 20px 5px #00000088;
-    border-radius: 0.7rem;
-    backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
     overflow: hidden;
     transition: 0.5s all;
-    border-radius: 15px;
+    border-radius: 20px;
     max-height: 640px;
     user-select: none;
     max-width: 300px;
     margin: 5rem auto;
-    border: 1px solid #ffffff22;
-    box-shadow: 0 7px 20px 5px #00000088;
+    border: 1px solid rgb(84 90 106);
     border-radius: 0.7rem;
     backdrop-filter: blur(7px);
     -webkit-backdrop-filter: blur(7px);
@@ -198,9 +209,9 @@ const Container = styled.div`
     }
     &:hover {
       border: 1px solid #ffffff44;
-      box-shadow: 0 7px 50px 10px #000000aa;
+      box-shadow: 10px 10px 20px #0c0c0c, -10px -10px 10px #2d1f3b;
       transform: scale(1.015);
-      filter: brightness(1);
+
       ::before {
         filter: brightness(0.5);
         top: -100%;
@@ -285,7 +296,7 @@ const Container = styled.div`
   .card:hover {
     .type {
       opacity: 1;
-      transform: translate(0px, 2px);
+      transform: translate(0px, -20px);
     }
   }
   .type .icon {

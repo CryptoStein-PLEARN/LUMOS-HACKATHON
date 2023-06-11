@@ -1815,13 +1815,7 @@ font-size: 22px;
   max-width: 85vw;
   min-width: 85vw;
 }
-.blu{
-  background-image: url('https://www.blocktrain.info/bottomCut.png');
-  background-attachment: bottom !important;
-  background-position: bottom !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important; 
-}
+ 
 .MainFs{ 
   background-color: #000; 
 }

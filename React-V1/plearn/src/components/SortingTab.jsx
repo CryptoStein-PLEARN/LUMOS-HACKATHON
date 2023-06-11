@@ -6,8 +6,6 @@ import { setSearchQuery } from "../Store/Slice/userSlice";
 export default React.memo(function SortingTab({ ShopState }) {
   const dispatch = useDispatch();
   var Name = useSelector((state) => state.Blog.Name);
-  var BidName = useSelector((state) => state.Bid.Name);
-  const card = useSelector((state) => state.tools.cards);
 
   const handleSearch = (event) => {
     dispatch(setSearchQuery(event.target.value));
@@ -19,7 +17,8 @@ export default React.memo(function SortingTab({ ShopState }) {
       </div>
       <div
         className="wrapper"
-        style={{ display: `${ShopState ? "None" : "Inherit "}` }}
+        // style={{ display: `${ShopState ? "None" : "Inherit "}` }}
+        style={{ display: `None` }}
       >
         <div className="input-wrapper">
           <button className="icon">

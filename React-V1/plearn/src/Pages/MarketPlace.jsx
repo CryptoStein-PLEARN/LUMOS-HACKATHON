@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CardLoader from "../components/CardLoader";
+import CardLoader from "../components/MarketPlace/CardsSlider";
 import Header from "../components/MarketPlace/Header";
 import SortingTab from "../components/SortingTab";
 import Cards from "../components/MarketPlace/Cards";

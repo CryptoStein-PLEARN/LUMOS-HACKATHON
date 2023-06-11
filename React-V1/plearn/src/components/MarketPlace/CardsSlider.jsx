@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
-import Cards from "./MarketPlace/Cards";
+import Cards from "./Cards";
 
 export default React.memo(function CardLoader(props) {
   const data = props.data;
@@ -33,7 +33,7 @@ export default React.memo(function CardLoader(props) {
     };
   }, [viewportWidth]);
   return (
-    <div className="blu">
+    <div>
       <Swiper
         slidesPerView={num}
         spaceBetween={30}
