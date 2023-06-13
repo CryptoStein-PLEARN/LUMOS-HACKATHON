@@ -41,7 +41,7 @@ export default React.memo(function Cards(props) {
 
   return (
     <Container>
-      <div key={_id} className={`card ${itemAvailable ? `` : `bbc`}`}>
+      <div key={_id} className={`card`}>
         <>
           <div className="type">
             <img className="icon" src={coin} height="30px" />
@@ -63,7 +63,11 @@ export default React.memo(function Cards(props) {
                   HandleClick();
                 }}
               >
-                Buy Item
+                {itemAvailable ? (
+                  <span>Buy item</span>
+                ) : (
+                  <span>View details</span>
+                )}
               </a>
             </div>
           </div>
