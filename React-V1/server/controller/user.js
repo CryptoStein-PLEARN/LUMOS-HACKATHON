@@ -227,11 +227,11 @@ const getAuctionDetails = async (req,res) => {
 
         if(categoryData)
         {
-            var item = categoryData.auction.find(item => item.id === id);
+            var item = categoryData.auction.find(item => item.id === parseInt(id));
             
             if(item)
             {
-                console.log(item);
+                // console.log(item);
                 res.send(item);
             }
             else
@@ -260,22 +260,26 @@ const startAuction = async (req,res) => {
 
         if(categoryData)
         {
-            var item = categoryData.auction.find(item => item.id === id);
+            var item = categoryData.auction.find(item => item.id === parseInt(id));
 
-            if(item)    //startAuction
+            if(item)    //startAuctionAgainForItem
             {
                 const updateResult = await auctionDetail.updateOne(
                     {category: req.body.category},
                     {
                         $set: 
                         {
-                            [item.started]: true,
-                            [item.ended]: false,
-                            [item.duration]: duration,
-                            [item.timer]: duration,
-                            [item.basePrice]: basePrice,
+                            [`auction.${categoryData.auction.indexOf(item)}.started`]: true,
+                            [`auction.${categoryData.auction.indexOf(item)}.ended`]: false,
+                            [`auction.${categoryData.auction.indexOf(item)}.duration`]: duration,
+                            [`auction.${categoryData.auction.indexOf(item)}.timer`]: duration,
+                            [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: basePrice,
                         },
-                    }
+                    },
+                    // (err) => {
+                    //     console.log(err);
+                    //     return res.sendStatus(500);
+                    // }
                 )
 
                 const updateMarketplace = await marketplaceDetail.updateOne(
@@ -290,13 +294,48 @@ const startAuction = async (req,res) => {
 
                 res.send({message: "Auction Started.", updateResult, updateMarketplace});
             }
-            else    //Something is wrong
+            else    //AddItemInAuction
             {
-                console.log("Item not found, Something is wrong.");
-                res.send("Item not found, Something is wrong.");
+                const updateResult = await auctionDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $push:
+                        {
+                            [`auction`]: {
+                                id: id,
+                                started: true,
+                                ended: false,
+                                duration: duration,
+                                timer: duration,
+                                basePrice: basePrice
+                            }
+                        }
+                    },
+                    // (err) => {
+                    //     if(err) {
+                    //         console.log(err);
+                    //         return res.sendStatus(500);
+                    //     }
+                    // }
+                )
+                if (updateResult.nModified === 0) {
+                    throw new Error('Update operation failed');
+                }
+
+                const updateMarketplace = await marketplaceDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $set:
+                        {
+                            [`details.${id - 2}.inAuction`]: true,
+                        }
+                    }
+                )
+
+                res.send({message: "Auction Started.", updateResult, updateMarketplace})
             }
         }
-        else    //Create Auction
+        else    //Create Auction for the category
         {
             const newCategoryData = new auctionDetail({
                 category: category,
