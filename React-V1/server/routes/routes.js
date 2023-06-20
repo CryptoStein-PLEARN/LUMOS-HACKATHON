@@ -14,6 +14,8 @@ const {getLoanList} = require("../controller/user");
 const {updateBankLoan} = require("../controller/user");
 const {buyFromMarketplace} = require("../controller/user");
 const {getOwnedNFTs} = require("../controller/user");
+const {startAuction} = require("../controller/user")
+const {getAuctionDetails} = require("../controller/user")
 
 router.post("/preregistration", preRegisterUser);
 
@@ -26,6 +28,10 @@ router.post('/saveDetails', saveDetails);
 router.get('/getMarketplaceDetails', getMarketplaceDetails);
 
 router.post('/buyFromMarketplace', buyFromMarketplace);
+
+router.get('/getAuctionDetails/:category/:id', getAuctionDetails);
+
+router.post('/startAuction', startAuction);
 
 router.get('/getOwnedNFTs/:userAccount', getOwnedNFTs); //Change the name from characters to generic - items
 

@@ -11,6 +11,7 @@ const {bankLoan, bankDeposit} = require("../model/bank");
 const preRegistrationDetail = require("../model/preregistration");
 const entrepreneurshipDetail = require("../model/entrepreneurship");
 const marketplaceDetail = require("../model/marketplace");
+const auctionDetail = require("../model/Auction")
 
 const app = express();
 
@@ -139,24 +140,6 @@ const saveDetails = (req,res) => {
     );
 };
 
-
-//For inserting characters in the DB
-const insertCharacters = async () => {
-    await characterDetail.upsert({ characterName: "Character3", description: "Lorem Ipsum", cost: 0, unlockLevel: 1, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character3.png' });
-    await characterDetail.upsert({ characterName: "Character4", description: "Lorem Ipsum", cost: 0, unlockLevel: 1, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character4.png'});
-    await characterDetail.upsert({ characterName: "Tony", description: "Lorem Ipsum", cost: 10, unlockLevel: 2, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character5.jpeg' });
-    await characterDetail.upsert({ characterName: "Steve", description: "Lorem Ipsum", cost: 10, unlockLevel: 2, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character6.jpeg' });
-    await characterDetail.upsert({ characterName: "Bruce", description: "Lorem Ipsum", cost: 10, unlockLevel: 3, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character7.jpeg' });
-    await characterDetail.upsert({ characterName: "Thor", description: "Lorem Ipsum", cost: 10, unlockLevel: 3, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character8.jpeg' });
-    await characterDetail.upsert({ characterName: "Rhodey", description: "Lorem Ipsum", cost: 10, unlockLevel: 4, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character9.jpeg' });
-    await characterDetail.upsert({ characterName: "Natasha", description: "Lorem Ipsum", cost: 10, unlockLevel: 4, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character10.jpeg' });
-    await characterDetail.upsert({ characterName: "Wanda", description: "Lorem Ipsum", cost: 10, unlockLevel: 5, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character11.jpeg' });
-    await characterDetail.upsert({ characterName: "Jane", description: "Lorem Ipsum", cost: 10, unlockLevel: 5, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character12.jpeg' });
-    await characterDetail.upsert({ characterName: "Pepper", description: "Lorem Ipsum", cost: 10, unlockLevel: 6, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character13.jpeg' });
-    await characterDetail.upsert({ characterName: "Peggy", description: "Lorem Ipsum", cost: 10, unlockLevel: 6, ImgUri: 'https://github.com/CryptoStein-PLEARN/PLEARN/blob/main/React-V1/plearn/src/assets/MarketPlace/Characters/Character14.jpeg' });
-}
-insertCharacters();
-
 const getMarketplaceDetails = (req, res) => {
     marketplaceDetail.find({}, (err, category) => {
         if(err) 
@@ -235,6 +218,295 @@ const buyFromMarketplace = async (req, res) => {
     }
 };
 
+const getAuctionDetails = async (req,res) => {
+    try
+    {
+        const {category, id} = req.params;
+
+        const categoryData = await auctionDetail.findOne({ category: category });
+
+        if(categoryData)
+        {
+            var item = categoryData.auction.find(item => item.id === id);
+            
+            if(item)
+            {
+                console.log(item);
+                res.send(item);
+            }
+            else
+            {
+                console.log("Item not found. Something is wrong.");
+                res.send("Item not found. Something is wrong.");
+            }
+        }
+        else
+        {
+            console.log("Category not found. Something is wrong.")
+            res.send("Category not found. Something is wrong.")
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+const startAuction = async (req,res) => {
+    try{
+        const {category, id, duration, basePrice} = req.body.data;
+        const categoryData = await auctionDetail.findOne({ category: category });
+
+        if(categoryData)
+        {
+            var item = categoryData.auction.find(item => item.id === id);
+
+            if(item)    //startAuction
+            {
+                const updateResult = await auctionDetail.updateOne(
+                    {category: req.body.data.category},
+                    {
+                        $set: 
+                        {
+                            [item.started]: true,
+                            [item.ended]: false,
+                            [item.duration]: duration,
+                            [item.timer]: duration,
+                            [item.basePrice]: basePrice,
+                        },
+                    }
+                )
+
+                const updateMarketplace = await marketplaceDetail.updateOne(
+                    {category: req.body.data.category},
+                    {
+                        $set:
+                        {
+                            [`details.${item.id - 2}.inAuction`]: true,
+                        }
+                    }
+                )
+
+                res.send({message: "Auction Started.", updateResult, updateMarketplace});
+            }
+            else    //Something is wrong
+            {
+                console.log("Item not found, Something is wrong.");
+                res.send("Item not found, Something is wrong.");
+            }
+        }
+        else    //Create Auction
+        {
+            const newCategoryData = new auctionDetail({
+                category: category,
+                auction: [{
+                    id: id,
+                    started: true,
+                    ended: false,
+                    duration: duration,
+                    timer: duration,
+                    basePrice: basePrice,
+                }]
+            });
+
+            const updateMarketplace = await marketplaceDetail.updateOne(
+                {category: req.body.data.category},
+                {
+                    $set:
+                    {
+                        [`details.${id - 2}.inAuction`]: true,
+                    }
+                }
+            )
+
+            await newCategoryData.save();
+
+            res.send("New auction record created successfully");
+        }
+    }
+    catch(err)
+    {
+        console.log(err)
+        res.send(err)
+    }
+}
+
+const endAuction = async (req,res) => {
+    try
+    {
+        const {category, id} = req.body.data;
+        const categoryData = await auctionDetail.findOne({ category: category });
+
+        if(categoryData)
+        {
+            var item = categoryData.auction.find(item => item.id === id);
+            
+            if(item)
+            {
+                if(item.bids.length > 0)
+                {
+                    const highestBid = item.bids.reduce((maxBid, currentBid) => {
+                        if (currentBid.bidAmount > maxBid.bidAmount) {
+                            return currentBid;
+                        } else {
+                            return maxBid;
+                        }
+                    });
+
+                    const updateResult = await auctionDetail.updateOne(
+                        {category: req.body.data.category},
+                        {
+                            $set: 
+                            {
+                                [item.started]: false,
+                                [item.ended]: true,
+                                [item.duration]: 0,
+                                [item.timer]: 0,
+                                [item.basePrice]: 0,
+                            },
+                        },
+                        {
+                            arrayFilters: [{ 'item.id': id }],
+                        }
+                    )
+
+                    const updateMarketplace = await marketplaceDetail.updateOne(
+                        {
+                            category: req.body.data.category
+                        },
+                        {
+                            $set: 
+                            {
+                                [`details.${id - 2}.inAuction`]: false,
+                                [`details.${id - 2}.currentOwner`]: highestBid.bidderAddress,
+                            },
+                            $push:
+                            {
+                                [`details.${id - 2}.transactions`]: {
+                                    buyerAddress: highestBid.bidderAddress,
+                                    sellerAddress: item.currentOwner,
+                                    cost: highestBid.bidAmount,
+                                    timestamp: new Date(),
+                                }
+                            }
+                        }
+                    )
+
+                    const playerUpdateResult = await playerDetail.updateOne(
+                        { userAccount: userAccount },
+                        {
+                            $push: { [`ownedNFTs.${req.body.data.category}`]: id }
+                        },
+                    );
+
+                    res.send({
+                        message: `Auction ended for ItemID ${id}`,
+                        AuctionWinner: highestBid.bidderAddress,
+                    });
+                }
+                else
+                {
+                    const updateResult = await auctionDetail.updateOne(
+                        {category: req.body.data.category},
+                        {
+                            $set: 
+                            {
+                                [item.started]: false,
+                                [item.ended]: true,
+                                [item.duration]: 0,
+                                [item.timer]: 0,
+                                [item.basePrice]: 0,
+                            },
+                        },
+                        {
+                            arrayFilters: [{ 'item.id': id }],
+                        }
+                    )
+
+                    const updateMarketplace = await marketplaceDetail.updateOne(
+                        {
+                            category: req.body.data.category
+                        },
+                        {
+                            $set: 
+                            {
+                                [`details.${id - 2}.inAuction`]: false,
+                            },
+                        }
+                    )
+
+                    res.send({message: `Auction ended. No bids for item ${id}.`})
+                }
+            }
+            else    //Something is wrong
+            {
+                console.log("Item not found, Something is wrong.");
+                res.send("Item not found, Something is wrong.");
+            }
+        }
+        else    //Something is wrong
+        {
+            console.log("Category not found, Something is wrong.")
+            res.send("Category not found, Something is wrong.")
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+const placeBid = async (req,res) => {
+    try
+    {
+        const {category, id, bid, bidderAddress, bidAmount, currency} = req.body.data;
+        const categoryData = await auctionDetail.findOne({ category: category });
+
+        if(categoryData)
+        {
+            var item = categoryData.auction.find(item => item.id === id);
+
+            if(item)
+            {
+                if(bid.bidAmount < item.basePrice)
+                {
+                    res.send({message: `Bid Amount should be greater than the Base Price ${item.basePrice}${bid.currency}`})
+                }
+                else
+                {
+                    const updateResult = await auctionDetail.updateOne(
+                        {category: req.body.data.category},
+                        {
+                            $push: 
+                            {
+                                [item.bids]: bid,
+                            },
+                        }
+                    )
+
+                    res.send({message: "Bid placed Successfully.", updateResult});
+                }   
+            }
+            else    //Something is wrong
+            {
+                console.log("Item not found, Something is wrong.");
+                res.send("Item not found, Something is wrong.");
+            }
+        }
+        else    //Something is wrong
+        {
+            console.log("Category not found, Something is wrong.")
+            res.send("Category not found, Something is wrong.")
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send(err);
+    }
+}
 
 const getOwnedNFTs = (req,res) => {
     const {userAccount} = req.params;
@@ -519,4 +791,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, getHouseList, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};

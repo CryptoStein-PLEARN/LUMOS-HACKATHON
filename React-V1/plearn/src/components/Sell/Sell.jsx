@@ -1,8 +1,35 @@
+import axios from "axios";
 import React from "react";
 import { useParams } from "react-router-dom";
 
 export default function Sell() {
   const { itemName } = useParams();
+  
+  const SendDummyData = async () => {
+    const daysInput = document.getElementById("durationDays");
+    const hoursInput = document.getElementById("durationHours");
+    const minutesInput = document.getElementById("durationMinutes");
+
+    // Convert the values to numbers
+    const days = parseInt(daysInput.value, 10) || 0;
+    const hours = parseInt(hoursInput.value, 10) || 0;
+    const minutes = parseInt(minutesInput.value, 10) || 0;
+
+    // Calculate the total duration in milliseconds
+    const totalDuration = ((days * 24 + hours) * 60 + minutes) * 60 * 1000;
+
+    const data = {
+      category: "characters",
+      id: 3,
+      duration: totalDuration,
+      basePrice: 100,
+    }
+
+    await axios.post("http://localhost:8080/startAuction", data)
+    .then((response) => {
+      console.log(response.data);
+    })    
+  }
 
   return (
     <div
@@ -32,9 +59,11 @@ export default function Sell() {
           maxLength="4"
         ></input>
         <p> Duration of the Auction </p>
-        <input type="date" />
+        <input type="number" id="durationDays" placeholder="Days" min="0"/>
+        <input type="number" id="durationHours" placeholder="Hours" min="0" max="23"/>
+        <input type="number" id="durationMinutes" placeholder="Minutes" min="0" max="59"/>
         <p>Category : Characters</p>
-        <button>Submit</button>
+        <button onClick={SendDummyData}>Submit</button>
       </div>
     </div>
   );
