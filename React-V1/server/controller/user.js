@@ -255,7 +255,7 @@ const getAuctionDetails = async (req,res) => {
 
 const startAuction = async (req,res) => {
     try{
-        const {category, id, duration, basePrice} = req.body.data;
+        const {category, id, duration, basePrice} = req.body;
         const categoryData = await auctionDetail.findOne({ category: category });
 
         if(categoryData)
@@ -265,7 +265,7 @@ const startAuction = async (req,res) => {
             if(item)    //startAuction
             {
                 const updateResult = await auctionDetail.updateOne(
-                    {category: req.body.data.category},
+                    {category: req.body.category},
                     {
                         $set: 
                         {
@@ -279,7 +279,7 @@ const startAuction = async (req,res) => {
                 )
 
                 const updateMarketplace = await marketplaceDetail.updateOne(
-                    {category: req.body.data.category},
+                    {category: req.body.category},
                     {
                         $set:
                         {
@@ -311,7 +311,7 @@ const startAuction = async (req,res) => {
             });
 
             const updateMarketplace = await marketplaceDetail.updateOne(
-                {category: req.body.data.category},
+                {category: req.body.category},
                 {
                     $set:
                     {
