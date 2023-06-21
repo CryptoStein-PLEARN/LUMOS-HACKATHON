@@ -23,6 +23,7 @@ export default function Sell() {
       id: 7,
       duration: totalDuration,
       basePrice: 100,
+      currentOwner: localStorage.getItem(1)
     }
 
     // await axios.post("http://localhost:8080/startAuction", data)

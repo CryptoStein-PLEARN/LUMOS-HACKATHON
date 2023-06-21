@@ -255,7 +255,7 @@ const getAuctionDetails = async (req,res) => {
 
 const startAuction = async (req,res) => {
     try{
-        const {category, id, duration, basePrice} = req.body;
+        const {category, id, duration, basePrice, currentOwner} = req.body;
         const categoryData = await auctionDetail.findOne({ category: category });
 
         if(categoryData)
@@ -275,6 +275,7 @@ const startAuction = async (req,res) => {
                             [`auction.${categoryData.auction.indexOf(item)}.ended`]: false,
                             [`auction.${categoryData.auction.indexOf(item)}.endTime`]: endTime,
                             [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: basePrice,
+                            [`auction.${categoryData.auction.indexOf(item)}.currentOwner`]: currentOwner
                         },
                     },
                 )
@@ -307,7 +308,8 @@ const startAuction = async (req,res) => {
                                 started: true,
                                 ended: false,
                                 endTime: endTime,
-                                basePrice: basePrice
+                                basePrice: basePrice,
+                                currentOwner: currentOwner
                             }
                         }
                     },
@@ -343,6 +345,7 @@ const startAuction = async (req,res) => {
                     ended: false,
                     endTime: endTime,
                     basePrice: basePrice,
+                    currentOwner: currentOwner
                 }]
             });
 

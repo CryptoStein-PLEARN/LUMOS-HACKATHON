@@ -9,6 +9,7 @@ const auctionSchema = new mongoose.Schema({
         endTime: {type: Date},
         basePrice: {type: Number},
         timestamp: {type: Date, default: Date.now},
+        currentOwner: {type: String},
         bids:[{
             bidderAddress: {type: String},
             bidAmount: {type: Number},
