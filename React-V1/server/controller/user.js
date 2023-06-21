@@ -264,6 +264,8 @@ const startAuction = async (req,res) => {
 
             if(item)    //startAuctionAgainForItem
             {
+                const endTime = new Date(Date.now() + duration);
+
                 const updateResult = await auctionDetail.updateOne(
                     {category: req.body.category},
                     {
@@ -271,15 +273,10 @@ const startAuction = async (req,res) => {
                         {
                             [`auction.${categoryData.auction.indexOf(item)}.started`]: true,
                             [`auction.${categoryData.auction.indexOf(item)}.ended`]: false,
-                            [`auction.${categoryData.auction.indexOf(item)}.duration`]: duration,
-                            [`auction.${categoryData.auction.indexOf(item)}.timer`]: duration,
+                            [`auction.${categoryData.auction.indexOf(item)}.endTime`]: endTime,
                             [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: basePrice,
                         },
                     },
-                    // (err) => {
-                    //     console.log(err);
-                    //     return res.sendStatus(500);
-                    // }
                 )
 
                 const updateMarketplace = await marketplaceDetail.updateOne(
@@ -292,10 +289,14 @@ const startAuction = async (req,res) => {
                     }
                 )
 
-                res.send({message: "Auction Started.", updateResult, updateMarketplace});
+                const updatedItem = await auctionDetail.findOne({ category: category });
+
+                res.send({message: "Auction Started.", item: updatedItem.auction.find((i) => i.id === parseInt(id))});
             }
             else    //AddItemInAuction
             {
+                const endTime = new Date(Date.now() + duration);
+
                 const updateResult = await auctionDetail.updateOne(
                     {category: req.body.category},
                     {
@@ -305,18 +306,11 @@ const startAuction = async (req,res) => {
                                 id: id,
                                 started: true,
                                 ended: false,
-                                duration: duration,
-                                timer: duration,
+                                endTime: endTime,
                                 basePrice: basePrice
                             }
                         }
                     },
-                    // (err) => {
-                    //     if(err) {
-                    //         console.log(err);
-                    //         return res.sendStatus(500);
-                    //     }
-                    // }
                 )
                 if (updateResult.nModified === 0) {
                     throw new Error('Update operation failed');
@@ -332,19 +326,22 @@ const startAuction = async (req,res) => {
                     }
                 )
 
-                res.send({message: "Auction Started.", updateResult, updateMarketplace})
+                const updatedItem = await auctionDetail.findOne({ category: category });
+
+                res.send({message: "Auction Started.", item: updatedItem.auction.find((i) => i.id === parseInt(id))})
             }
         }
         else    //Create Auction for the category
         {
+            const endTime = new Date(Date.now() + duration);
+
             const newCategoryData = new auctionDetail({
                 category: category,
                 auction: [{
                     id: id,
                     started: true,
                     ended: false,
-                    duration: duration,
-                    timer: duration,
+                    endTime: endTime,
                     basePrice: basePrice,
                 }]
             });
@@ -361,7 +358,9 @@ const startAuction = async (req,res) => {
 
             await newCategoryData.save();
 
-            res.send("New auction record created successfully");
+            const updatedItem = await auctionDetail.findOne({ category: category });
+
+            res.send({message: "New auction record created successfully", item: updatedItem.auction.find((i) => i.id === parseInt(id))});
         }
     }
     catch(err)

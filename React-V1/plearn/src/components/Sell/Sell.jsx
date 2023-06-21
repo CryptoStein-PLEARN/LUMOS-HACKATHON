@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 export default function Sell() {
   const { itemName } = useParams();
   
-  const SendDummyData = async () => {
+  const StartAuction = async () => {
     const daysInput = document.getElementById("durationDays");
     const hoursInput = document.getElementById("durationHours");
     const minutesInput = document.getElementById("durationMinutes");
@@ -20,12 +20,13 @@ export default function Sell() {
 
     const data = {
       category: "characters",
-      id: 3,
+      id: 7,
       duration: totalDuration,
       basePrice: 100,
     }
 
-    await axios.post("http://localhost:8080/startAuction", data)
+    // await axios.post("http://localhost:8080/startAuction", data)
+    await axios.post("https://plearn-backend.onrender.com/startAuction", data)
     .then((response) => {
       console.log(response.data);
     })    
@@ -63,7 +64,7 @@ export default function Sell() {
         <input type="number" id="durationHours" placeholder="Hours" min="0" max="23"/>
         <input type="number" id="durationMinutes" placeholder="Minutes" min="0" max="59"/>
         <p>Category : Characters</p>
-        <button onClick={SendDummyData}>Submit</button>
+        <button onClick={StartAuction}>Submit</button>
       </div>
     </div>
   );

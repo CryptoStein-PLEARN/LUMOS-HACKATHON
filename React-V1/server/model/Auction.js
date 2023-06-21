@@ -6,8 +6,7 @@ const auctionSchema = new mongoose.Schema({
         id: {type: Number}, //ItemID
         started: {type: Boolean, default: false},
         ended: {type: Boolean, default: true},
-        duration: {type: Number, default: 0},
-        timer: {type: Number},
+        endTime: {type: Date},
         basePrice: {type: Number},
         timestamp: {type: Date, default: Date.now},
         bids:[{
