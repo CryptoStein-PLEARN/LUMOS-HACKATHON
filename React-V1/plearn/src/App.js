@@ -33,7 +33,7 @@ export default React.memo(function App() {
           category.details.forEach(async (item) => {
             if(item.inAuction === true)
             {
-              const res = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${item.category}/${item.id}`);
+              const res = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${category.category}/${item.id}`);
               // const res = await axios.get(`http://localhost:8080/getAuctionDetails/${category.category}/${item.id}`);
               console.log(res.data);
             }
