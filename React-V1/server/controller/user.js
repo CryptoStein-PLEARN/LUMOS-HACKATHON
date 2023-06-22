@@ -325,7 +325,7 @@ const startAuction = async (req,res) => {
                         $set:
                         {
                             [`details.${id - 2}.inAuction`]: true,
-                            [`details.${item.id - 2}.auctionEndTime`]: endTime
+                            [`details.${id - 2}.auctionEndTime`]: endTime
                         }
                     }
                 )
@@ -357,7 +357,7 @@ const startAuction = async (req,res) => {
                     $set:
                     {
                         [`details.${id - 2}.inAuction`]: true,
-                        [`details.${item.id - 2}.auctionEndTime`]: endTime
+                        [`details.${id - 2}.auctionEndTime`]: endTime
                     }
                 }
             )
