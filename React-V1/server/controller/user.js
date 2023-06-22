@@ -252,7 +252,7 @@ const getAuctionDetails = async (req,res) => {
         res.send(err);
     }
 }
-
+//
 const startAuction = async (req,res) => {
     try{
         const {category, id, duration, basePrice, currentOwner} = req.body;
