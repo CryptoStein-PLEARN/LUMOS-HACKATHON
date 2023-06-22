@@ -18,7 +18,7 @@ export default React.memo(function ItemonBid({ ds }) {
   const unlockLevel = firstObject ? firstObject.unlockLevel : "";
   const price = firstObject ? firstObject.cost : "";
   const imgUri = firstObject ? firstObject.imgUri : "";
-  console.log(filteredArray);
+  // console.log(filteredArray);
 
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);

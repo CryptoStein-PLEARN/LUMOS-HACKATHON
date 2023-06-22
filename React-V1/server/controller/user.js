@@ -232,7 +232,7 @@ const getAuctionDetails = async (req,res) => {
             if(item)
             {
                 // console.log(item);
-                res.send(item);
+                res.send({item, category: category});
             }
             else
             {
@@ -292,7 +292,7 @@ const startAuction = async (req,res) => {
 
                 const updatedItem = await auctionDetail.findOne({ category: category });
 
-                res.send({message: "Auction Started.", item: updatedItem.auction.find((i) => i.id === parseInt(id))});
+                res.send({message: "Auction Started.", item: updatedItem.auction.find((i) => i.id === parseInt(id)), category: category});
             }
             else    //AddItemInAuction
             {
@@ -330,7 +330,7 @@ const startAuction = async (req,res) => {
 
                 const updatedItem = await auctionDetail.findOne({ category: category });
 
-                res.send({message: "Auction Started.", item: updatedItem.auction.find((i) => i.id === parseInt(id))})
+                res.send({message: "Auction Started.", item: updatedItem.auction.find((i) => i.id === parseInt(id)), category: category})
             }
         }
         else    //Create Auction for the category
@@ -363,7 +363,7 @@ const startAuction = async (req,res) => {
 
             const updatedItem = await auctionDetail.findOne({ category: category });
 
-            res.send({message: "New auction record created successfully", item: updatedItem.auction.find((i) => i.id === parseInt(id))});
+            res.send({message: "New auction record created successfully", item: updatedItem.auction.find((i) => i.id === parseInt(id)), category: category});
         }
     }
     catch(err)

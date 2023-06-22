@@ -6,8 +6,8 @@ import { SetBlog } from "../../Store/Slice/Cardslice";
 import { useNavigate } from "react-router-dom";
 
 export default React.memo(function Cards(props) {
-  console.log("obj");
-  console.log(props.data);
+  // console.log("obj");
+  // console.log(props.data);
   const { name, id, imgUri, cost, unlockLevel, _id, itemAvailable, inAuction } =
     props.data;
   const category = props.category;
