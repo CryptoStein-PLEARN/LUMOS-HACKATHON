@@ -26,17 +26,22 @@ export default React.memo(function ItemonBid({ ds }) {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
 
+  const EndAuction = () => {
+    console.log("Ended");
+  }
+
   const CountdownButton = () => {
     const [timeLeft, setTimeLeft] = useState("");
 
     useEffect(() => {
       const interval = setInterval(() => {
         const currentTime = new Date();
-        const endTime = new Date("2023-06-22T13:34:35.329Z");
+        const endTime = new Date(filteredArray[0].auctionEndTime);
         const timeDiff = endTime - currentTime;
         if (timeDiff <= 0) {
           clearInterval(interval);
           setTimeLeft("Timer ended");
+          EndAuction();
         } else {
           const hours = Math.floor(timeDiff / (1000 * 60 * 60));
           const minutes = Math.floor(
