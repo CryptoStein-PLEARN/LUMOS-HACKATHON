@@ -17,7 +17,8 @@ const marketplaceSchema = new mongoose.Schema({
             cost: { type: Number },
             timestamp: { type: Date, default: Date.now }
         }],
-        inAuction: {type: Boolean, default: false}
+        inAuction: {type: Boolean, default: false},
+        auctionEndTime: {type: Date, default: Date.now}
     }]
 });
 // currency field
