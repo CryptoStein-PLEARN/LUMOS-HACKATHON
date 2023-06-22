@@ -1,18 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
-import SortingTab from "../components/SortingTab";
-import Loader from "../components/Loader";
-import coin from "../assets/MarketPlace/A (5).png";
+import SortingTab from "../SortingTab";
+import Loader from "../Loader";
+import coin from "../../assets/MarketPlace/A (5).png";
 import { useLocation } from "react-router-dom";
-import InfoTab from "../components/Bid/InfoTab";
-export default React.memo(function ItemonBid() {
-  const price = useSelector((state) => state.Bid.price);
-  const Name = useSelector((state) => state.Bid.Name);
-  const desc = useSelector((state) => state.Bid.desc);
-  const Category = useSelector((state) => state.Bid.Category);
+import InfoTab from "./InfoTab";
+export default React.memo(function ItemonBid({ ds }) {
+  const filteredArray = ds
+    .filter((obj) => obj.category === "characters")
+    .flatMap((obj) => obj.details.filter((detail) => detail.name === "Thor"));
+  const firstObject = filteredArray[0];
+  const Category = firstObject ? firstObject.category : "";
+  const Name = firstObject ? firstObject.name : "";
+  const itemID = firstObject ? firstObject.id : "";
+  const desc = firstObject ? firstObject.description : "";
+  const unlockLevel = firstObject ? firstObject.unlockLevel : "";
+  const price = firstObject ? firstObject.cost : "";
+  const imgUri = firstObject ? firstObject.imgUri : "";
+  console.log(filteredArray);
+
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
+
   const CountdownButton = ({ initialTimeLeft }) => {
     const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 
@@ -40,7 +50,11 @@ export default React.memo(function ItemonBid() {
   };
   useEffect(() => {
     setShowLoader(true);
-    setTimeout(() => setShowLoader(false), 500);
+    if (filteredArray.length === 0) {
+      setShowLoader(true);
+    } else {
+      setShowLoader(false);
+    }
   }, [location]);
   return (
     <>

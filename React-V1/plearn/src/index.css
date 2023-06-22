@@ -1800,13 +1800,8 @@ font-size: 22px;
   text-decoration: none;   cursor: pointer;
 }
 .Markt{
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+ 
   display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
   justify-content: flex-start;
   flex-direction: column;
   align-items: center; 
@@ -1816,8 +1811,12 @@ font-size: 22px;
   min-width: 85vw;
 }
  
-.MainFs{ 
-  background-color: #000; 
+.MainFs {
+  background-attachment: fixed !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  background: url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg);
 }
 .react-tabs__tab:focus:after{
   display: none;

@@ -8,34 +8,15 @@ import { useNavigate } from "react-router-dom";
 export default React.memo(function Cards(props) {
   console.log("obj");
   console.log(props.data);
-  const {
-    name,
-    id,
-    imgUri,
-    description,
-    cost,
-    unlockLevel,
-    _id,
-    itemAvailable,
-  } = props.data;
+  const { name, id, imgUri, cost, unlockLevel, _id, itemAvailable, inAuction } =
+    props.data;
   const category = props.category;
   const nav = useNavigate();
-  const dispatch = useDispatch();
   const HandleClick = async () => {
-    try {
-      await dispatch(
-        SetBlog({
-          Name: name,
-          cost: cost,
-          id: id,
-          ImgUri: imgUri,
-          desc: description,
-        })
-      );
-      // await console.log(Name);
+    if (inAuction) {
+      nav(`/bid/${category + "/" + name}`);
+    } else {
       nav(`/Buy/${category + "/" + name}`);
-    } catch (error) {
-      console.error(error);
     }
   };
 
@@ -65,6 +46,8 @@ export default React.memo(function Cards(props) {
               >
                 {itemAvailable ? (
                   <span>Buy item</span>
+                ) : inAuction ? (
+                  <span>Place a bid</span>
                 ) : (
                   <span>View details</span>
                 )}

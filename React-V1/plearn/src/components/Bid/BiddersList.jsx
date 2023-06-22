@@ -116,11 +116,11 @@ const Container = styled.div`
   }
   .activity__tag {
     display: inline-block;
-    position: absolute;
-    top: -6px;
-    left: -6px;
-    width: 28px;
-    height: 28px;
+    position: relative;
+    top: -20px;
+    left: -16px;
+    width: 25px;
+    height: 25px;
     line-height: 28px;
     text-align: center;
     border-radius: 50%;

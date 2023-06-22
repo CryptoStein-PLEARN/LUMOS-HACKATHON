@@ -22,7 +22,7 @@ export default React.memo(function Buy({ ds }) {
   const pathArray = path.split("/");
   const category = pathArray[pathArray.length - 2];
   const [showLoader, setShowLoader] = useState(false);
-
+  const [butnLoader, setLoader] = useState(false);
   useEffect(() => {
     getUserDetails();
     setShowLoader(true);
@@ -44,6 +44,7 @@ export default React.memo(function Buy({ ds }) {
   };
 
   const BuyNFTs = async () => {
+    setLoader(true);
     const userDetails = {
       userAccount: localStorage.getItem(1),
       userLevel: playerLevel,
@@ -70,6 +71,7 @@ export default React.memo(function Buy({ ds }) {
       // .post(`http://localhost:8080/buyFromMarketplace`, requestData)
       .then((response) => {
         setSuccessMessage(response.data.message);
+        setLoader(false);
         setTimeout(() => {
           setSuccessMessage("");
         }, 2000);
@@ -133,15 +135,19 @@ export default React.memo(function Buy({ ds }) {
                 <div class="cta">
                   {itemAvailable ? (
                     <>
-                      <button class="butn butn--primary" onClick={BuyNFTs}>
-                        <span class="icon-arrow ">
-                          <img src={coin} alt="" />
-                        </span>
-                        <span class="butn-inner">
-                          <span class="butn-label">Cost: {cost} ETH</span>
-                          <span class="butn-blur" aria-hidden=""></span>
-                        </span>
-                      </button>
+                      {butnLoader ? (
+                        <>Processing Transaction...</>
+                      ) : (
+                        <button class="butn butn--primary" onClick={BuyNFTs}>
+                          <span class="icon-arrow ">
+                            <img src={coin} alt="" />
+                          </span>
+                          <span class="butn-inner">
+                            <span class="butn-label">Cost: {cost} ETH</span>
+                            <span class="butn-blur" aria-hidden=""></span>
+                          </span>
+                        </button>
+                      )}
                     </>
                   ) : (
                     <button class="bstn">Item not on Sale</button>

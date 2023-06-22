@@ -80,7 +80,10 @@ export default function Owned() {
                       <button disabled className=" dis">
                         OWNED
                       </button>
-                      <Link className="Btn" to={`/Sell/${Category.name}`}>
+                      <Link
+                        className="Btn"
+                        to={`/Sell/${Category.name}_${Category.category}_${Category.id}`}
+                      >
                         Sell item
                       </Link>
                     </div>

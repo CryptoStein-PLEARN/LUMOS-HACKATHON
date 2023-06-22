@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import PrivacyPolicy from "./Pages/PrivacyPolicy";
 import Main from "./Pages/Main";
+import Thankyou from "./Components/Thankyou";
 function App() {
   return (
     <div className="App">
@@ -10,6 +11,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />}></Route>
           <Route path="/Policy" element={<PrivacyPolicy />}></Route>
+
+          <Route path="/Thankyou" element={<Thankyou />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

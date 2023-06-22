@@ -1,11 +1,15 @@
 import axios from "axios";
-import React from "react";
-import { useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 export default function Sell() {
-  const { itemName } = useParams();
-  
+  const item = useParams();
+
+  const [itemName, category, id] = item.itemName.split("_");
+  const nav = useNavigate();
+  const [Loader, setLoader] = useState(false);
   const StartAuction = async () => {
+    setLoader(true);
     const daysInput = document.getElementById("durationDays");
     const hoursInput = document.getElementById("durationHours");
     const minutesInput = document.getElementById("durationMinutes");
@@ -19,19 +23,22 @@ export default function Sell() {
     const totalDuration = ((days * 24 + hours) * 60 + minutes) * 60 * 1000;
 
     const data = {
-      category: "characters",
-      id: 7,
+      category: category,
+      id: id,
       duration: totalDuration,
       basePrice: 100,
-      currentOwner: localStorage.getItem(1)
-    }
+      currentOwner: localStorage.getItem(1),
+    };
 
     // await axios.post("http://localhost:8080/startAuction", data)
-    await axios.post("https://plearn-backend.onrender.com/startAuction", data)
-    .then((response) => {
-      console.log(response.data);
-    })    
-  }
+    await axios
+      .post("https://plearn-backend.onrender.com/startAuction", data)
+      .then((response) => {
+        setLoader(false);
+        console.log(response.data);
+        nav("/MarketPlace");
+      });
+  };
 
   return (
     <div
@@ -61,11 +68,25 @@ export default function Sell() {
           maxLength="4"
         ></input>
         <p> Duration of the Auction </p>
-        <input type="number" id="durationDays" placeholder="Days" min="0"/>
-        <input type="number" id="durationHours" placeholder="Hours" min="0" max="23"/>
-        <input type="number" id="durationMinutes" placeholder="Minutes" min="0" max="59"/>
+        <input type="number" id="durationDays" placeholder="Days" min="0" />
+        <input
+          type="number"
+          id="durationHours"
+          placeholder="Hours"
+          min="0"
+          max="23"
+        />
+        <input
+          type="number"
+          id="durationMinutes"
+          placeholder="Minutes"
+          min="0"
+          max="59"
+        />
         <p>Category : Characters</p>
-        <button onClick={StartAuction}>Submit</button>
+        <button disabled={Loader ? true : false} onClick={StartAuction}>
+          Submit
+        </button>
       </div>
     </div>
   );

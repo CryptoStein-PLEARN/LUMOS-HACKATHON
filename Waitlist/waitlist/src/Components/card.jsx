@@ -89,6 +89,9 @@ export default function Card() {
         {successMsg && <p className="success">{successMsg}</p>} */}
         <div
           class="sender-form-field"
+          onClick={() => {
+            console.log("hello");
+          }}
           data-sender-form-id="lgi9os7zdb2wwd45y2v"
         ></div>
         {/* <span className="link">

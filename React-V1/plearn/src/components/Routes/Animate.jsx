@@ -7,7 +7,7 @@ import Owned from "../../Pages/Owned";
 import PrivacyPolicy from "../../Pages/PrivacyPolicy";
 import Error from "../../Pages/404";
 import Main from "../../Pages/Main";
-import ItemonBid from "../../Pages/ItemonBid";
+import ItemonBid from "../Bid/ItemonBid";
 import { useSelector } from "react-redux";
 import Sell from "../Sell/Sell";
 
@@ -30,7 +30,11 @@ export default function Animate() {
         ))
       )}
       <Route exact path="/Sell/:itemName" element={<Sell />} />
-      <Route exact path="/Bid" element={<ItemonBid></ItemonBid>}></Route>
+      <Route
+        exact
+        path="/Bid/:itemName/:itemName"
+        element={<ItemonBid ds={card} />}
+      ></Route>
       <Route exact path="/marketplace" element={<MarketPlace />}></Route>
       <Route exact path="/owned" element={<Owned />}></Route>
       <Route exact path="/policy" element={<PrivacyPolicy />}></Route>

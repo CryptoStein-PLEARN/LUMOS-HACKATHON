@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import HeaderPfp from "./HeaderPfp";
-import homeBg from "../../assets/MarketPlace/COVER-17.jpg";
+import coinEth from "../../assets/MarketPlace/Frame-251-5.png";
 export default React.memo(function Header() {
-  
   return (
-    <Container className="p-5" style={{ background: `url(${homeBg})` }}>
+    <Container className="p-5">
       <div className="w-full  rounded-md bg-center bg-cover flex flex-col justify-center px-4">
         <h1 className="mb-4 display-5">
           Welcome to <br /> Plearns' Marketplace - <br /> ready to help you find
@@ -15,7 +13,9 @@ export default React.memo(function Header() {
           </p>
         </h1>
       </div>
-      <HeaderPfp />
+      <div className="img-fluid imgl float">
+        <img src={coinEth} alt="" />
+      </div>
     </Container>
   );
 });
