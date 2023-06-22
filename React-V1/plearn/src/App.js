@@ -8,7 +8,6 @@ import axios from "axios";
 import { updateCards } from "./Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
 import { SetOwned } from "./Store/Slice/Owned";
-import Category from "./components/MarketPlace/Category";
 
 export default React.memo(function App() {
   const [userAccount, setUserAccount] = useState(null);
@@ -36,6 +35,7 @@ export default React.memo(function App() {
               const res = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${category.category}/${item.id}`);
               // const res = await axios.get(`http://localhost:8080/getAuctionDetails/${category.category}/${item.id}`);
               console.log(res.data);
+              
             }
           })
         })

@@ -93,7 +93,7 @@ export default function Owned() {
               <div
                 className="marketplace__item"
                 onClick={() => {
-                  nav("/bid");
+                  nav("/bid/characters/Thor");
                 }}
               >
                 <div className="OnSale"> </div>

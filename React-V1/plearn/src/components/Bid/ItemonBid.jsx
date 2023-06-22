@@ -4,50 +4,62 @@ import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
 import coin from "../../assets/MarketPlace/A (5).png";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import InfoTab from "./InfoTab";
 export default React.memo(function ItemonBid({ ds }) {
+  const character = useLocation();
+  const values = character.pathname.split("/").slice(-2); // Extract the last two values
+
+  const Category = values[0];
+  const ItemName = values[1];
   const filteredArray = ds
-    .filter((obj) => obj.category === "characters")
-    .flatMap((obj) => obj.details.filter((detail) => detail.name === "Thor"));
+    .filter((obj) => obj.category === Category)
+    .flatMap((obj) => obj.details.filter((detail) => detail.name === ItemName));
   const firstObject = filteredArray[0];
-  const Category = firstObject ? firstObject.category : "";
-  const Name = firstObject ? firstObject.name : "";
-  const itemID = firstObject ? firstObject.id : "";
-  const desc = firstObject ? firstObject.description : "";
-  const unlockLevel = firstObject ? firstObject.unlockLevel : "";
+  // const desc = firstObject ? firstObject.description : "";
+  const desc =
+    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab minima eligendi voluptatibus consequatur, deleniti, nemo aspernatur debitis incidunt quidem, assumenda perferendis nihil nobis nisi blanditiis ullam porro facere dolore perspiciatis!";
   const price = firstObject ? firstObject.cost : "";
-  const imgUri = firstObject ? firstObject.imgUri : "";
-  // console.log(filteredArray);
+
+  console.log(filteredArray);
 
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
 
-  const CountdownButton = ({ initialTimeLeft }) => {
-    const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
+  const CountdownButton = () => {
+    const [timeLeft, setTimeLeft] = useState("");
 
     useEffect(() => {
-      if (timeLeft > 0) {
-        const timer = setTimeout(() => {
-          setTimeLeft(timeLeft - 1);
-        }, 1000);
-        return () => clearTimeout(timer);
-      }
-    }, [timeLeft]);
+      const interval = setInterval(() => {
+        const currentTime = new Date();
+        const endTime = new Date("2023-06-22T13:34:35.329Z");
+        const timeDiff = endTime - currentTime;
+        if (timeDiff <= 0) {
+          clearInterval(interval);
+          setTimeLeft("Timer ended");
+        } else {
+          const hours = Math.floor(timeDiff / (1000 * 60 * 60));
+          const minutes = Math.floor(
+            (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
+          );
+          const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-    const formatTime = (time) => {
-      const hours = Math.floor(time / 3600);
-      const minutes = Math.floor((time % 3600) / 60);
-      const seconds = time % 60;
-      return `${hours}:${minutes}:${seconds}`;
-    };
+          setTimeLeft(`${hours}:${minutes}:${seconds}`);
+        }
+      }, 1000);
+
+      return () => {
+        clearInterval(interval);
+      };
+    }, []);
 
     return (
-      <button className="Btn">
-        {timeLeft > 0 ? `${formatTime(timeLeft)}` : "View Bid!"}
+      <button className="Btn" key="countdown-btn">
+        {timeLeft !== "" ? timeLeft : "View Bid!"}
       </button>
     );
   };
+  const [bid, setBid] = useState(true);
   useEffect(() => {
     setShowLoader(true);
     if (filteredArray.length === 0) {
@@ -56,6 +68,7 @@ export default React.memo(function ItemonBid({ ds }) {
       setShowLoader(false);
     }
   }, [location]);
+  const [value, setValue] = useState();
   return (
     <>
       {showLoader ? (
@@ -78,7 +91,7 @@ export default React.memo(function ItemonBid({ ds }) {
             </div>
             <div className="left">
               <div className="top">
-                <h1 className="name">{Name}</h1>
+                <h1 className="name">{ItemName}</h1>
 
                 <div class="bnt-conteiner">
                   <div class="bnt-content">
@@ -122,15 +135,75 @@ export default React.memo(function ItemonBid({ ds }) {
                 <div className="bidArea">
                   <div className="desc au dark">
                     <span>Auction Ending in</span>
-                    <CountdownButton initialTimeLeft={500} />
+                    <CountdownButton />
                   </div>
                   <div className="cancelBid">
-                    <button class="cta">
-                      <span class="hover-underline-animation">
-                        {" "}
-                        Cancel Bid{" "}
-                      </span>
-                    </button>
+                    {bid ? (
+                      <button class="cta">
+                        <span
+                          class="hover-underline-animation"
+                          onClick={() => {
+                            setBid(false);
+                          }}
+                        >
+                          {" "}
+                          Place Bid{" "}
+                        </span>
+                      </button>
+                    ) : (
+                      <div className="flex">
+                        <div class="form__group field">
+                          <input
+                            required=""
+                            placeholder="Name"
+                            class="form__field"
+                            type="number"
+                            onChange={(e) => {
+                              setValue(e.target.value);
+                            }}
+                          />
+                          <label class="form__label" for="name">
+                            Enter your Bid
+                          </label>
+                        </div>
+                        <div className="flx">
+                          <button
+                            onClick={() => {
+                              console.log(value);
+                            }}
+                            class="contactButton"
+                          >
+                            {" "}
+                            Place
+                            <div class="iconButton">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                width="24"
+                                height="24"
+                              >
+                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                <path
+                                  fill="currentColor"
+                                  d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                                ></path>
+                              </svg>
+                            </div>
+                          </button>
+                          <div className="ms">
+                            <button
+                              onClick={() => {
+                                setBid(true);
+                              }}
+                            >
+                              <span class="shadow"></span>
+                              <span class="edge"></span>
+                              <span class="front text"> Cancel</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="info">
@@ -146,11 +219,113 @@ export default React.memo(function ItemonBid({ ds }) {
 });
 const Container = styled.div`
   background: black;
-  .bidArea {
-    display: flex;
-    width: 76%;
+  .info {
+    margin-top: 10vh;
+  }
+  .flx {
     justify-content: space-between;
     align-items: center;
+    gap: 30px;
+    .ms {
+      button {
+        position: relative;
+        border: none;
+        background: transparent;
+        padding: 0;
+        cursor: pointer;
+        outline-offset: 4px;
+        transition: filter 250ms;
+        user-select: none;
+        touch-action: manipulation;
+      }
+
+      .shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: hsl(0deg 0% 0% / 0.25);
+        will-change: transform;
+        transform: translateY(2px);
+        transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+      }
+
+      .edge {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 12px;
+        background: linear-gradient(
+          to left,
+          hsl(340deg 100% 16%) 0%,
+          hsl(340deg 100% 32%) 8%,
+          hsl(340deg 100% 32%) 92%,
+          hsl(340deg 100% 16%) 100%
+        );
+      }
+
+      .front {
+        display: block;
+        position: relative;
+        padding: 10px 22px;
+        border-radius: 12px;
+        font-size: 17px;
+        color: white;
+        background: hsl(345deg 100% 47%);
+        will-change: transform;
+        transform: translateY(-4px);
+        transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+      }
+
+      button:hover {
+        filter: brightness(110%);
+      }
+
+      button:hover .front {
+        transform: translateY(-6px);
+        transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+      }
+
+      button:active .front {
+        transform: translateY(-2px);
+        transition: transform 34ms;
+      }
+
+      button:hover .shadow {
+        transform: translateY(4px);
+        transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+      }
+
+      button:active .shadow {
+        transform: translateY(1px);
+        transition: transform 34ms;
+      }
+
+      button:focus:not(:focus-visible) {
+        outline: none;
+      }
+    }
+  }
+  .flex {
+    width: 20vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    flex-direction: column;
+    margin-bottom: 10vh;
+  }
+  .bidArea {
+    display: flex;
+    height: 25vh;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
   }
   .top,
   .au,
@@ -159,7 +334,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 25px;
+    gap: 50px;
   }
   .au {
     margin-top: 10px;
@@ -343,8 +518,9 @@ const Container = styled.div`
   .cta span {
     padding-bottom: 7px;
     letter-spacing: 4px;
-    font-size: 14px;
+    font-size: 17px;
     padding-right: 15px;
+    padding-left: 15px;
     text-transform: uppercase;
   }
 
@@ -370,5 +546,121 @@ const Container = styled.div`
   .cta:hover .hover-underline-animation:after {
     transform: scaleX(1);
     transform-origin: bottom left;
+  }
+  .form__group {
+    position: relative;
+    padding: 20px 0 0;
+    width: 100%;
+    max-width: 180px;
+  }
+
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #6b6b6b;
+    outline: 0;
+    font-size: 17px;
+    color: #fff;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
+
+  .form__field::placeholder {
+    color: transparent;
+  }
+
+  .form__field:placeholder-shown ~ .form__label {
+    font-size: 17px;
+    cursor: text;
+    top: 20px;
+  }
+
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 17px;
+    color: #ffe699;
+    pointer-events: none;
+  }
+
+  .form__field:focus {
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #ffe699, #5d3294);
+    border-image-slice: 1;
+  }
+
+  .form__field:focus ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 17px;
+    color: #ffe699;
+    font-weight: 700;
+  }
+
+  /* reset input */
+  .form__field:required,
+  .form__field:invalid {
+    box-shadow: none;
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  .contactButton {
+    background: #7079f0;
+    color: white;
+    font-family: inherit;
+    padding: 0.45em;
+    padding-left: 1em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #714da6;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3em;
+  }
+
+  .iconButton {
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #7a8cf3;
+    right: 0.3em;
+    transition: all 0.3s;
+  }
+
+  .contactButton:hover {
+    transform: translate(-0.05em, -0.05em);
+    box-shadow: 0.15em 0.15em #5566c2;
+  }
+
+  .contactButton:active {
+    transform: translate(0.05em, 0.05em);
+    box-shadow: 0.05em 0.05em #5566c2;
   }
 `;
