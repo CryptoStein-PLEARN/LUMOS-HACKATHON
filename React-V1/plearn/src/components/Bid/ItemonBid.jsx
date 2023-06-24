@@ -227,7 +227,9 @@ export default React.memo(function ItemonBid({ ds }) {
                         </div>
                         <div className="flx">
                           <button
-                            onClick={PlaceBid(value)}
+                            onClick={() => {
+                              PlaceBid(value)
+                            }}
                             class="contactButton"
                           >
                             {" "}

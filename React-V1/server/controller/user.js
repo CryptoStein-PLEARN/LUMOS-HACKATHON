@@ -540,7 +540,7 @@ const placeBid = async (req,res) => {
                         {
                             $push: 
                             {
-                                [item.bids]: bid,
+                                [`auction.${categoryData.auction.indexOf(item)}.bids`]: bid,
                             },
                         }
                     )
