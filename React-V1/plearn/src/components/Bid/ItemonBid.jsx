@@ -6,6 +6,8 @@ import Loader from "../Loader";
 import coin from "../../assets/MarketPlace/A (5).png";
 import { useLocation, useParams } from "react-router-dom";
 import InfoTab from "./InfoTab";
+import axios from "axios";
+
 export default React.memo(function ItemonBid({ ds }) {
   const character = useLocation();
   const values = character.pathname.split("/").slice(-2); // Extract the last two values
@@ -17,8 +19,7 @@ export default React.memo(function ItemonBid({ ds }) {
     .flatMap((obj) => obj.details.filter((detail) => detail.name === ItemName));
   const firstObject = filteredArray[0];
   // const desc = firstObject ? firstObject.description : "";
-  const desc =
-    "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ab minima eligendi voluptatibus consequatur, deleniti, nemo aspernatur debitis incidunt quidem, assumenda perferendis nihil nobis nisi blanditiis ullam porro facere dolore perspiciatis!";
+  const desc = filteredArray[0].description
   const price = firstObject ? firstObject.cost : "";
 
   console.log(filteredArray);
@@ -26,9 +27,36 @@ export default React.memo(function ItemonBid({ ds }) {
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
 
-  const EndAuction = () => {
-    console.log("Ended");
+  const EndAuction = async () => {
+    const data = {
+      category: Category,
+      id: filteredArray[0].id
+    }
+
+    const response = await axios.get(`https://plearn-backend.onrender.com/endAuction`, data);
+    
+    console.log(response.data);
   }
+
+  const [itemAuctionDetails, setItemAuctionDetails] = useState(null);
+
+  useEffect(() => {
+    async function GetItemAuctionDetail()
+    {
+      try
+      {
+        const response = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0].id}`);
+
+        setItemAuctionDetails(response.data);
+        // console.log(itemAuctionDetails);
+      }
+      catch (error) 
+      {
+        console.log(error);
+      }
+    }
+    GetItemAuctionDetail();
+  }, [])
 
   const CountdownButton = () => {
     const [timeLeft, setTimeLeft] = useState("");
@@ -74,6 +102,25 @@ export default React.memo(function ItemonBid({ ds }) {
     }
   }, [location]);
   const [value, setValue] = useState();
+
+  async function PlaceBid(value)
+  {
+    const data = {
+      category: Category,
+      id: filteredArray[0].id,
+      bid: {
+        bidderAddress: localStorage.getItem(1),
+        bidAmount: value,
+        currency: "ETH",
+        USDValue: 100
+      }
+    }
+
+    const response = await axios.post(`https://plearn-backend.onrender.com/placeBid`, data);
+
+    console.log(response.data);
+  }
+
   return (
     <>
       {showLoader ? (
@@ -87,7 +134,7 @@ export default React.memo(function ItemonBid({ ds }) {
                 <div className="Imgblock">
                   <div className="Image">
                     <img
-                      src="https://cdn.dribbble.com/users/383277/screenshots/18055765/media/e5fc935b60035305099554810357012a.png"
+                      src={filteredArray[0].imgUri}
                       alt=""
                     />
                   </div>
@@ -125,17 +172,24 @@ export default React.memo(function ItemonBid({ ds }) {
                     className="round"
                     alt=""
                   />
-                  <div className="price">
-                    {" "}
-                    <span className="desc">
-                      {" "}
-                      Highest bid by <span className="dark">
-                        XANDER_HALL{" "}
-                      </span>{" "}
-                      <br />
-                      0.9945 ETH
-                    </span>{" "}
-                  </div>
+       {itemAuctionDetails && itemAuctionDetails.item.bids.length > 0 ? (
+  <div className="price">
+    <span className="desc">Highest bid by</span>
+    <div className="dark">
+      {itemAuctionDetails.item.bids.reduce((maxBid, currentBid) =>
+        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+      ).bidderAddress}
+      <br />
+      {itemAuctionDetails.item.bids.reduce((maxBid, currentBid) =>
+        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+      ).bidAmount} ETH
+    </div>
+  </div>
+) : (
+  <div className="price">
+    <span className="desc">No bids yet</span>
+  </div>
+)}
                 </div>
                 <div className="bidArea">
                   <div className="desc au dark">
@@ -173,9 +227,7 @@ export default React.memo(function ItemonBid({ ds }) {
                         </div>
                         <div className="flx">
                           <button
-                            onClick={() => {
-                              console.log(value);
-                            }}
+                            onClick={PlaceBid(value)}
                             class="contactButton"
                           >
                             {" "}

@@ -8,6 +8,8 @@ export default function Owned() {
   const startTime = useRef(Date.now());
   const card = useSelector((state) => state.Owned.data);
   const nav = useNavigate();
+
+  console.log(card);
   const CountdownButton = ({ initialTimeLeft }) => {
     const [timeLeft, setTimeLeft] = useState(initialTimeLeft);
 
@@ -80,12 +82,12 @@ export default function Owned() {
                       <button disabled className=" dis">
                         OWNED
                       </button>
-                      <Link
+                      {Category.inAuction ? (<p>InAuction</p>): (<Link
                         className="Btn"
                         to={`/Sell/${Category.name}_${Category.category}_${Category.id}`}
                       >
                         Sell item
-                      </Link>
+                      </Link>)}
                     </div>
                   </div>
                 </div>

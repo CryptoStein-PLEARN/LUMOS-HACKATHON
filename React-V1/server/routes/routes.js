@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express();
-const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer} = require("../controller/user");
+const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction} = require("../controller/user");
 const {getPlayer} = require("../controller/user");
 const {saveDetails} = require("../controller/user");
 const {getMarketplaceDetails} = require("../controller/user");
@@ -16,6 +16,7 @@ const {buyFromMarketplace} = require("../controller/user");
 const {getOwnedNFTs} = require("../controller/user");
 const {startAuction} = require("../controller/user")
 const {getAuctionDetails} = require("../controller/user")
+const {placeBid} = require("../controller/user");
 
 router.post("/preregistration", preRegisterUser);
 
@@ -32,6 +33,10 @@ router.post('/buyFromMarketplace', buyFromMarketplace);
 router.get('/getAuctionDetails/:category/:id', getAuctionDetails);
 
 router.post('/startAuction', startAuction);
+
+router.get('/endAuction', endAuction);
+
+router.post('/placeBid', placeBid);
 
 router.get('/getOwnedNFTs/:userAccount', getOwnedNFTs); //Change the name from characters to generic - items
 

@@ -28,17 +28,17 @@ export default React.memo(function App() {
         );
         console.log(response.data);
 
-        response.data.forEach((category) => {
-          category.details.forEach(async (item) => {
-            if(item.inAuction === true)
-            {
-              const res = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${category.category}/${item.id}`);
-              // const res = await axios.get(`http://localhost:8080/getAuctionDetails/${category.category}/${item.id}`);
-              console.log(res.data);
+        // response.data.forEach((category) => {
+        //   category.details.forEach(async (item) => {
+        //     if(item.inAuction === true)
+        //     {
+        //       const res = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${category.category}/${item.id}`);
+        //       // const res = await axios.get(`http://localhost:8080/getAuctionDetails/${category.category}/${item.id}`);
+        //       console.log(res.data);
               
-            }
-          })
-        })
+        //     }
+        //   })
+        // })
 
         dispatch(updateCards(response.data));
       } catch (error) {

@@ -379,17 +379,19 @@ const startAuction = async (req,res) => {
 const endAuction = async (req,res) => {
     try
     {
-        const {category, id} = req.body.data;
+        const {category, id} = req.body;
         const categoryData = await auctionDetail.findOne({ category: category });
 
         if(categoryData)
         {
-            var item = categoryData.auction.find(item => item.id === id);
+            var item = categoryData.auction.find(item => item.id === parseInt(id));
             
             if(item)
             {
                 if(item.bids.length > 0)
                 {
+                    const endTime = new Date();
+
                     const highestBid = item.bids.reduce((maxBid, currentBid) => {
                         if (currentBid.bidAmount > maxBid.bidAmount) {
                             return currentBid;
@@ -399,15 +401,15 @@ const endAuction = async (req,res) => {
                     });
 
                     const updateResult = await auctionDetail.updateOne(
-                        {category: req.body.data.category},
+                        {category: req.body.category},
                         {
                             $set: 
                             {
-                                [item.started]: false,
-                                [item.ended]: true,
-                                [item.duration]: 0,
-                                [item.timer]: 0,
-                                [item.basePrice]: 0,
+                                [`auction.${categoryData.auction.indexOf(item)}.started`]: false,
+                                [`auction.${categoryData.auction.indexOf(item)}.ended`]: true,
+                                [`auction.${categoryData.auction.indexOf(item)}.endTime`]: endTime,
+                                [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: 0,
+                                [`auction.${categoryData.auction.indexOf(item)}.currentOwner`]: highestBid.bidderAddress
                             },
                         },
                         {
@@ -417,12 +419,13 @@ const endAuction = async (req,res) => {
 
                     const updateMarketplace = await marketplaceDetail.updateOne(
                         {
-                            category: req.body.data.category
+                            category: req.body.category
                         },
                         {
                             $set: 
                             {
                                 [`details.${id - 2}.inAuction`]: false,
+                                [`details.${id - 2}.auctionEndTime`]: endTime,
                                 [`details.${id - 2}.currentOwner`]: highestBid.bidderAddress,
                             },
                             $push:
@@ -436,17 +439,29 @@ const endAuction = async (req,res) => {
                             }
                         }
                     )
-
-                    const playerUpdateResult = await playerDetail.updateOne(
-                        { userAccount: userAccount },
+                    
+                    //Adding NFT to the account of new owner
+                    const playerUpdateResult1 = await playerDetail.updateOne(
+                        { userAccount: highestBid.bidderAddress },
                         {
-                            $push: { [`ownedNFTs.${req.body.data.category}`]: id }
+                            $push: { [`ownedNFTs.${req.body.category}`]: id }
                         },
                     );
+                    
+                    //Removing NFT from the account of prev owner
+                    const playerUpdateResult2 = await playerDetail.updateOne(
+                        { userAccount: item.currentOwner },
+                        {
+                            $pull:
+                            {
+                                [`ownedNFTs.${req.body.category}`]: id 
+                            }
+                        }
+                    )
 
                     res.send({
                         message: `Auction ended for ItemID ${id}`,
-                        AuctionWinner: highestBid.bidderAddress,
+                        AuctionWinner: highestBid,
                     });
                 }
                 else
@@ -456,11 +471,10 @@ const endAuction = async (req,res) => {
                         {
                             $set: 
                             {
-                                [item.started]: false,
-                                [item.ended]: true,
-                                [item.duration]: 0,
-                                [item.timer]: 0,
-                                [item.basePrice]: 0,
+                                [`auction.${categoryData.auction.indexOf(item)}.started`]: false,
+                                [`auction.${categoryData.auction.indexOf(item)}.ended`]: true,
+                                [`auction.${categoryData.auction.indexOf(item)}.endTime`]: endTime,
+                                [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: 0,
                             },
                         },
                         {
@@ -476,6 +490,7 @@ const endAuction = async (req,res) => {
                             $set: 
                             {
                                 [`details.${id - 2}.inAuction`]: false,
+                                [`details.${id - 2}.auctionEndTime`]: new Date(),
                             },
                         }
                     )
@@ -505,7 +520,7 @@ const endAuction = async (req,res) => {
 const placeBid = async (req,res) => {
     try
     {
-        const {category, id, bid, bidderAddress, bidAmount, currency} = req.body.data;
+        const {category, id, bid} = req.body;
         const categoryData = await auctionDetail.findOne({ category: category });
 
         if(categoryData)
@@ -521,7 +536,7 @@ const placeBid = async (req,res) => {
                 else
                 {
                     const updateResult = await auctionDetail.updateOne(
-                        {category: req.body.data.category},
+                        {category: req.body.category},
                         {
                             $push: 
                             {
@@ -835,4 +850,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};

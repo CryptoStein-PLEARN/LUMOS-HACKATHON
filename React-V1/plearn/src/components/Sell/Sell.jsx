@@ -26,7 +26,7 @@ export default function Sell() {
       category: category,
       id: id,
       duration: totalDuration,
-      basePrice: 100,
+      basePrice: document.getElementById("basePrice").value,
       currentOwner: localStorage.getItem(1),
     };
 
@@ -56,6 +56,7 @@ export default function Sell() {
         <h3>Product Name : {itemName}</h3>
         <p>Enter Your Base Price</p>
         <input
+          id="basePrice"
           type="number"
           min="0"
           placeholder="Sell At"
