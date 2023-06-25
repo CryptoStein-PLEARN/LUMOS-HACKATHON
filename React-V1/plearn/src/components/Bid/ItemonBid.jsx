@@ -49,7 +49,7 @@ export default React.memo(function ItemonBid({ ds }) {
         const response = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0].id}`);
 
         setItemAuctionDetails(response.data);
-        // console.log(itemAuctionDetails);
+        console.log(itemAuctionDetails);
       }
       catch (error) 
       {
