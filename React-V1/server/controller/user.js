@@ -467,7 +467,7 @@ const endAuction = async (req,res) => {
                 else
                 {
                     const updateResult = await auctionDetail.updateOne(
-                        {category: req.body.data.category},
+                        {category: req.body.category},
                         {
                             $set: 
                             {
@@ -484,7 +484,7 @@ const endAuction = async (req,res) => {
 
                     const updateMarketplace = await marketplaceDetail.updateOne(
                         {
-                            category: req.body.data.category
+                            category: req.body.category
                         },
                         {
                             $set: 
