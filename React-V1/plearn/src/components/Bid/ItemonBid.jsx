@@ -32,10 +32,11 @@ export default React.memo(function ItemonBid({ ds }) {
       category: Category,
       id: filteredArray[0].id
     }
-
-    const response = await axios.get(`https://plearn-backend.onrender.com/endAuction`, data);
-    
-    console.log(response.data);
+    // const response = await axios.get(`https://plearn-backend.onrender.com/endAuction`, data);
+    await axios.post("https://plearn-backend.onrender.com/endAuction", data)
+    .then((response) => {
+      console.log(response.data);
+    })
   }
 
   const [itemAuctionDetails, setItemAuctionDetails] = useState(null);

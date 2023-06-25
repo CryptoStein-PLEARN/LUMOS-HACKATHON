@@ -34,7 +34,7 @@ router.get('/getAuctionDetails/:category/:id', getAuctionDetails);
 
 router.post('/startAuction', startAuction);
 
-router.get('/endAuction', endAuction);
+router.post('/endAuction', endAuction);
 
 router.post('/placeBid', placeBid);
 
