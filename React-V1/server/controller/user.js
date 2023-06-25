@@ -474,7 +474,7 @@ const endAuction = async (req,res) => {
                                 [`auction.${categoryData.auction.indexOf(item)}.started`]: false,
                                 [`auction.${categoryData.auction.indexOf(item)}.ended`]: true,
                                 [`auction.${categoryData.auction.indexOf(item)}.endTime`]: endTime,
-                                [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: 0,
+                                [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: new Date(),
                             },
                         },
                         {
