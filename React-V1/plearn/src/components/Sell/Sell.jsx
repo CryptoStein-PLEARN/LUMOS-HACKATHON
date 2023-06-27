@@ -37,6 +37,7 @@ export default function Sell() {
         setLoader(false);
         console.log(response.data);
         nav("/MarketPlace");
+        window.location.reload();
       });
   };
 

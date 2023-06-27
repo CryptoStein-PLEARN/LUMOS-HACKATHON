@@ -11,7 +11,8 @@ import axios from "axios";
 export default React.memo(function ItemonBid({ ds }) {
   const character = useLocation();
   const values = character.pathname.split("/").slice(-2); // Extract the last two values
-
+  const [Bidcomponent, ChangeComponent] = useState(false);
+  const [bidAmount, Setbid] = useState(0);
   const Category = values[0];
   const ItemName = values[1];
   const filteredArray = ds
@@ -19,7 +20,7 @@ export default React.memo(function ItemonBid({ ds }) {
     .flatMap((obj) => obj.details.filter((detail) => detail.name === ItemName));
   const firstObject = filteredArray[0];
   // const desc = firstObject ? firstObject.description : "";
-  const desc = filteredArray[0].description
+  const desc = filteredArray[0].description;
   const price = firstObject ? firstObject.cost : "";
 
   console.log(filteredArray);
@@ -30,34 +31,33 @@ export default React.memo(function ItemonBid({ ds }) {
   const EndAuction = async () => {
     const data = {
       category: Category,
-      id: filteredArray[0].id
-    }
+      id: filteredArray[0].id,
+    };
     // const response = await axios.get(`https://plearn-backend.onrender.com/endAuction`, data);
-    await axios.post("https://plearn-backend.onrender.com/endAuction", data)
-    .then((response) => {
-      console.log(response.data);
-    })
-  }
+    await axios
+      .post("https://plearn-backend.onrender.com/endAuction", data)
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
 
   const [itemAuctionDetails, setItemAuctionDetails] = useState(null);
 
   useEffect(() => {
-    async function GetItemAuctionDetail()
-    {
-      try
-      {
-        const response = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0].id}`);
+    async function GetItemAuctionDetail() {
+      try {
+        const response = await axios.get(
+          `https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0].id}`
+        );
 
         setItemAuctionDetails(response.data);
         console.log(itemAuctionDetails);
-      }
-      catch (error) 
-      {
+      } catch (error) {
         console.log(error);
       }
     }
     GetItemAuctionDetail();
-  }, [])
+  }, []);
 
   const CountdownButton = () => {
     const [timeLeft, setTimeLeft] = useState("");
@@ -104,8 +104,7 @@ export default React.memo(function ItemonBid({ ds }) {
   }, [location]);
   const [value, setValue] = useState();
 
-  async function PlaceBid(value)
-  {
+  async function PlaceBid(value) {
     const data = {
       category: Category,
       id: filteredArray[0].id,
@@ -113,12 +112,17 @@ export default React.memo(function ItemonBid({ ds }) {
         bidderAddress: localStorage.getItem(1),
         bidAmount: value,
         currency: "ETH",
-        USDValue: 100
-      }
+        USDValue: 100,
+      },
+    };
+
+    const response = await axios.post(
+      `https://plearn-backend.onrender.com/placeBid`,
+      data
+    );
+    if (response.data) {
+      ChangeComponent(true);
     }
-
-    const response = await axios.post(`https://plearn-backend.onrender.com/placeBid`, data);
-
     console.log(response.data);
   }
 
@@ -134,10 +138,7 @@ export default React.memo(function ItemonBid({ ds }) {
               <div className="blockMain">
                 <div className="Imgblock">
                   <div className="Image">
-                    <img
-                      src={filteredArray[0].imgUri}
-                      alt=""
-                    />
+                    <img src={filteredArray[0].imgUri} alt="" />
                   </div>
                 </div>
               </div>
@@ -173,24 +174,36 @@ export default React.memo(function ItemonBid({ ds }) {
                     className="round"
                     alt=""
                   />
-       {itemAuctionDetails && itemAuctionDetails.item.bids.length > 0 ? (
-  <div className="price">
-    <span className="desc">Highest bid by</span>
-    <div className="dark">
-      {itemAuctionDetails.item.bids.reduce((maxBid, currentBid) =>
-        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
-      ).bidderAddress}
-      <br />
-      {itemAuctionDetails.item.bids.reduce((maxBid, currentBid) =>
-        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
-      ).bidAmount} ETH
-    </div>
-  </div>
-) : (
-  <div className="price">
-    <span className="desc">No bids yet</span>
-  </div>
-)}
+                  {itemAuctionDetails &&
+                  itemAuctionDetails.item.bids.length > 0 ? (
+                    <div className="price">
+                      <span className="desc">Highest bid by</span>
+                      <div className="dark">
+                        {
+                          itemAuctionDetails.item.bids.reduce(
+                            (maxBid, currentBid) =>
+                              currentBid.bidAmount > maxBid.bidAmount
+                                ? currentBid
+                                : maxBid
+                          ).bidderAddress
+                        }
+                        <br />
+                        {
+                          itemAuctionDetails.item.bids.reduce(
+                            (maxBid, currentBid) =>
+                              currentBid.bidAmount > maxBid.bidAmount
+                                ? currentBid
+                                : maxBid
+                          ).bidAmount
+                        }{" "}
+                        ETH
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="price">
+                      <span className="desc">No bids yet</span>
+                    </div>
+                  )}
                 </div>
                 <div className="bidArea">
                   <div className="desc au dark">
@@ -229,7 +242,7 @@ export default React.memo(function ItemonBid({ ds }) {
                         <div className="flx">
                           <button
                             onClick={() => {
-                              PlaceBid(value)
+                              PlaceBid(value);
                             }}
                             class="contactButton"
                           >
