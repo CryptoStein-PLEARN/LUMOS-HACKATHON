@@ -11,8 +11,9 @@ import axios from "axios";
 export default React.memo(function ItemonBid({ ds }) {
   const character = useLocation();
   const values = character.pathname.split("/").slice(-2); // Extract the last two values
-  const [Bidcomponent, ChangeComponent] = useState(false);
-  const [bidAmount, Setbid] = useState(0);
+  const [showBidInput, setShowBidInput] = useState(false);
+  const [bidPlaced, setBidPlaced] = useState(false);
+  const [bidValue, setBidValue] = useState("");
   const Category = values[0];
   const ItemName = values[1];
   const filteredArray = ds
@@ -20,11 +21,10 @@ export default React.memo(function ItemonBid({ ds }) {
     .flatMap((obj) => obj.details.filter((detail) => detail.name === ItemName));
   const firstObject = filteredArray[0];
   // const desc = firstObject ? firstObject.description : "";
-  const desc = filteredArray[0].description;
+  const desc = filteredArray[0]?.description;
   const price = firstObject ? firstObject.cost : "";
 
   console.log(filteredArray);
-
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
 
@@ -44,13 +44,14 @@ export default React.memo(function ItemonBid({ ds }) {
   const [itemAuctionDetails, setItemAuctionDetails] = useState(null);
 
   useEffect(() => {
+    setShowLoader(true);
     async function GetItemAuctionDetail() {
       try {
         const response = await axios.get(
           `https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0].id}`
         );
-
         setItemAuctionDetails(response.data);
+        setShowLoader(false);
         console.log(itemAuctionDetails);
       } catch (error) {
         console.log(error);
@@ -93,18 +94,8 @@ export default React.memo(function ItemonBid({ ds }) {
       </button>
     );
   };
-  const [bid, setBid] = useState(true);
-  useEffect(() => {
-    setShowLoader(true);
-    if (filteredArray.length === 0) {
-      setShowLoader(true);
-    } else {
-      setShowLoader(false);
-    }
-  }, [location]);
-  const [value, setValue] = useState();
 
-  async function PlaceBid(value) {
+  async function handlePlaceBid(value) {
     const data = {
       category: Category,
       id: filteredArray[0].id,
@@ -121,10 +112,22 @@ export default React.memo(function ItemonBid({ ds }) {
       data
     );
     if (response.data) {
-      ChangeComponent(true);
+      setBidPlaced(true);
     }
     console.log(response.data);
   }
+  const handlePlaceBidClick = () => {
+    setShowBidInput(true);
+  };
+  const handleCancelBid = () => {
+    setShowBidInput(false);
+    setBidPlaced(false);
+    setBidValue("");
+  };
+
+  const handleBidInputChange = (e) => {
+    setBidValue(e.target.value);
+  };
 
   return (
     <>
@@ -138,7 +141,7 @@ export default React.memo(function ItemonBid({ ds }) {
               <div className="blockMain">
                 <div className="Imgblock">
                   <div className="Image">
-                    <img src={filteredArray[0].imgUri} alt="" />
+                    <img src={filteredArray[0]?.imgUri} alt="" />
                   </div>
                 </div>
               </div>
@@ -211,72 +214,62 @@ export default React.memo(function ItemonBid({ ds }) {
                     <CountdownButton />
                   </div>
                   <div className="cancelBid">
-                    {bid ? (
-                      <button class="cta">
-                        <span
-                          class="hover-underline-animation"
-                          onClick={() => {
-                            setBid(false);
-                          }}
-                        >
-                          {" "}
-                          Place Bid{" "}
-                        </span>
-                      </button>
-                    ) : (
-                      <div className="flex">
-                        <div class="form__group field">
-                          <input
-                            required=""
-                            placeholder="Name"
-                            class="form__field"
-                            type="number"
-                            onChange={(e) => {
-                              setValue(e.target.value);
-                            }}
-                          />
-                          <label class="form__label" for="name">
-                            Enter your Bid
-                          </label>
-                        </div>
-                        <div className="flx">
-                          <button
-                            onClick={() => {
-                              PlaceBid(value);
-                            }}
-                            class="contactButton"
-                          >
-                            {" "}
-                            Place
-                            <div class="iconButton">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width="24"
-                                height="24"
-                              >
-                                <path fill="none" d="M0 0h24v24H0z"></path>
-                                <path
-                                  fill="currentColor"
-                                  d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                                ></path>
-                              </svg>
-                            </div>
-                          </button>
-                          <div className="ms">
+                    <div className="cancelBid">
+                      {bidPlaced ? (
+                        <div>Placed</div>
+                      ) : showBidInput ? (
+                        <div className="flex">
+                          <div className="form__group field">
+                            <input
+                              required
+                              placeholder="Name"
+                              className="form__field"
+                              type="number"
+                              value={bidValue}
+                              onChange={handleBidInputChange}
+                            />
+                            <label className="form__label" htmlFor="name">
+                              Enter your Bid
+                            </label>
+                          </div>
+                          <div className="flx">
                             <button
-                              onClick={() => {
-                                setBid(true);
-                              }}
+                              onClick={handlePlaceBid}
+                              className="contactButton"
                             >
-                              <span class="shadow"></span>
-                              <span class="edge"></span>
-                              <span class="front text"> Cancel</span>
+                              Place
+                              <div className="iconButton">
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  width="24"
+                                  height="24"
+                                >
+                                  <path fill="none" d="M0 0h24v24H0z"></path>
+                                  <path
+                                    fill="currentColor"
+                                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                                  ></path>
+                                </svg>
+                              </div>
                             </button>
+                            <div className="ms">
+                              <button onClick={handleCancelBid}>
+                                <span className="shadow"></span>
+                                <span className="edge"></span>
+                                <span className="front text">Cancel</span>
+                              </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    )}
+                      ) : (
+                        <button className="cta" onClick={handlePlaceBidClick}>
+                          <span className="hover-underline-animation">
+                            Place Bid
+                          </span>
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
                 <div className="info">
