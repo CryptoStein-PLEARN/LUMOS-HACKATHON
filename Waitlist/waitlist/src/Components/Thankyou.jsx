@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 export default function Thankyou() {
   return (
     <Container>
@@ -15,7 +15,7 @@ export default function Thankyou() {
           <p>for contacting us, we will reply promptly</p>
           <p>once your message is received. </p>
           <button class="go-home">
-            <a href="https://codepen.io/LeenaStark/full/VOxrJO">home page</a>
+            <Link href="/">home page</Link>
           </button>
         </div>
       </div>
