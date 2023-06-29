@@ -12,10 +12,12 @@ export default function Thankyou() {
             border="0"
           />
           <h1>Thank you!</h1>
-          <p>for contacting us, we will reply promptly</p>
-          <p>once your message is received. </p>
+          <p>
+            for reaching out to us! We greatly appreciate your message. Rest
+            assured that we will respond promptly upon receiving it{" "}
+          </p>
           <button class="go-home">
-            <Link href="/">home page</Link>
+            <Link to="/">home page</Link>
           </button>
         </div>
       </div>
@@ -23,6 +25,11 @@ export default function Thankyou() {
   );
 }
 const Container = styled.div`
+  height: 100vh;
+  display: flex;
+
+  align-items: center;
+
   .wrapper-1 {
     width: 100%;
     height: 100vh;
@@ -107,9 +114,25 @@ const Container = styled.div`
     }
     .wrapper-1 {
       height: initial;
+      border-radius: 30px;
       max-width: 620px;
       margin: 0 auto;
+      display: flex;
+      background: dimgrey;
+      padding: 20px;
       margin-top: 50px;
+      display: flex;
+      background: dimgrey;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      img {
+        width: 10vh;
+      }
+      p {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
     }
   }
 `;
