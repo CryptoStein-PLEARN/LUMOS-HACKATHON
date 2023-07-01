@@ -176,7 +176,7 @@ export default React.memo(function ItemonBid({ ds }) {
                       <span className="desc">Highest bid by</span>
                       <div className="dark">
                         {
-                          itemAuctionDetails?.item?.bids.reduce(
+                          itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.reduce(
                             (maxBid, currentBid) =>
                               currentBid.bidAmount > maxBid.bidAmount
                                 ? currentBid

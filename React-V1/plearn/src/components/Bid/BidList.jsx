@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export default function BidList({ transaction }) {
+  console.log(transaction)
   const [maxCostOwner, setMaxCostOwner] = useState("");
 
-  const obj = transaction?.item.bids;
+  const obj = transaction?.item.bids[transaction?.item.bids.length - 1].bid;
   const SortedArray = obj.sort((a, b) => b.bidAmount - a.bidAmount);
   let i = 1;
   function calculateTimeDifference(timestamp, currentTimestamp) {

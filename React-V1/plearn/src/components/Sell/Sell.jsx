@@ -27,12 +27,14 @@ export default function Sell() {
       id: id,
       duration: totalDuration,
       basePrice: document.getElementById("basePrice").value,
+      minBidAmount: document.getElementById("minBidAmount").value,
       currentOwner: localStorage.getItem(1),
     };
 
     // await axios.post("http://localhost:8080/startAuction", data)
     await axios
       .post("https://plearn-backend.onrender.com/startAuction", data)
+      // .post("http://localhost:8080/startAuction", data)
       .then((response) => {
         setLoader(false);
         console.log(response.data);
@@ -61,6 +63,20 @@ export default function Sell() {
           type="number"
           min="0"
           placeholder="Sell At"
+          onInput={(event) =>
+            (event.target.value = event.target.value.slice(
+              0,
+              event.target.maxLength
+            ))
+          }
+          maxLength="4"
+        ></input>
+        <p>Enter minimum bid amount allowed</p>
+        <input
+          id="minBidAmount"
+          type="number"
+          min="0"
+          placeholder="Minimum bid amount"
           onInput={(event) =>
             (event.target.value = event.target.value.slice(
               0,
