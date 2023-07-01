@@ -91,13 +91,13 @@ export default React.memo(function ItemonBid({ ds }) {
     );
   };
 
-  async function handlePlaceBid(value) {
+  async function handlePlaceBid() {
     const data = {
       category: Category,
       id: filteredArray[0].id,
       bid: {
         bidderAddress: localStorage.getItem(1),
-        bidAmount: value,
+        bidAmount: parseInt(bidValue),
         currency: "ETH",
         USDValue: 100,
       },
