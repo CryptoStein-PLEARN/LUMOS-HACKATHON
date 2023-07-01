@@ -11,7 +11,7 @@ export default function Thankyou() {
             alt="thank-you-envelope"
             border="0"
           />
-          <h1>Thank you!</h1>
+          <h1>Thank you</h1>
           <p>
             for reaching out to us! We greatly appreciate your message. Rest
             assured that we will respond promptly upon receiving it{" "}
@@ -41,7 +41,7 @@ const Container = styled.div`
     text-align: center;
   }
   h1 {
-    font-size: 4em;
+    font-size: 4.5em;
     font-weight: 900;
     letter-spacing: 3px;
     color: #fafafa;

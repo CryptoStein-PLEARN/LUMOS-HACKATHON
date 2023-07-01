@@ -6,7 +6,7 @@ export default function BidList({ transaction }) {
 
   const obj = transaction?.item.bids;
   const SortedArray = obj.sort((a, b) => b.bidAmount - a.bidAmount);
-  let i = 0;
+  let i = 1;
   function calculateTimeDifference(timestamp, currentTimestamp) {
     var timestampDate = new Date(timestamp);
     var currentDate = new Date(currentTimestamp);
