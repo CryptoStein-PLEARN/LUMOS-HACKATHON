@@ -46,6 +46,7 @@ export default React.memo(function ItemonBid({ ds }) {
       try {
         const response = await axios.get(
           `https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0]?.id}`
+          // `http://localhost:8080/getAuctionDetails/${Category}/${filteredArray[0]?.id}`
         );
         setItemAuctionDetails(response.data);
         console.log(itemAuctionDetails);
@@ -171,26 +172,30 @@ export default React.memo(function ItemonBid({ ds }) {
                     alt=""
                   />
                   {itemAuctionDetails &&
-                  itemAuctionDetails?.item?.bids.length > 0 ? (
+                  itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.length > 0 ? (
                     <div className="price">
                       <span className="desc">Highest bid by</span>
                       <div className="dark">
                         {
+                          itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.length > 0 ? (
                           itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.reduce(
                             (maxBid, currentBid) =>
                               currentBid.bidAmount > maxBid.bidAmount
                                 ? currentBid
                                 : maxBid
                           ).bidderAddress
+                          ) : ("No bids")
                         }
                         <br />
                         {
-                          itemAuctionDetails.item.bids.reduce(
+                          itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.length > 0 ? (
+                          itemAuctionDetails.item.bids[itemAuctionDetails.item.bids.length - 1].bid.reduce(
                             (maxBid, currentBid) =>
                               currentBid.bidAmount > maxBid.bidAmount
                                 ? currentBid
                                 : maxBid
                           ).bidAmount
+                          ) : ("")
                         }{" "}
                         ETH
                       </div>

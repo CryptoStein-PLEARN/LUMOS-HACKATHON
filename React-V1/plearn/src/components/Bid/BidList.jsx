@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 export default function BidList({ transaction }) {
-  console.log(transaction)
   const [maxCostOwner, setMaxCostOwner] = useState("");
 
   const obj = transaction?.item.bids[transaction?.item.bids.length - 1].bid;
