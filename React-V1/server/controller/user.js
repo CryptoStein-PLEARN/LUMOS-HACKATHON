@@ -414,7 +414,7 @@ const endAuction = async (req,res) => {
                 {
                     const endTime = new Date();
 
-                    const highestBid = item.bids[bids.length - 1].bid.reduce((maxBid, currentBid) => {
+                    const highestBid = item.bids[item.bids.length - 1].bid.reduce((maxBid, currentBid) => {
                         if (currentBid.bidAmount > maxBid.bidAmount) {
                             return currentBid;
                         } else {
@@ -552,7 +552,7 @@ const placeBid = async (req,res) => {
 
             if(item)
             {
-                if(bid.bidAmount < item.minBidAmount)
+                if(bid.bidAmount <= item.minBidAmount)
                 {
                     res.send({message: `Bid Amount should be greater than the Minimum Bid Amount ${item.minBidAmount}${bid.currency}`})
                 }
@@ -563,7 +563,7 @@ const placeBid = async (req,res) => {
                         {
                             $push: 
                             {
-                                [`auction.${categoryData.auction.indexOf(item)}.bids.${categoryData.auction.indexOf(item).bids[item.bids.length - 1]}.bid`]: bid,
+                                [`auction.${categoryData.auction.indexOf(item)}.bids.${item.bids.length - 1}.bid`]: bid,
                             },
                         }
                     )
