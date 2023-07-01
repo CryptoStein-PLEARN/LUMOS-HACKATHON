@@ -31,9 +31,9 @@ export default React.memo(function ItemonBid({ ds }) {
       category: Category,
       id: filteredArray[0]?.id,
     };
-    // const response = await axios.get(`https://plearn-backend.onrender.com/endAuction`, data);
     await axios
       .post("https://plearn-backend.onrender.com/endAuction", data)
+      // .post("http://localhost:8080/endAuction", data)
       .then((response) => {
         console.log(response.data);
       });

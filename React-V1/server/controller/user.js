@@ -277,11 +277,14 @@ const startAuction = async (req,res) => {
                             [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: basePrice,
                             [`auction.${categoryData.auction.indexOf(item)}.currentOwner`]: currentOwner,
                             [`auction.${categoryData.auction.indexOf(item)}.minBidAmount`]: minBidAmount,
-                            [`auction.${categoryData.auction.indexOf(item)}.bids`]: {
-                                auctionID: `auction.${categoryData.auction.indexOf(item)}.bids.auctionID` + 1,
-                                bid: []
-                            }
                         },
+                        $push:
+                        {
+                            [`auction.${categoryData.auction.indexOf(item)}.bids`]: [{
+                                auctionID: item.bids.length,
+                                bid: []
+                            }]
+                        }
                     },
                 )
 
@@ -407,7 +410,7 @@ const endAuction = async (req,res) => {
             
             if(item)
             {
-                if(item.bids[bids.length - 1].bid.length > 0)
+                if(item.bids[item.bids.length - 1].bid.length > 0)
                 {
                     const endTime = new Date();
 
@@ -428,7 +431,8 @@ const endAuction = async (req,res) => {
                                 [`auction.${categoryData.auction.indexOf(item)}.ended`]: true,
                                 [`auction.${categoryData.auction.indexOf(item)}.endTime`]: endTime,
                                 [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: 0,
-                                [`auction.${categoryData.auction.indexOf(item)}.currentOwner`]: highestBid.bidderAddress
+                                [`auction.${categoryData.auction.indexOf(item)}.currentOwner`]: highestBid.bidderAddress,
+                                [`auction.${categoryData.auction.indexOf(item)}.minBidAmount`]: 0,
                             },
                         },
                         {
@@ -493,6 +497,7 @@ const endAuction = async (req,res) => {
                                 [`auction.${categoryData.auction.indexOf(item)}.ended`]: true,
                                 [`auction.${categoryData.auction.indexOf(item)}.endTime`]: new Date(),
                                 [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: 0,
+                                [`auction.${categoryData.auction.indexOf(item)}.minBidAmount`]: 0,
                             },
                         },
                         {
