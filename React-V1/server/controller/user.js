@@ -252,10 +252,10 @@ const getAuctionDetails = async (req,res) => {
         res.send(err);
     }
 }
-//
+
 const startAuction = async (req,res) => {
     try{
-        const {category, id, duration, basePrice, currentOwner} = req.body;
+        const {category, id, duration, basePrice, currentOwner, minBidAmount} = req.body;
         const categoryData = await auctionDetail.findOne({ category: category });
 
         if(categoryData)
@@ -275,7 +275,12 @@ const startAuction = async (req,res) => {
                             [`auction.${categoryData.auction.indexOf(item)}.ended`]: false,
                             [`auction.${categoryData.auction.indexOf(item)}.endTime`]: endTime,
                             [`auction.${categoryData.auction.indexOf(item)}.basePrice`]: basePrice,
-                            [`auction.${categoryData.auction.indexOf(item)}.currentOwner`]: currentOwner
+                            [`auction.${categoryData.auction.indexOf(item)}.currentOwner`]: currentOwner,
+                            [`auction.${categoryData.auction.indexOf(item)}.minBidAmount`]: minBidAmount,
+                            [`auction.${categoryData.auction.indexOf(item)}.bids`]: {
+                                auctionID: `auction.${categoryData.auction.indexOf(item)}.bids.auctionID` + 1,
+                                bid: []
+                            }
                         },
                     },
                 )
@@ -310,7 +315,14 @@ const startAuction = async (req,res) => {
                                 ended: false,
                                 endTime: endTime,
                                 basePrice: basePrice,
-                                currentOwner: currentOwner
+                                currentOwner: currentOwner,
+                                minBidAmount: minBidAmount,
+                                bids:[
+                                    {
+                                        auctionID: 0,
+                                        bid:[]
+                                    }
+                                ]
                             }
                         }
                     },
@@ -335,7 +347,7 @@ const startAuction = async (req,res) => {
                 res.send({message: "Auction Started.", item: updatedItem.auction.find((i) => i.id === parseInt(id)), category: category})
             }
         }
-        else    //Create Auction for the category
+        else    //Create Auction for the category and item - first time.
         {
             const endTime = new Date(Date.now() + duration);
 
@@ -347,7 +359,14 @@ const startAuction = async (req,res) => {
                     ended: false,
                     endTime: endTime,
                     basePrice: basePrice,
-                    currentOwner: currentOwner
+                    currentOwner: currentOwner,
+                    minBidAmount: minBidAmount,
+                    bids: [
+                        {
+                            auctionID: 0,
+                            bid:[]
+                        }
+                    ]
                 }]
             });
 
@@ -388,11 +407,11 @@ const endAuction = async (req,res) => {
             
             if(item)
             {
-                if(item.bids.length > 0)
+                if(item.bids[bids.length - 1].bid.length > 0)
                 {
                     const endTime = new Date();
 
-                    const highestBid = item.bids.reduce((maxBid, currentBid) => {
+                    const highestBid = item.bids[bids.length - 1].bid.reduce((maxBid, currentBid) => {
                         if (currentBid.bidAmount > maxBid.bidAmount) {
                             return currentBid;
                         } else {
@@ -528,9 +547,9 @@ const placeBid = async (req,res) => {
 
             if(item)
             {
-                if(bid.bidAmount < item.basePrice)
+                if(bid.bidAmount < item.minBidAmount)
                 {
-                    res.send({message: `Bid Amount should be greater than the Base Price ${item.basePrice}${bid.currency}`})
+                    res.send({message: `Bid Amount should be greater than the Minimum Bid Amount ${item.minBidAmount}${bid.currency}`})
                 }
                 else
                 {
@@ -539,7 +558,7 @@ const placeBid = async (req,res) => {
                         {
                             $push: 
                             {
-                                [`auction.${categoryData.auction.indexOf(item)}.bids`]: bid,
+                                [`auction.${categoryData.auction.indexOf(item)}.bids.${categoryData.auction.indexOf(item).bids[bids.length - 1]}.bid`]: bid,
                             },
                         }
                     )

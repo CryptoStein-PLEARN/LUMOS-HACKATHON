@@ -10,12 +10,16 @@ const auctionSchema = new mongoose.Schema({
         basePrice: {type: Number},
         timestamp: {type: Date, default: Date.now},
         currentOwner: {type: String},
+        minBidAmount: {type: Number},
         bids:[{
-            bidderAddress: {type: String},
-            bidAmount: {type: Number},
-            timestamp: {type: Date, default: Date.now},
-            currency: {type: String},
-            USDValue: {type: Number},
+            auctionID: {type: Number, default: 0},
+            bid:[{
+                bidderAddress: {type: String},
+                bidAmount: {type: Number},
+                timestamp: {type: Date, default: Date.now},
+                currency: {type: String},
+                USDValue: {type: Number},
+            }]
         }]
     }]
 })
