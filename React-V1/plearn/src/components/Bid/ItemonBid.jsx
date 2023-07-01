@@ -20,18 +20,16 @@ export default React.memo(function ItemonBid({ ds }) {
     .filter((obj) => obj.category === Category)
     .flatMap((obj) => obj.details.filter((detail) => detail.name === ItemName));
   const firstObject = filteredArray[0];
-  // const desc = firstObject ? firstObject.description : "";
-  const desc = filteredArray[0]?.description;
+  const desc = firstObject ? firstObject.description : "";
   const price = firstObject ? firstObject.cost : "";
-
-  console.log(filteredArray);
+  const transaction = firstObject ? firstObject.transactions : {};
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
 
   const EndAuction = async () => {
     const data = {
       category: Category,
-      id: filteredArray[0].id,
+      id: filteredArray[0]?.id,
     };
     // const response = await axios.get(`https://plearn-backend.onrender.com/endAuction`, data);
     await axios
@@ -44,21 +42,19 @@ export default React.memo(function ItemonBid({ ds }) {
   const [itemAuctionDetails, setItemAuctionDetails] = useState(null);
 
   useEffect(() => {
-    setShowLoader(true);
     async function GetItemAuctionDetail() {
       try {
         const response = await axios.get(
-          `https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0].id}`
+          `https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0]?.id}`
         );
         setItemAuctionDetails(response.data);
-        setShowLoader(false);
         console.log(itemAuctionDetails);
       } catch (error) {
         console.log(error);
       }
     }
     GetItemAuctionDetail();
-  }, []);
+  }, [location]);
 
   const CountdownButton = () => {
     const [timeLeft, setTimeLeft] = useState("");
@@ -111,9 +107,6 @@ export default React.memo(function ItemonBid({ ds }) {
       `https://plearn-backend.onrender.com/placeBid`,
       data
     );
-    if (response.data) {
-      setBidPlaced(true);
-    }
     console.log(response.data);
   }
   const handlePlaceBidClick = () => {
@@ -178,12 +171,12 @@ export default React.memo(function ItemonBid({ ds }) {
                     alt=""
                   />
                   {itemAuctionDetails &&
-                  itemAuctionDetails.item.bids.length > 0 ? (
+                  itemAuctionDetails?.item?.bids.length > 0 ? (
                     <div className="price">
                       <span className="desc">Highest bid by</span>
                       <div className="dark">
                         {
-                          itemAuctionDetails.item.bids.reduce(
+                          itemAuctionDetails?.item?.bids.reduce(
                             (maxBid, currentBid) =>
                               currentBid.bidAmount > maxBid.bidAmount
                                 ? currentBid
@@ -273,7 +266,7 @@ export default React.memo(function ItemonBid({ ds }) {
                   </div>
                 </div>
                 <div className="info">
-                  <InfoTab></InfoTab>
+                  <InfoTab transaction={itemAuctionDetails}></InfoTab>
                 </div>
               </div>
             </div>

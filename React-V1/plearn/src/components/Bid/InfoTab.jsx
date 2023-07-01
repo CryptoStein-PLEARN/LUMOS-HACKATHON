@@ -2,9 +2,9 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
 
 import React from "react";
-import BidList from "./BiddersList";
+import BidList from "./BidList";
 
-export default function InfoTab() {
+export default function InfoTab({ transaction }) {
   return (
     <Tabs>
       <TabList>
@@ -18,9 +18,7 @@ export default function InfoTab() {
         <h2>Any content 1</h2>
       </TabPanel>
       <TabPanel>
-        <h2>
-          <BidList></BidList>
-        </h2>
+        {transaction && <BidList transaction={transaction}></BidList>}
       </TabPanel>
       <TabPanel>
         <h2>Any content 3</h2>
