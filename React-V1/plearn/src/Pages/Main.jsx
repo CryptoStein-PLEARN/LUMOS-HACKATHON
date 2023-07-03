@@ -9,7 +9,6 @@ import BreadCrums from "../components/BreadCrums";
 const ShowCase = lazy(() => import("../components/ShowCase"));
 const Toke = lazy(() => import("../components/toke"));
 const Faq = lazy(() => import("../components/Faq"));
-const CTAsection = lazy(() => import("../components/CTAsection"));
 const Footer = lazy(() => import("../components/Footer"));
 
 export default React.memo(function Main() {
@@ -24,10 +23,9 @@ export default React.memo(function Main() {
             <ShowCase style={{ marginTop: "10vw" }} />
             <Toke />
             <Faq />
-            <CTAsection />
           </div>
           <Footer />
-        </Suspense>
+        </Suspense> 
       </div>
     </>
   );
