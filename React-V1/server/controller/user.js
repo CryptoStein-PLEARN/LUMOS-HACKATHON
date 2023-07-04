@@ -568,7 +568,7 @@ const placeBid = async (req,res) => {
                         }
                     )
 
-                    res.send({message: "Bid placed Successfully.", updateResult});
+                    res.send({message: "Bid placed Successfully.", bid});
                 }   
             }
             else    //Something is wrong
