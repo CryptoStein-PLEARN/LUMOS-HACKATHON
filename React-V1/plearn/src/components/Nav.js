@@ -39,7 +39,7 @@ export default function Nav() {
     { name: "MarketPlace" },
 
     { name: "Tokenomics" },
-    // { name: "Trading" },
+    { name: "Get in Touch" },
     // { name: "NFT" },
   ];
 
