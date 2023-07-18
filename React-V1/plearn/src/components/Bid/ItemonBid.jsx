@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
 import coin from "../../assets/MarketPlace/A (5).png";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import InfoTab from "./InfoTab";
 import axios from "axios";
 
@@ -23,9 +23,12 @@ export default React.memo(function ItemonBid({ ds }) {
   const desc = firstObject ? firstObject.description : "";
   const price = firstObject ? firstObject.cost : "";
   const transaction = firstObject ? firstObject.transactions : {};
+
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
-
+  const [btnLoader, setLoding] = useState(false);
+  const [responseLog, setLog] = useState("");
+  const [timeLeft, setTimeLeft] = useState("");
   const EndAuction = async () => {
     const data = {
       category: Category,
@@ -40,26 +43,24 @@ export default React.memo(function ItemonBid({ ds }) {
   };
 
   const [itemAuctionDetails, setItemAuctionDetails] = useState(null);
-
-  useEffect(() => {
-    async function GetItemAuctionDetail() {
-      try {
-        const response = await axios.get(
-          `https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0]?.id}`
-          // `http://localhost:8080/getAuctionDetails/${Category}/${filteredArray[0]?.id}`
-        );
-        setItemAuctionDetails(response.data);
-        console.log(itemAuctionDetails);
-      } catch (error) {
-        console.log(error);
-      }
+  const placedRef = useRef(false);
+  async function GetItemAuctionDetail() {
+    try {
+      const response = await axios.get(
+        `https://plearn-backend.onrender.com/getAuctionDetails/${Category}/${filteredArray[0]?.id}`
+        // `http://localhost:8080/getAuctionDetails/${Category}/${filteredArray[0]?.id}`
+      );
+      setItemAuctionDetails(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
     }
+  }
+  useEffect(() => {
     GetItemAuctionDetail();
-  }, [location]);
+  }, [location, placedRef.current]);
 
   const CountdownButton = () => {
-    const [timeLeft, setTimeLeft] = useState("");
-
     useEffect(() => {
       const interval = setInterval(() => {
         const currentTime = new Date();
@@ -67,7 +68,7 @@ export default React.memo(function ItemonBid({ ds }) {
         const timeDiff = endTime - currentTime;
         if (timeDiff <= 0) {
           clearInterval(interval);
-          setTimeLeft("Timer ended");
+          setTimeLeft("");
           EndAuction();
         } else {
           const hours = Math.floor(timeDiff / (1000 * 60 * 60));
@@ -75,7 +76,6 @@ export default React.memo(function ItemonBid({ ds }) {
             (timeDiff % (1000 * 60 * 60)) / (1000 * 60)
           );
           const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
           setTimeLeft(`${hours}:${minutes}:${seconds}`);
         }
       }, 1000);
@@ -93,6 +93,7 @@ export default React.memo(function ItemonBid({ ds }) {
   };
 
   async function handlePlaceBid() {
+    setLoding(true);
     const data = {
       category: Category,
       id: filteredArray[0].id,
@@ -108,8 +109,19 @@ export default React.memo(function ItemonBid({ ds }) {
       `https://plearn-backend.onrender.com/placeBid`,
       data
     );
+
     console.log(response.data);
+    if (response.data) {
+      setLoding(false);
+      handleCancelBid();
+      setLog(response.data.message);
+      setTimeout(() => {
+        setLog("");
+      }, 2000);
+      GetItemAuctionDetail();
+    }
   }
+
   const handlePlaceBidClick = () => {
     setShowBidInput(true);
   };
@@ -122,7 +134,24 @@ export default React.memo(function ItemonBid({ ds }) {
   const handleBidInputChange = (e) => {
     setBidValue(e.target.value);
   };
-
+  const highestBidder =
+    itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1]
+      .bid.length > 0
+      ? itemAuctionDetails?.item?.bids[
+          itemAuctionDetails?.item?.bids.length - 1
+        ].bid.reduce((maxBid, currentBid) =>
+          currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+        ).bidderAddress
+      : "No bids";
+  const highestBid =
+    itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1]
+      .bid.length > 0
+      ? itemAuctionDetails.item.bids[
+          itemAuctionDetails.item.bids.length - 1
+        ].bid.reduce((maxBid, currentBid) =>
+          currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+        ).bidAmount
+      : "";
   return (
     <>
       {showLoader ? (
@@ -139,19 +168,25 @@ export default React.memo(function ItemonBid({ ds }) {
                   </div>
                 </div>
               </div>
+              <>
+                <h1>details</h1>
+              </>
             </div>
             <div className="left">
               <div className="top">
                 <h1 className="name">{ItemName}</h1>
 
-                <div class="bnt-conteiner">
-                  <div class="bnt-content">
-                    <span class="icon-arrow ">
-                      <img src={coin} alt="" />
-                    </span>
-                    <span class="bnt-title">
+                <div className="bnt-conteiner">
+                  <div className="bnt-content">
+                    BASE PRICE:
+                    <span className="bnt-title">
                       {" "}
-                      <span className="price">{price} ETH</span>{" "}
+                      <span className="price">
+                        {itemAuctionDetails?.item?.basePrice}{" "}
+                      </span>{" "}
+                    </span>
+                    <span className="icon-arrow ">
+                      <img src={coin} alt="" />
                     </span>
                   </div>
                 </div>
@@ -172,32 +207,18 @@ export default React.memo(function ItemonBid({ ds }) {
                     alt=""
                   />
                   {itemAuctionDetails &&
-                  itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.length > 0 ? (
+                  itemAuctionDetails?.item?.bids[
+                    itemAuctionDetails?.item?.bids.length - 1
+                  ].bid.length > 0 ? (
                     <div className="price">
-                      <span className="desc">Highest bid by</span>
+                      <span className="desc">Highest bid by </span>
                       <div className="dark">
-                        {
-                          itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.length > 0 ? (
-                          itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.reduce(
-                            (maxBid, currentBid) =>
-                              currentBid.bidAmount > maxBid.bidAmount
-                                ? currentBid
-                                : maxBid
-                          ).bidderAddress
-                          ) : ("No bids")
-                        }
-                        <br />
-                        {
-                          itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1].bid.length > 0 ? (
-                          itemAuctionDetails.item.bids[itemAuctionDetails.item.bids.length - 1].bid.reduce(
-                            (maxBid, currentBid) =>
-                              currentBid.bidAmount > maxBid.bidAmount
-                                ? currentBid
-                                : maxBid
-                          ).bidAmount
-                          ) : ("")
-                        }{" "}
-                        ETH
+                        <span className="red">
+                          {" "}
+                          {highestBidder.slice(0, 5)}
+                        </span>
+                        &nbsp;of&nbsp;<span className="red">{highestBid}</span>
+                        &nbsp;ETH
                       </div>
                     </div>
                   ) : (
@@ -235,21 +256,43 @@ export default React.memo(function ItemonBid({ ds }) {
                               onClick={handlePlaceBid}
                               className="contactButton"
                             >
-                              Place
-                              <div className="iconButton">
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  viewBox="0 0 24 24"
-                                  width="24"
-                                  height="24"
-                                >
-                                  <path fill="none" d="M0 0h24v24H0z"></path>
-                                  <path
-                                    fill="currentColor"
-                                    d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                                  ></path>
-                                </svg>
-                              </div>
+                              {btnLoader ? (
+                                <div className="loader">
+                                  <div className="bar1"></div>
+                                  <div className="bar2"></div>
+                                  <div className="bar3"></div>
+                                  <div className="bar4"></div>
+                                  <div className="bar5"></div>
+                                  <div className="bar6"></div>
+                                  <div className="bar7"></div>
+                                  <div className="bar8"></div>
+                                  <div className="bar9"></div>
+                                  <div className="bar10"></div>
+                                  <div className="bar11"></div>
+                                  <div className="bar12"></div>
+                                </div>
+                              ) : (
+                                <>
+                                  Place
+                                  <div className="iconButton">
+                                    <svg
+                                      xmlns="http://www.w3.org/2000/svg"
+                                      viewBox="0 0 24 24"
+                                      width="24"
+                                      height="24"
+                                    >
+                                      <path
+                                        fill="none"
+                                        d="M0 0h24v24H0z"
+                                      ></path>
+                                      <path
+                                        fill="currentColor"
+                                        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                                      ></path>
+                                    </svg>
+                                  </div>{" "}
+                                </>
+                              )}
                             </button>
                             <div className="ms">
                               <button onClick={handleCancelBid}>
@@ -269,6 +312,7 @@ export default React.memo(function ItemonBid({ ds }) {
                       )}
                     </div>
                   </div>
+                  {responseLog ? <p className="rose">{responseLog}</p> : <></>}
                 </div>
                 <div className="info">
                   <InfoTab transaction={itemAuctionDetails}></InfoTab>
@@ -285,6 +329,109 @@ const Container = styled.div`
   background: black;
   .info {
     margin-top: 10vh;
+    width: 100%;
+  }
+  .react-tabs__tab-list {
+    display: flex;
+    justify-content: space-around;
+    .react-tabs__tab {
+      padding: 6px 50px !important;
+    }
+  }
+  .rose {
+    padding: 20px;
+    color: #e11d48;
+    padding-top: 0;
+  }
+
+  .loader {
+    position: relative;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+  }
+
+  .loader div {
+    width: 8%;
+    height: 24%;
+    background: white;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    opacity: 0;
+    border-radius: 50px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+    animation: fade458 1s linear infinite;
+  }
+
+  @keyframes fade458 {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0.25;
+    }
+  }
+
+  .loader .bar1 {
+    transform: rotate(0deg) translate(0, -130%);
+    animation-delay: 0s;
+  }
+
+  .loader .bar2 {
+    transform: rotate(30deg) translate(0, -130%);
+    animation-delay: -1.1s;
+  }
+
+  .loader .bar3 {
+    transform: rotate(60deg) translate(0, -130%);
+    animation-delay: -1s;
+  }
+
+  .loader .bar4 {
+    transform: rotate(90deg) translate(0, -130%);
+    animation-delay: -0.9s;
+  }
+
+  .loader .bar5 {
+    transform: rotate(120deg) translate(0, -130%);
+    animation-delay: -0.8s;
+  }
+
+  .loader .bar6 {
+    transform: rotate(150deg) translate(0, -130%);
+    animation-delay: -0.7s;
+  }
+
+  .loader .bar7 {
+    transform: rotate(180deg) translate(0, -130%);
+    animation-delay: -0.6s;
+  }
+
+  .loader .bar8 {
+    transform: rotate(210deg) translate(0, -130%);
+    animation-delay: -0.5s;
+  }
+
+  .loader .bar9 {
+    transform: rotate(240deg) translate(0, -130%);
+    animation-delay: -0.4s;
+  }
+
+  .loader .bar10 {
+    transform: rotate(270deg) translate(0, -130%);
+    animation-delay: -0.3s;
+  }
+
+  .loader .bar11 {
+    transform: rotate(300deg) translate(0, -130%);
+    animation-delay: -0.2s;
+  }
+
+  .loader .bar12 {
+    transform: rotate(330deg) translate(0, -130%);
+    animation-delay: -0.1s;
   }
   .flx {
     justify-content: space-between;
@@ -386,7 +533,7 @@ const Container = styled.div`
   .bidArea {
     display: flex;
     height: 25vh;
-    gap: 10px;
+    gap: 40px;
     justify-content: space-between;
     align-items: flex-start;
     flex-direction: column;
@@ -411,7 +558,7 @@ const Container = styled.div`
     display: flex;
     justify-content: flex-start;
     gap: 15px;
-    align-items: flex-start;
+    align-items: center;
   }
   .head {
     padding-top: 5vh;
@@ -433,7 +580,7 @@ const Container = styled.div`
       color: white;
       font-size: 50px;
       line-height: 1.1em;
-      margin: 25px 0 0 0;
+      margin: 0px 0 0 0;
       word-wrap: break-word;
     }
     max-width: 40%;
@@ -507,6 +654,9 @@ const Container = styled.div`
   }
   .dark {
     font-weight: 600;
+    .red {
+      color: #ff135a;
+    }
   }
 
   .bnt-content:hover,

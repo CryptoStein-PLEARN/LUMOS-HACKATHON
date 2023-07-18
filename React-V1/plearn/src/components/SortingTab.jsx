@@ -12,7 +12,7 @@ export default React.memo(function SortingTab({ ShopState }) {
   };
   return (
     <Container className="container">
-      <div className="left">
+      <div className="lft">
         <h1>SHOP</h1>
       </div>
       <div
@@ -69,7 +69,7 @@ const Container = styled.div`
   align-items: baseline;
   align-content: flex-end;
   border-bottom: 1px solid white;
-  .left {
+  .lft {
     h1 {
       font-family: Rubik, sans-serif;
       font-weight: 700;

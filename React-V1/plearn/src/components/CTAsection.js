@@ -91,7 +91,7 @@ export default React.memo(function CTAsection() {
   return (
     <Container>
       <div id="container">
-        <h1>&bull; Keep in Touch &bull;</h1>
+        <h1>&bull; Get in Touch &bull;</h1>
         <div className="underline"></div>
         <div className="icon_wrapper">
           <svg className="icon" viewBox="0 0 145.192 145.192">

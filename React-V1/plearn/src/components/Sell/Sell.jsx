@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-
+import bg from "../../assets/sell.jpg";
+import styled from "styled-components";
 export default function Sell() {
   const item = useParams();
 
@@ -50,14 +51,22 @@ export default function Sell() {
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "2vh",
-        height: "70vh",
+        background: `url(${bg})`,
+        height: "101vh",
+        backgroundAttachment: "fixed",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
       }}
     >
       <div className="box">
-        <h1>Sell your Item</h1>
-        <h3>Product Name : {itemName}</h3>
+        <div className="wrap">
+          <h1>Start an Auction</h1>
+          <h3>Product Name : {itemName}</h3>
+          <h3>Category : Characters</h3>
+        </div>
         <p>Enter Your Base Price</p>
+
         <input
           id="basePrice"
           type="number"
@@ -101,11 +110,65 @@ export default function Sell() {
           min="0"
           max="59"
         />
-        <p>Category : Characters</p>
-        <button disabled={Loader ? true : false} onClick={StartAuction}>
-          Submit
-        </button>
+
+        <Button>
+          <button disabled={Loader ? true : false} onClick={StartAuction}>
+            <span> Submit</span>
+          </button>
+        </Button>
       </div>
     </div>
   );
 }
+const Button = styled.div`
+  button {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #03045e;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease-in;
+    z-index: 1;
+  }
+
+  button::before,
+  button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 100%;
+    transform: skew(15deg);
+    transition: all 0.5s;
+    overflow: hidden;
+    z-index: -1;
+  }
+
+  button::before {
+    left: -10px;
+    background: #240046;
+  }
+
+  button::after {
+    right: -10px;
+    background: #5a189a;
+  }
+
+  button:hover::before,
+  button:hover::after {
+    width: 58%;
+  }
+
+  button:hover span {
+    color: #e0aaff;
+    transition: 0.3s;
+  }
+
+  button span {
+    color: #03045e;
+    font-size: 18px;
+    transition: all 0.3s ease-in;
+  }
+`;

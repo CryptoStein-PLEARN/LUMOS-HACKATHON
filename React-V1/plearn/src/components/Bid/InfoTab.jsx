@@ -10,21 +10,13 @@ export default function InfoTab({ transaction }) {
       <TabList>
         <Tab>Owner</Tab>
         <Tab>Bid List</Tab>
-        <Tab>Title 3</Tab>
-        <Tab>Title 4</Tab>
       </TabList>
 
       <TabPanel>
-        <h2>{transaction?.item.currentOwner.slice(0,5)}</h2>
+        <h2>{transaction?.item?.currentOwner.slice(0, 5)}</h2>
       </TabPanel>
       <TabPanel>
         {transaction && <BidList transaction={transaction}></BidList>}
-      </TabPanel>
-      <TabPanel>
-        <h2>Any content 3</h2>
-      </TabPanel>
-      <TabPanel>
-        <h2>Any content 4</h2>
       </TabPanel>
     </Tabs>
   );

@@ -5,6 +5,7 @@ import Loader from "../components/Loader";
 import BreadCrums from "../components/BreadCrums";
 // import Litepaper from "../components/Litepaper";
 // import Hype from "./components/Hype";
+import TawkMessengerReact from "@tawk.to/tawk-messenger-react";
 // import Gamedes from "./components/Gamedes";
 const ShowCase = lazy(() => import("../components/ShowCase"));
 const Toke = lazy(() => import("../components/toke"));
@@ -18,6 +19,9 @@ export default React.memo(function Main() {
         <Suspense fallback={<Loader></Loader>}>
           <div className="vidbg">
             <Header />
+            <div>
+              <TawkMessengerReact propertyId="property_id" widgetId="default" />
+            </div>
             <GameSection />
             <BreadCrums />
             <ShowCase style={{ marginTop: "10vw" }} />
@@ -25,7 +29,7 @@ export default React.memo(function Main() {
             <Faq />
           </div>
           <Footer />
-        </Suspense> 
+        </Suspense>
       </div>
     </>
   );

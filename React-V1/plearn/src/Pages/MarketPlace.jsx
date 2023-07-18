@@ -57,14 +57,23 @@ export default React.memo(function MarketPlace() {
           <div className="Markt">
             <div className="left">
               {ShopState === false ? (
-                <>
-                  <Category />
-                  <div className="shopAll">
-                    {Object.entries(cardData).map(([category, { details }]) =>
-                      details.map((ds) => <Cards data={ds} />)
-                    )}
-                  </div>
-                </>
+                !cardData ? (
+                  <>
+                    please wait till the data is loaded
+                    <p>
+                      Please make sure to connect your wallet to see the data
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <Category />
+                    <div className="shopAll">
+                      {Object.entries(cardData).map(([category, { details }]) =>
+                        details.map((ds) => <Cards data={ds} />)
+                      )}
+                    </div>
+                  </>
+                )
               ) : (
                 <Root />
               )}
