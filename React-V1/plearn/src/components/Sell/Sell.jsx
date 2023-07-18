@@ -12,16 +12,16 @@ export default function Sell() {
   const StartAuction = async () => {
     setLoader(true);
     const daysInput = document.getElementById("durationDays");
-    const hoursInput = document.getElementById("durationHours");
-    const minutesInput = document.getElementById("durationMinutes");
+    // const hoursInput = document.getElementById("durationHours");
+    // const minutesInput = document.getElementById("durationMinutes");
 
     // Convert the values to numbers
     const days = parseInt(daysInput.value, 10) || 0;
-    const hours = parseInt(hoursInput.value, 10) || 0;
-    const minutes = parseInt(minutesInput.value, 10) || 0;
+    // const hours = parseInt(hoursInput.value, 10) || 0;
+    // const minutes = parseInt(minutesInput.value, 10) || 0;
 
     // Calculate the total duration in milliseconds
-    const totalDuration = ((days * 24 + hours) * 60 + minutes) * 60 * 1000;
+    const totalDuration = ((days * 24) * 60) * 60 * 1000;
 
     const data = {
       category: category,
@@ -36,6 +36,25 @@ export default function Sell() {
     await axios
       .post("https://plearn-backend.onrender.com/startAuction", data)
       // .post("http://localhost:8080/startAuction", data)
+      .then((response) => {
+        setLoader(false);
+        console.log(response.data);
+        nav("/MarketPlace");
+        window.location.reload();
+      });
+  };
+
+  const StartSale = async () => {
+    const data = {
+      category: category,
+      id: id,
+      basePrice: document.getElementById("sellingBasePrice").value,
+      currentOwner: localStorage.getItem(1)
+    }
+
+    await axios
+      .post("https://plearn-backend.onrender.com/startSale", data)
+      // .post("http://localhost:8080/startSale", data)
       .then((response) => {
         setLoader(false);
         console.log(response.data);
@@ -95,27 +114,27 @@ export default function Sell() {
           maxLength="4"
         ></input>
         <p> Duration of the Auction </p>
-        <input type="number" id="durationDays" placeholder="Days" min="0" />
-        <input
-          type="number"
-          id="durationHours"
-          placeholder="Hours"
-          min="0"
-          max="23"
-        />
-        <input
-          type="number"
-          id="durationMinutes"
-          placeholder="Minutes"
-          min="0"
-          max="59"
-        />
-
+        <input type="number" id="durationDays" placeholder="Days" min="1" />
         <Button>
           <button disabled={Loader ? true : false} onClick={StartAuction}>
             <span> Submit</span>
           </button>
         </Button>
+
+        <p>*Temporary*</p>
+        <input type="number" id="sellingBasePrice" placeholder="Sell At" onInput={(event) =>
+            (event.target.value = event.target.value.slice(
+              0,
+              event.target.maxLength
+            ))
+          }
+          maxLength="4"/>
+        <Button>
+          <button onClick={StartSale}>
+              Sell Fixed
+          </button>
+        </Button>
+        <p>*Temporary*</p>
       </div>
     </div>
   );

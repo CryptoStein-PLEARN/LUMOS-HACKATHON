@@ -18,12 +18,11 @@ const marketplaceSchema = new mongoose.Schema({
             timestamp: { type: Date, default: Date.now }
         }],
         inAuction: {type: Boolean, default: false},
-        auctionEndTime: {type: Date, default: Date.now}
+        auctionEndTime: {type: Date, default: Date.now},
+        forSale: {type: Boolean, default: false}
     }]
 });
-// currency field
-// USD amount (display entered crypto currency value in USD)
-// Auction Collection - mix of auction in marketplace and player
+
 const marketplaceDetail = new mongoose.model(
     "Marketplace_Table",
     marketplaceSchema,

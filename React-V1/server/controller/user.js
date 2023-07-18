@@ -12,6 +12,7 @@ const preRegistrationDetail = require("../model/preregistration");
 const entrepreneurshipDetail = require("../model/entrepreneurship");
 const marketplaceDetail = require("../model/marketplace");
 const auctionDetail = require("../model/Auction")
+const saleDetail = require("../model/sale");
 
 const app = express();
 
@@ -590,6 +591,313 @@ const placeBid = async (req,res) => {
     }
 }
 
+const getSaleDetails = async (req, res) => {
+    try
+    {
+        const {category, id} = req.params;
+
+        const categoryData = await saleDetail.findOne({ category: category});
+
+        if(categoryData)
+        {
+            var item = categoryData.sell.find(item => item.id === parseInt(id));
+
+            if(item)
+            {
+                res.send({item, category: category});
+            }
+            else
+            {
+                console.log("Item not found. Something is wrong.");
+                res.send("Item not found. Something is wrong.");
+            }
+        }
+        else
+        {
+            console.log("Category not found. Something is wrong.")
+            res.send("Category not found. Something is wrong.")
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+const startSale = async (req, res) => {
+    try
+    {
+        const {category, id, basePrice, currentOwner} = req.body;
+        const categoryData = await saleDetail.findOne({ category: category });
+
+        if(categoryData)
+        {
+            var item = categoryData.sell.find(item => item.id === parseInt(id));
+
+            if(item)    //startSaleAgainForItem
+            {
+                const updateResult = await saleDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $set:
+                        {
+                            [`sell.${categoryData.sell.indexOf(item)}.started`]: true,
+                            [`sell.${categoryData.sell.indexOf(item)}.ended`]: false,
+                            [`sell.${categoryData.sell.indexOf(item)}.basePrice`]: basePrice,
+                            [`sell.${categoryData.sell.indexOf(item)}.cuurentOwner`]: currentOwner,
+                        },
+                        $push:
+                        {
+                            [`sell.${categoryData.sell.indexOf(item)}.sales`]: [{
+                                saleID: item.sales.length,
+                                sale: {}
+                            }],
+                        }
+                    }
+                )
+
+                const updateMarketplace = await marketplaceDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $set:
+                        {
+                            [`details.${item.id - 2}.forSale`]: true,
+                        }
+                    }
+                )
+
+                const updatedItem = await saleDetail.findOne({ category: category });
+
+                res.send({message: "Sale Started.", item: updatedItem.sell.find((i) => i.id === parseInt(id)), category: category});
+            }
+            else    //AddItemInSale
+            {
+                const updateResult = await saleDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $push:
+                        {
+                            [`sell`]: {
+                                id: id,
+                                started: true,
+                                ended: false,
+                                basePrice: basePrice,
+                                currentOwner: currentOwner,
+                                sales:[
+                                    {
+                                        saleID: 0,
+                                        sale: {}
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                )
+                if (updateResult.nModified === 0) {
+                    throw new Error('Update operation failed');
+                }
+
+                const updateMarketplace = await marketplaceDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $set:
+                        {
+                            [`details.${id - 2}.forSale`]: true,
+                        }
+                    }
+                )
+
+                const updatedItem = await saleDetail.findOne({ category: category });
+
+                res.send({message: "Sale Started.", item: updatedItem.sell.find((i) => i.id === parseInt(id)), category: category})
+            }
+        }
+        else    //Create Sale for the category and item - first time.
+        {
+            const newCategoryData = new saleDetail({
+                category: category,
+                sell: [{
+                    id: id,
+                    started: true,
+                    ended: false,
+                    basePrice: basePrice,
+                    currentOwner: currentOwner,
+                    sales: [
+                        {
+                            saleID: 0,
+                            sale: {}
+                        }
+                    ]
+                }]
+            });
+
+            const updateMarketplace = await marketplaceDetail.updateOne(
+                {category: req.body.category},
+                {
+                    $set:
+                    {
+                        [`details.${id - 2}.forSale`]: true,
+                    }
+                }
+            )
+
+            await newCategoryData.save();
+
+            const updatedItem = await saleDetail.findOne({ category: category });
+
+            res.send({message: "New sale record created successfully", item: updatedItem.sell.find((i) => i.id === parseInt(id)), category: category});
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+const buyFromSale = async (req,res) => {
+    try
+    {
+        const {category, id, sale} = req.body;
+        const categoryData = await saleDetail.findOne({ category: category});
+
+        if(categoryData)
+        {
+            var item = categoryData.sell.find(item => item.id === id);
+
+            if(item)
+            {
+                const updateResult = await saleDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $set:
+                        {
+                            [`sell.${categoryData.sell.indexOf(item)}.started`]: false,
+                            [`sell.${categoryData.sell.indexOf(item)}.ended`]: true,
+                            [`sell.${categoryData.sell.indexOf(item)}.curentOwner`]: sale.customerAddress,
+                            [`sell.${categoryData.sell.indexOf(item)}.sales.${item.sales.length - 1}.sale`]: sale,
+                        }
+                    }
+                )
+
+                const updateMarketplace = await marketplaceDetail.updateOne(
+                    {
+                        category: req.body.category
+                    },
+                    {
+                        $set: 
+                        {
+                            [`details.${id - 2}.forSale`]: false,
+                            [`details.${id - 2}.currentOwner`]: sale.customerAddress,
+                        },
+                        $push:
+                        {
+                            [`details.${id - 2}.transactions`]: {
+                                buyerAddress: sale.customerAddress,
+                                sellerAddress: item.currentOwner,
+                                cost: item.basePrice,
+                                timestamp: new Date(),
+                            }
+                        }
+                    }
+                )
+
+                //Removing NFT from the account of prev owner
+                const playerUpdateResult2 = await playerDetail.updateOne(
+                    { userAccount: item.currentOwner },
+                    {
+                        $pull:
+                        {
+                            [`ownedNFTs.${req.body.category}`]: id 
+                        }
+                    }
+                )
+                
+                //Adding NFT to the account of new owner
+                const playerUpdateResult1 = await playerDetail.updateOne(
+                    { userAccount: sale.customerAddress },
+                    {
+                        $push: { [`ownedNFTs.${req.body.category}`]: id }
+                    },
+                );
+
+                res.send({message: "Sold Successfully.", sale, item: categoryData.sell.find((i) => i.id === parseInt(id)), category: category});
+            }
+            else    //Something is wrong
+            {
+                console.log("Item not found, Something is wrong.");
+                res.send("Item not found, Something is wrong.");
+            }
+        }
+        else    //Something is wrong
+        {
+            console.log("Category not found, Something is wrong.")
+            res.send("Category not found, Something is wrong.")
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send(err);
+    }
+}
+
+const cancelSale = async (req,res) => {
+    try
+    {
+        const {category, id} = req.body;
+        const categoryData = await saleDetail.findOne({ category: category});
+
+        if(categoryData)
+        {
+            var item = categoryData.sell.find(item => item.id === id);
+            
+            if(item)
+            {
+                const updateResult = await saleDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $set:
+                        {
+                            [`sell.${categoryData.sell.indexOf(item)}.started`]: false,
+                            [`sell.${categoryData.sell.indexOf(item)}.ended`]: true,
+                        }
+                    }
+                )
+
+                const updateMarketplace = await marketplaceDetail.updateOne(
+                    {category: req.body.category},
+                    {
+                        $set:
+                        {
+                            [`details.${id - 2}.forSale`]: false,
+                        }
+                    }
+                )
+
+                res.send({message: "Sale cancelled successfully", item: categoryData.sell.find((i) => i.id === parseInt(id))});
+            }
+            else    //Something is wrong
+            {
+                console.log("Item not found, Something is wrong.");
+                res.send("Item not found, Something is wrong.");
+            }
+        }
+        else    //Something is wrong
+        {
+            console.log("Category not found, Something is wrong.")
+            res.send("Category not found, Something is wrong.")
+        }
+
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send(err);
+    }
+}
+
 const getOwnedNFTs = (req,res) => {
     const {userAccount} = req.params;
 
@@ -873,4 +1181,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, getSaleDetails, startSale, buyFromSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};

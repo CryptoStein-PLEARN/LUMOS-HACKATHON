@@ -37,6 +37,13 @@ export default React.memo(function App() {
               console.log(res.data);
               
             }
+
+            else if(item.forSale === true)
+            {
+              const res = await axios.get(`https://plearn-backend.onrender.com/getSaleDetails/${category.category}/${item.id}`);
+              // const res = await axios.get(`http://localhost:8080/getSaleDetails/${category.category}/${item.id}`);
+              console.log(res.data);
+            }
           })
         })
 
