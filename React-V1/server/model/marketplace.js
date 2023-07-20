@@ -19,7 +19,6 @@ const marketplaceSchema = new mongoose.Schema({
         }],
         inAuction: {type: Boolean, default: false},
         auctionEndTime: {type: Date, default: Date.now},
-        forSale: {type: Boolean, default: false}
     }]
 });
 

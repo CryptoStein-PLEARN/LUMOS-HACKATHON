@@ -17,7 +17,7 @@ const {getOwnedNFTs} = require("../controller/user");
 const {startAuction} = require("../controller/user")
 const {getAuctionDetails} = require("../controller/user")
 const {placeBid} = require("../controller/user");
-const {startSale, getSaleDetails, buyFromSale, cancelSale} = require("../controller/user")
+const {startSale, cancelSale} = require("../controller/user")
 
 router.post("/preregistration", preRegisterUser);
 
@@ -37,11 +37,7 @@ router.post('/startAuction', startAuction);
 
 router.post('/endAuction', endAuction);
 
-router.get('/getSaleDetails/:category/:id', getSaleDetails);
-
 router.post('/startSale', startSale);
-
-router.post('/buyFromSale', buyFromSale);
 
 router.post('/cancelSale', cancelSale);
 

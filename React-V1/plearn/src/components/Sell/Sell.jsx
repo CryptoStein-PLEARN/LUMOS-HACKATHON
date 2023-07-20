@@ -48,8 +48,7 @@ export default function Sell() {
     const data = {
       category: category,
       id: id,
-      basePrice: document.getElementById("sellingBasePrice").value,
-      currentOwner: localStorage.getItem(1)
+      cost: document.getElementById("sellingBasePrice").value,
     }
 
     await axios
