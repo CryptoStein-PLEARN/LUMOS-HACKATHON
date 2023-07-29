@@ -7,18 +7,22 @@ import coin from "../../assets/MarketPlace/A (5).png";
 import { useLocation } from "react-router-dom";
 import InfoTab from "./InfoTab";
 import axios from "axios";
-
+import PastOwners from "./PastOwners";
+import { TbListDetails } from "react-icons/tb";
 export default React.memo(function ItemonBid({ ds }) {
   const character = useLocation();
   const values = character.pathname.split("/").slice(-2); // Extract the last two values
   const [showBidInput, setShowBidInput] = useState(false);
   const [bidPlaced, setBidPlaced] = useState(false);
   const [bidValue, setBidValue] = useState("");
+  const [ShowDesc, setShowDesc] = useState(false);
+
   const Category = values[0];
   const ItemName = values[1];
   const filteredArray = ds
     .filter((obj) => obj.category === Category)
     .flatMap((obj) => obj.details.filter((detail) => detail.name === ItemName));
+
   const firstObject = filteredArray[0];
   const desc = firstObject ? firstObject.description : "";
   const price = firstObject ? firstObject.cost : "";
@@ -60,6 +64,87 @@ export default React.memo(function ItemonBid({ ds }) {
     GetItemAuctionDetail();
   }, [location, placedRef.current]);
 
+  const currentOwner = filteredArray[0]?.currentOwner;
+  const isOwner = localStorage.getItem(1) === currentOwner;
+  let BidView = () => {
+    return (
+      <div className="cancelBid">
+        {bidPlaced ? (
+          <div>Placed</div>
+        ) : showBidInput ? (
+          <div className="flex">
+            <div className="form__group field">
+              <input
+                required
+                placeholder="Name"
+                className="form__field"
+                type="number"
+                value={bidValue}
+                onChange={handleBidInputChange}
+              />
+              <label className="form__label" htmlFor="name">
+                Enter your Bid
+              </label>
+            </div>
+            <div className="flx">
+              <button onClick={handlePlaceBid} className="contactButton">
+                {btnLoader ? (
+                  <div className="loader">
+                    <div className="bar1"></div>
+                    <div className="bar2"></div>
+                    <div className="bar3"></div>
+                    <div className="bar4"></div>
+                    <div className="bar5"></div>
+                    <div className="bar6"></div>
+                    <div className="bar7"></div>
+                    <div className="bar8"></div>
+                    <div className="bar9"></div>
+                    <div className="bar10"></div>
+                    <div className="bar11"></div>
+                    <div className="bar12"></div>
+                  </div>
+                ) : (
+                  <>
+                    Place
+                    <div className="iconButton">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="24"
+                        height="24"
+                      >
+                        <path fill="none" d="M0 0h24v24H0z"></path>
+                        <path
+                          fill="currentColor"
+                          d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                        ></path>
+                      </svg>
+                    </div>{" "}
+                  </>
+                )}
+              </button>
+              <div className="ms">
+                <button onClick={handleCancelBid}>
+                  <span className="shadow"></span>
+                  <span className="edge"></span>
+                  <span className="front text">Cancel</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <button className="cta" onClick={handlePlaceBidClick}>
+            <span className="hover-underline-animation">Place Bid</span>
+          </button>
+        )}
+      </div>
+    );
+  };
+  if (isOwner) {
+    BidView = () => {
+      <></>;
+    };
+  }
   const CountdownButton = () => {
     useEffect(() => {
       const interval = setInterval(() => {
@@ -159,48 +244,46 @@ export default React.memo(function ItemonBid({ ds }) {
       ) : (
         <Container>
           <SortingTab />
-          <div className="head container">
-            <div className="right ">
-              <div className="blockMain">
-                <div className="Imgblock">
-                  <div className="Image">
-                    <img src={filteredArray[0]?.imgUri} alt="" />
+          <div className=" container">
+            <div className="head">
+              <div className="right ">
+                <div className="blockMain">
+                  <div className="Imgblock">
+                    <div className="Image">
+                      <img src={filteredArray[0]?.imgUri} alt="" />
+                    </div>
                   </div>
                 </div>
               </div>
-              <>
-                <h1>details</h1>
-              </>
-            </div>
-            <div className="left">
-              <div className="top">
-                <h1 className="name">{ItemName}</h1>
+              <div className="left">
+                <div className="top">
+                  <div>
+                    <h1 className="name">{ItemName}</h1>
+                    <span>Owned by </span>
+                    <span>{currentOwner.slice(0, 7)}</span>{" "}
+                    <div className="Categor">
+                      <h2>
+                        Category : <span className="ca desc">{Category}</span>
+                      </h2>
+                    </div>
+                  </div>
 
-                <div className="bnt-conteiner">
-                  <div className="bnt-content">
-                    BASE PRICE:
-                    <span className="bnt-title">
-                      {" "}
-                      <span className="price">
-                        {itemAuctionDetails?.item?.basePrice}{" "}
-                      </span>{" "}
-                    </span>
-                    <span className="icon-arrow ">
-                      <img src={coin} alt="" />
-                    </span>
+                  <div className="bnt-conteiner">
+                    <div className="bnt-content">
+                      Base Price
+                      <span className="bnt-title">
+                        <span className="price pp bnt-title">
+                          <img className="icon-arrow" src={coin} alt="" />
+                          {itemAuctionDetails?.item?.basePrice}
+                        </span>
+                        <span className="sml price gold"> Game coins</span>
+                        <span className="sml">$37.39</span>
+                      </span>
+                    </div>
                   </div>
                 </div>
-                <div className="description">
-                  <p className="desc">{desc}</p>
-                </div>
-                <div className="Categor">
-                  <h2>
-                    Category : <span className="ca desc">{Category}</span>
-                  </h2>
-                </div>
-              </div>
-              <div className="bottom">
-                <div className="highest logo-thumbnail ">
+                <div className="bottom">
+                  {/* <div className="highest logo-thumbnail ">
                   <img
                     src="https://react-bitakon.netlify.app/assets/img/activity/user-1.jpg"
                     className="round"
@@ -213,11 +296,11 @@ export default React.memo(function ItemonBid({ ds }) {
                     <div className="price">
                       <span className="desc">Highest bid by </span>
                       <div className="dark">
-                        <span className="red">
+                        <span className="gold">
                           {" "}
                           {highestBidder.slice(0, 5)}
                         </span>
-                        &nbsp;of&nbsp;<span className="red">{highestBid}</span>
+                        &nbsp;of&nbsp;<span className="gold">{highestBid}</span>
                         &nbsp;ETH
                       </div>
                     </div>
@@ -226,97 +309,58 @@ export default React.memo(function ItemonBid({ ds }) {
                       <span className="desc">No bids yet</span>
                     </div>
                   )}
-                </div>
-                <div className="bidArea">
-                  <div className="desc au dark">
-                    <span>Auction Ending in</span>
-                    <CountdownButton />
-                  </div>
-                  <div className="cancelBid">
-                    <div className="cancelBid">
-                      {bidPlaced ? (
-                        <div>Placed</div>
-                      ) : showBidInput ? (
-                        <div className="flex">
-                          <div className="form__group field">
-                            <input
-                              required
-                              placeholder="Name"
-                              className="form__field"
-                              type="number"
-                              value={bidValue}
-                              onChange={handleBidInputChange}
-                            />
-                            <label className="form__label" htmlFor="name">
-                              Enter your Bid
-                            </label>
-                          </div>
-                          <div className="flx">
-                            <button
-                              onClick={handlePlaceBid}
-                              className="contactButton"
-                            >
-                              {btnLoader ? (
-                                <div className="loader">
-                                  <div className="bar1"></div>
-                                  <div className="bar2"></div>
-                                  <div className="bar3"></div>
-                                  <div className="bar4"></div>
-                                  <div className="bar5"></div>
-                                  <div className="bar6"></div>
-                                  <div className="bar7"></div>
-                                  <div className="bar8"></div>
-                                  <div className="bar9"></div>
-                                  <div className="bar10"></div>
-                                  <div className="bar11"></div>
-                                  <div className="bar12"></div>
-                                </div>
-                              ) : (
-                                <>
-                                  Place
-                                  <div className="iconButton">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      viewBox="0 0 24 24"
-                                      width="24"
-                                      height="24"
-                                    >
-                                      <path
-                                        fill="none"
-                                        d="M0 0h24v24H0z"
-                                      ></path>
-                                      <path
-                                        fill="currentColor"
-                                        d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
-                                      ></path>
-                                    </svg>
-                                  </div>{" "}
-                                </>
-                              )}
-                            </button>
-                            <div className="ms">
-                              <button onClick={handleCancelBid}>
-                                <span className="shadow"></span>
-                                <span className="edge"></span>
-                                <span className="front text">Cancel</span>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <button className="cta" onClick={handlePlaceBidClick}>
-                          <span className="hover-underline-animation">
-                            Place Bid
-                          </span>
-                        </button>
-                      )}
+                </div> */}
+                  <div className="bidArea">
+                    <div className="desc au dark">
+                      <span>Auction Ending in</span>
+                      <CountdownButton />
                     </div>
+                    <div className="cancelBid">
+                      <BidView />
+                    </div>
+                    {responseLog ? (
+                      <p className="rose">{responseLog}</p>
+                    ) : (
+                      <></>
+                    )}
                   </div>
-                  {responseLog ? <p className="rose">{responseLog}</p> : <></>}
                 </div>
-                <div className="info">
-                  <InfoTab transaction={itemAuctionDetails}></InfoTab>
+              </div>
+            </div>
+            <div className="bottomD">
+              {" "}
+              <div className="lfr">
+                <div className="l">
+                  <div className="description">
+                    <div
+                      className="headingDesc"
+                      onClick={() => {
+                        setShowDesc(!ShowDesc);
+                      }}
+                    >
+                      {/* <p className="desc">{desc}</p> */}
+                      <h1 style={{ fontSize: "34px" }}>Description</h1>{" "}
+                      {<TbListDetails size={"34px"} />}
+                    </div>
+                    <hr
+                      style={{ display: `${ShowDesc ? "inherit" : "none"}` }}
+                    />
+                    <p
+                      className="desc"
+                      style={{ display: `${ShowDesc ? "inherit" : "none"}` }}
+                    >
+                      Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                      Tempora, optio temporibus at explicabo nemo minus
+                      reiciendis expedita voluptas aspernatur rem officia eos
+                      voluptatem ratione mollitia odit dicta beatae vel ducimus!
+                    </p>
+                  </div>
+                  <div className="info">
+                    <InfoTab transaction={itemAuctionDetails}></InfoTab>
+                  </div>
                 </div>
+
+                <PastOwners transaction={transaction} />
               </div>
             </div>
           </div>
@@ -328,14 +372,54 @@ export default React.memo(function ItemonBid({ ds }) {
 const Container = styled.div`
   background: black;
   .info {
-    margin-top: 10vh;
     width: 100%;
+  }
+  .bottomD {
+    display: flex;
+    flex-direction: column;
+    .lfr {
+      padding-top: 50px;
+      display: flex;
+      gap: 50px;
+      justify-content: space-between;
+      height: 100vh;
+      width: 100%;
+      align-items: flex-start;
+    }
+  }
+  .description {
+    margin-bottom: 5vh;
+    border-radius: 10px;
+    padding: 20px;
+    border: 1px solid white;
+  }
+  .headingDesc {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .react-tabs__tab--selected {
+    background: black;
+    border-color: #aaa;
+    color: #fff;
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 0px;
+    margin-left: 0px;
+    border-radius: 5px 5px 0 0;
   }
   .react-tabs__tab-list {
     display: flex;
+
     justify-content: space-around;
     .react-tabs__tab {
-      padding: 6px 50px !important;
+      padding: 20px !important;
+      border-radius: 10px;
+      width: 100%;
+      margin-bottom: 2px;
     }
   }
   .rose {
@@ -528,8 +612,8 @@ const Container = styled.div`
     align-items: flex-start;
     gap: 30px;
     flex-direction: column;
-    margin-bottom: 10vh;
   }
+
   .bidArea {
     display: flex;
     height: 25vh;
@@ -571,22 +655,26 @@ const Container = styled.div`
   .left {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 60px;
     h1 {
       font-family: Rubik, sans-serif;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: white;
-      font-size: 50px;
-      line-height: 1.1em;
-      margin: 0px 0 0 0;
-      word-wrap: break-word;
+      font-size: 35px;
+      font-weight: 600;
+      max-width: 100%;
+      margin: 0px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: normal;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      word-break: break-word;
     }
-    max-width: 40%;
+    width: 50%;
   }
   .Image img {
     border: 2px solid white;
+    height: 80vh;
   }
   .imgGrid {
     display: grid;
@@ -611,6 +699,22 @@ const Container = styled.div`
     font-weight: 400;
     color: #cacaca;
   }
+  .gold {
+    color: rgb(229, 174, 72);
+  }
+  .pp {
+    font-size: 30px;
+    color: rgb(229, 174, 72);
+    .icon-arrow {
+      transform: scale(0.8);
+    }
+    .icon-arrow {
+      width: 50px;
+    }
+  }
+  .sml {
+    font-size: 14px;
+  }
   .ca {
     font-size: 17px;
     text-transform: uppercase;
@@ -625,6 +729,10 @@ const Container = styled.div`
     line-height: 1.36842em;
     flex-shrink: 0;
   }
+  .description {
+    max-width: 78vh;
+    width: 78vh;
+  }
   .desc {
     font-family: "Space Mono", sans-serif;
     font-size: 16px;
@@ -634,67 +742,42 @@ const Container = styled.div`
   }
   .bnt-conteiner {
     display: flex;
+    width: 100%;
+    font-size: 20px;
+
     justify-content: center;
     --color-text: #ffffff;
-    --color-background: #ff135a;
-    --color-outline: #ff145b80;
-    --color-shadow: #00000080;
   }
 
   .bnt-content {
+    box-shadow: 0px 15px 80px rgba(4, 255, 236, 0.25),
+      0px 0px 0px rgba(10, 197, 173, 0.33);
+
     display: flex;
-    align-items: center;
-    padding: 0px 10px;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+    padding: 10px 30px;
+    height: 15vh;
     gap: 15px;
     text-decoration: none;
-    background: var(--color-background);
-    transition: 1s;
-    border-radius: 100px;
-    box-shadow: 0 0 0.2em 0 var(--color-background);
+    border-radius: 10px;
+    border: 1px solid rgba(220, 220, 220, 0.32);
   }
   .dark {
     font-weight: 600;
-    .red {
-      color: #ff135a;
-    }
+  }
+  .bnt-title {
+    display: flex;
+    gap: 10px;
+    align-items: center;
   }
 
-  .bnt-content:hover,
-  .bnt-content:focus {
-    transition: 0.5s;
-    -webkit-animation: bnt-content 1s;
-    animation: bnt-content 1s;
-    outline: 0.1em solid transparent;
-    outline-offset: 0.2em;
-    box-shadow: 0 0 0.4em 0 var(--color-background);
-  }
-
-  .bnt-content .icon-arrow {
-    transform: scale(0.8);
-  }
-
-  .icon-arrow {
-    width: 50px;
-  }
-
-  /* Button animations */
-  @-webkit-keyframes bnt-content {
-    0% {
-      outline: 0.2em solid var(--color-background);
-      outline-offset: 0;
-    }
-  }
-
-  @keyframes bnt-content {
-    0% {
-      outline: 0.2em solid var(--color-background);
-      outline-offset: 0;
-    }
-  }
   .Btn {
     padding: 10px 40px;
     border-radius: 7px;
-    border: 1px solid rgb(61, 106, 255);
+    border: 1px solid #00bcd4;
     font-size: 14px;
     text-transform: uppercase;
     font-weight: 600;

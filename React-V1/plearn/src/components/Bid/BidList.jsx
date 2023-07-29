@@ -116,13 +116,13 @@ const Container = styled.div`
     }
   }
   .activity__content > p a {
-    color: #3771fe;
+    color: #00bcd4;
     font-weight: 600;
   }
   .activity__content {
     p {
       a:hover {
-        color: #3771fe;
+        color: #00bcd4;
       }
     }
   }

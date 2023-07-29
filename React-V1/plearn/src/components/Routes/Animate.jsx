@@ -30,7 +30,8 @@ export default function Animate() {
           />
         ))
       )}
-      <Route exact path="/Sell/:itemName" element={<Sell />} />
+      <Route exact path="/Buy/:itemcategory/:itemName" element={<Sell />} />
+      {/* <Route exact path="/Sell/:itemName" element={<Sell />} /> */}
       <Route
         exact
         path="/Bid/:itemName/:itemName"
@@ -40,7 +41,6 @@ export default function Animate() {
       <Route exact path="/owned" element={<Owned />}></Route>
       <Route exact path="/policy" element={<PrivacyPolicy />}></Route>
       <Route exact path="/getintouch" element={<Contact />}></Route>
-
     </Routes>
   );
 }

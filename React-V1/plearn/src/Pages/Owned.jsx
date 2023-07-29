@@ -82,12 +82,16 @@ export default function Owned() {
                       <button disabled className=" dis">
                         OWNED
                       </button>
-                      {Category.inAuction ? (<p>InAuction</p>): (<Link
-                        className="Btn"
-                        to={`/Sell/${Category.name}_${Category.category}_${Category.id}`}
-                      >
-                        Sell item
-                      </Link>)}
+                      {Category.inAuction ? (
+                        <p>InAuction</p>
+                      ) : (
+                        <Link
+                          className="Btn"
+                          to={`/Buy/${Category.category}/${Category.name}`}
+                        >
+                          Sell item
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>

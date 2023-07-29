@@ -5,7 +5,9 @@ import Loader from "../Loader";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import coin from "../../assets/MarketPlace/A (5).png";
+import SellModal from "./SellModal";
 export default React.memo(function Buy({ ds }) {
+  console.log(ds, "ds");
   const [playerLevel, setPlayerLevel] = useState(1);
   const [gameCoins, setGameCoins] = useState(10);
   const [itemAvailable, setItemAvailable] = useState(ds.itemAvailable);
@@ -42,7 +44,7 @@ export default React.memo(function Buy({ ds }) {
         setGameCoins(response.data.gameCoins);
       });
   };
-
+  const [open, SetOpen] = useState(false);
   const BuyNFTs = async () => {
     setLoader(true);
     const userDetails = {
@@ -84,7 +86,20 @@ export default React.memo(function Buy({ ds }) {
         console.log(error);
       });
   };
-
+  const user = localStorage.getItem(1);
+  console.log(user, ds.currentOwner);
+  const isOwned = ds.currentOwner === user ? true : false;
+  const handleOpen = () => {
+    SetOpen(!open);
+  };
+  const [fixed, setFixed] = useState(false);
+  const handleFixed = () => {
+    setFixed(!fixed);
+  };
+  const containerStyle = {
+    filter: open ? "blur(0.8rem)" : "blur(0)",
+    transition: "filter 0.3s ease",
+  };
   return (
     <>
       {showLoader ? (
@@ -130,30 +145,53 @@ export default React.memo(function Buy({ ds }) {
                 </div>
               </div>
               <div className="bottom">
-                <h2 className="price">Unlocks at : Level {unlockLevel}</h2>
-
-                <div class="cta">
-                  {itemAvailable ? (
-                    <>
-                      {butnLoader ? (
-                        <>Processing Transaction...</>
+                {isOwned ? (
+                  <div className="Overlay">
+                    <button
+                      onClick={() => {
+                        handleOpen();
+                      }}
+                    >
+                      Sell Item
+                    </button>
+                    <SellModal
+                      isOpen={open}
+                      handleOpen={handleOpen}
+                      itemID={itemID}
+                      isFixed={fixed}
+                      handleFixed={handleFixed}
+                    />
+                  </div>
+                ) : (
+                  <React.Fragment>
+                    <h2 className="price">Unlocks at : Level {unlockLevel}</h2>
+                    <div class="cta">
+                      {itemAvailable ? (
+                        <>
+                          {butnLoader ? (
+                            <>Processing Transaction...</>
+                          ) : (
+                            <button
+                              class="butn butn--primary"
+                              onClick={BuyNFTs}
+                            >
+                              <span class="icon-arrow ">
+                                <img src={coin} alt="" />
+                              </span>
+                              <span class="butn-inner">
+                                <span class="butn-label">Cost: {cost} ETH</span>
+                                <span class="butn-blur" aria-hidden=""></span>
+                              </span>
+                            </button>
+                          )}
+                        </>
                       ) : (
-                        <button class="butn butn--primary" onClick={BuyNFTs}>
-                          <span class="icon-arrow ">
-                            <img src={coin} alt="" />
-                          </span>
-                          <span class="butn-inner">
-                            <span class="butn-label">Cost: {cost} ETH</span>
-                            <span class="butn-blur" aria-hidden=""></span>
-                          </span>
-                        </button>
+                        <button class="bstn">Item not on Sale</button>
                       )}
-                    </>
-                  ) : (
-                    <button class="bstn">Item not on Sale</button>
-                  )}
-                  <div className="mt-5">{successMessage}</div>
-                </div>
+                      <div className="mt-5">{successMessage}</div>
+                    </div>
+                  </React.Fragment>
+                )}
               </div>
             </div>
           </div>
