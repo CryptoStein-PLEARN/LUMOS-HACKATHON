@@ -15,7 +15,10 @@ const marketplaceSchema = new mongoose.Schema({
             buyerAddress: { type: String },
             sellerAddress: { type: String },
             cost: { type: Number },
-            timestamp: { type: Date, default: Date.now }
+            timestamp: { type: Date, default: Date.now },
+            event: { type: String, default: ""},
+            // transfer - 'Transfer'
+            // airdrop - 'Airdrop'
         }],
         inAuction: {type: Boolean, default: false},
         auctionEndTime: {type: Date, default: Date.now},

@@ -89,7 +89,7 @@ function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
             />
           </div>
           <h3 style={{ fontSize: "14px" }}>Product Name : {itemName}</h3>
-          <h3 style={{ fontSize: "14px" }}>Category : Characters</h3>
+          <h3 style={{ fontSize: "14px" }}>Category : {category}</h3>
         </div>
         {isFixed ? (
           <>

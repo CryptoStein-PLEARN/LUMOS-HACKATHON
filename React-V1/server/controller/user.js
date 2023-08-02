@@ -476,6 +476,7 @@ const endAuction = async (req,res) => {
                                     sellerAddress: item.currentOwner,
                                     cost: highestBid.bidAmount,
                                     timestamp: new Date(),
+                                    event: "AuctionSale"
                                 }
                             }
                         }

@@ -59,6 +59,7 @@ export default React.memo(function Buy({ ds }) {
       sellerAddress: ds.currentOwner,
       cost: ds.cost,
       timestamp: new Date(),
+      event: ds.currentOwner !== null ? "Sale" : "Minted"
     };
 
     const requestData = {
