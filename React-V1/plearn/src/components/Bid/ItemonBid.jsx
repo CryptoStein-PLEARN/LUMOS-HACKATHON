@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
 import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
@@ -27,7 +26,6 @@ export default React.memo(function ItemonBid({ ds }) {
   const desc = firstObject ? firstObject.description : "";
   const price = firstObject ? firstObject.cost : "";
   const transaction = firstObject ? firstObject.transactions : {};
-
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
   const [btnLoader, setLoding] = useState(false);

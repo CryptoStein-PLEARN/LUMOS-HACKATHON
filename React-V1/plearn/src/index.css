@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@300;400;500;600;700&display=swap');@import url("https://fonts.googleapis.com/css?family=Arvo:700");
 html{
   scroll-behavior: smooth;
 }
@@ -139,14 +139,14 @@ body {
   opacity: 1;
 }
 
-.ims {
+/* .ims {
   background-image: url(./assets/Images/image-18-1-1.png);
   border-bottom: 1px solid black;
 }
 
 .imc {
   background-image: url(./assets/Images/landing-rev-img-1.png);
-}
+} */
 
 .hero__nft-placeholder-img {
   position: absolute;
@@ -157,6 +157,10 @@ body {
   background-repeat: no-repeat;
   right: -120px;
   bottom: 0;
+}
+
+.hero__nft-placeholder-img  svg{
+  transform: translate3d(0px, -50px, 0px);
 }
 
 .block-title-inline {

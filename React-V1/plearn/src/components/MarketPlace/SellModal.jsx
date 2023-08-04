@@ -78,7 +78,31 @@ function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
       <div className="box">
         <div className="wrap">
           <div className="wraplex">
-            <h1> Start an Auction</h1>
+            {isFixed ? <h1>
+              Sell  At fixed Price
+
+            </h1>
+              : <h1>
+                Start an Auction
+              </h1>}
+            <List className="menu-bar">
+              <ListItem
+                className={`tab-button ${isFixed ? "active" : ""}`}
+                onClick={() => {
+                  handleFixed();
+                }}
+              >
+                Auction
+              </ListItem>
+              <ListItem
+                className={`tab-button ${isFixed ? "" : "active"}`}
+                onClick={() => {
+                  handleFixed();
+                }}
+              >
+                Sell
+              </ListItem>
+            </List>
             <IoIosClose
               color="white"
               size={"34"}
@@ -98,10 +122,10 @@ function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
               id="sellingBasePrice"
               placeholder="Sell At"
               onInput={(event) =>
-                (event.target.value = event.target.value.slice(
-                  0,
-                  event.target.maxLength
-                ))
+              (event.target.value = event.target.value.slice(
+                0,
+                event.target.maxLength
+              ))
               }
               maxLength="4"
             />
@@ -111,36 +135,35 @@ function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
           </>
         ) : (
           <>
-            <p>Enter Your Base Price</p>
+
             <input
               id="basePrice"
               type="number"
               min="0"
-              placeholder="Sell At"
+              placeholder="Enter Your Base Price"
               onInput={(event) =>
-                (event.target.value = event.target.value.slice(
-                  0,
-                  event.target.maxLength
-                ))
+              (event.target.value = event.target.value.slice(
+                0,
+                event.target.maxLength
+              ))
               }
               maxLength="4"
             ></input>
-            <p>Enter minimum bid amount allowed</p>
+
             <input
               id="minBidAmount"
               type="number"
               min="0"
-              placeholder="Minimum bid amount"
+              placeholder="Enter minimum bid amount allowed"
               onInput={(event) =>
-                (event.target.value = event.target.value.slice(
-                  0,
-                  event.target.maxLength
-                ))
+              (event.target.value = event.target.value.slice(
+                0,
+                event.target.maxLength
+              ))
               }
               maxLength="4"
             ></input>
-            <p> Duration of the Auction </p>
-            <input type="number" id="durationDays" placeholder="Days" min="1" />
+            <input type="number" id="durationDays" placeholder="Duration of the Auction " min="1" />
             <Button>
               <button disabled={Loader ? true : false} onClick={StartAuction}>
                 <span> Submit</span>
@@ -148,13 +171,8 @@ function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
             </Button>
           </>
         )}
-        <button
-          onClick={() => {
-            handleFixed();
-          }}
-        >
-          Want to sell at fix Price?
-        </button>
+
+
       </div>
     </Container>
   );
@@ -215,15 +233,45 @@ const Button = styled.div`
 `;
 const Container = styled.div`
   position: absolute;
-  left: 40vw;
+  left: 40vw;.tab-button { 
+    font-size: 16px;
+    border: none;
+    background-color: #f2f2f2;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s;
+  }
+  .tab-button {
+    padding: 10px 30px;
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;  
+  }
+  
+  .tab-button.active {
+    transform: translateX(15px); 
+    opacity: 0.4;     
+  }
   top: 34vh;
   .wrap {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
+    svg{
+      transform: translate(15px,-20px);
+    }
+    
     h1 {
       font-size: 30px !important;
       cursor: pointer;
+      letter-spacing: 0.12em;
+      max-width: 45%;
+      margin:0px;
     }
     h3 {
       margin: 0px !important;
@@ -234,4 +282,58 @@ const Container = styled.div`
       justify-content: space-between;
     }
   }
+  input{
+  --input-focus: #2d8cf0;
+  --font-color: #323232;
+  --font-color-sub: #666;
+  --bg-color: rgb(255,255,255,0.9);
+  --main-color: #323232;
+  width: 70%;
+  height: 40px;
+  border-radius: 5px;
+  border: 2px solid var(--main-color);
+  background-color: var(--bg-color);
+  box-shadow: 4px 4px var(--main-color);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--font-color);
+  padding: 5px 10px;
+  outline: none;
+}
+
+input::placeholder {
+  color: var(--font-color-sub);
+  opacity: 0.8;
+}
+
+input:focus {
+  border: 2px solid var(--input-focus);
+}
+`;
+
+const List = styled.ul`
+  display: flex;
+  gap: 20px; 
+  list-style: none;
+  justify-content:center;
+  width:40vh;
+  border-radius: 25px; 
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  align-items: center;
+  padding: 10px 10px;
+
+`;
+
+const ListItem = styled.li`
+  cursor: pointer;
+  list-style: none;
+  color: white;
+  font-family: sans-serif; 
+  font-weight: bold;
+  padding: 12px 16px;
+  margin: 0 8px;
+  position: relative;
+  cursor: pointer; 
+  
 `;

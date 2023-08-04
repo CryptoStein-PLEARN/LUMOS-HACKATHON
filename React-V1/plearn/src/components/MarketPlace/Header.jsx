@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import Lottie from 'lottie-react'
 import coinEth from "../../assets/MarketPlace/Frame-251-5.png";
+import animationData from '../../assets/animation_lkwl10co.json'
 export default React.memo(function Header() {
   return (
     <Container className="p-5">
@@ -14,7 +16,7 @@ export default React.memo(function Header() {
         </h1>
       </div>
       <div className="img-fluid imgl float">
-        <img src={coinEth} alt="" />
+        <Lottie animationData={animationData} />
       </div>
     </Container>
   );

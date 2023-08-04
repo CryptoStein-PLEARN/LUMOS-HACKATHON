@@ -64,7 +64,7 @@ export default function PastOwners({ transaction }) {
                     </tr>
                     <tr>
                       <td className="px-3 text-2xl font-medium dark:text-gray-400">
-                        <p>EVENT</p>
+                        <p>Auction</p>
                       </td>
                       <td className="px-3 py-2">
                         <p>{item?.buyerAddress.slice(0, 5)}</p>

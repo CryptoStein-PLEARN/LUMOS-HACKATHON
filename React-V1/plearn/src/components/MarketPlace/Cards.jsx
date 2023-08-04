@@ -1,9 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import coin from "../../assets/MarketPlace/A (5).png";
-import { useDispatch } from "react-redux";
-import { SetBlog } from "../../Store/Slice/Cardslice";
 import { useNavigate } from "react-router-dom";
+import Tilt from "react-parallax-tilt";
 
 export default React.memo(function Cards(props) {
   // console.log("obj");
@@ -22,44 +21,71 @@ export default React.memo(function Cards(props) {
 
   return (
     <Container>
-      <div key={_id} className={`card`}>
-        <>
-          <div className="type">
-            <img className="icon" src={coin} height="30px" />
-            <p>{cost} ETH</p>
+
+      <Tilt
+        className="parallax-effect"
+        perspective={900}
+        glareEnable={false}
+        scale={1.01}
+        glareMaxOpacity={0}
+      >
+        <div className="inner-element">
+          <div key={_id} className={`card`}>
+            <>
+              <div className="type">
+                <img className="icon" src={coin} height="30px" />
+                <p>{cost} ETH</p>
+              </div>
+              <div
+                className="ImgWrap"
+                id={id}
+                style={{ background: `url(${imgUri})` }}
+              ></div>
+              <div className="card-body">
+                <h1>{name}</h1>
+                <p className="desp">Unlock Level: {unlockLevel}</p>
+                <div className="details"></div>
+                <div className="product">
+                  <a
+                    className="btn"
+                    onClick={() => {
+                      HandleClick();
+                    }}
+                  >
+                    {itemAvailable ? (
+                      <span>Buy item</span>
+                    ) : inAuction ? (
+                      <span>Place a bid</span>
+                    ) : (
+                      <span>View details</span>
+                    )}
+                  </a>
+                </div>
+              </div>
+            </>
           </div>
-          <div
-            className="ImgWrap"
-            id={id}
-            style={{ background: `url(${imgUri})` }}
-          ></div>
-          <div className="card-body">
-            <h1>{name}</h1>
-            <p className="desp">Unlock Level: {unlockLevel}</p>
-            <div className="details"></div>
-            <div className="product">
-              <a
-                className="btn"
-                onClick={() => {
-                  HandleClick();
-                }}
-              >
-                {itemAvailable ? (
-                  <span>Buy item</span>
-                ) : inAuction ? (
-                  <span>Place a bid</span>
-                ) : (
-                  <span>View details</span>
-                )}
-              </a>
-            </div>
-          </div>
-        </>
-      </div>
+        </div>
+      </Tilt>
     </Container>
   );
 });
 const Container = styled.div`
+.parallax-effect { 
+  transform-style: preserve-3d; 
+  background:none;
+  .inner-element {
+    display: flex;
+    height:100%;
+    width:100%; 
+    flex-direction: column; 
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 15px;
+    font-style: italic;
+    color: white;
+    transform: translateZ(90px);
+  }
+}
   .desp {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -170,20 +196,34 @@ const Container = styled.div`
   }
   .card {
     align-self: center;
-    background: #111314;
+    background: 
+    #E2E2D9;
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 1px ); 
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.38 );
     overflow: hidden;
     transition: 0.5s all;
-    border-radius: 20px;
+    border-radius: 20px;  cursor:pointer;
+
     max-height: 640px;
     user-select: none;
     max-width: 300px;
     margin: 5rem auto;
     border: 1px solid rgb(84 90 106);
     border-radius: 0.7rem;
-    backdrop-filter: blur(7px);
-    -webkit-backdrop-filter: blur(7px);
-    overflow: hidden;
+    backdrop-filter: blur(3px); 
+    overflow: hidden;    height:100%;
+    width:100%;
     transition: 0.5s all;
+    h1{
+      color:black;
+      font-family:bold;  
+      text-transform: uppercase; 
+      transform-style: preserve-3d;
+    transform: translateZ(60px);
+       
+    }
     &::before {
       position: fixed;
       content: "";
@@ -210,6 +250,8 @@ const Container = styled.div`
     background-size: cover !important;
     background-position: center !important;
     height: 250px;
+    border-bottom-right-radius:50px;
+    border-bottom-left-radius:50px;
   }
   .product {
     align-items: center;
@@ -222,7 +264,7 @@ const Container = styled.div`
   .card p {
     color: white;
     margin-bottom: 20px;
-    color: #808191;
+    color: black;
     font-family: "Bai Jamjuree", Sans-serif;
     font-weight: 500;
   }
@@ -287,6 +329,8 @@ const Container = styled.div`
     }
   }
   .type .icon {
+    transform-style: preserve-3d;
+    transform: translateZ(90px);
     margin-right: 10px;
   }
 
