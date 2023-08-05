@@ -3,7 +3,9 @@ import styled from "styled-components";
 
 export default function PastOwners({ transaction }) {
   const [ShowEvents, setShowEvents] = useState(false);
-  if (transaction) {
+  const [Loading, isLoading] = useState(false);
+  console.log(transaction == null);
+  if (transaction[0]) {
     return (
       <Container
         onClick={() => {

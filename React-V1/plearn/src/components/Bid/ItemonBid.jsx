@@ -10,7 +10,7 @@ import PastOwners from "./PastOwners";
 import { TbListDetails } from "react-icons/tb";
 export default React.memo(function ItemonBid({ ds }) {
   const character = useLocation();
-  const values = character.pathname.split("/").slice(-2); // Extract the last two values
+  const values = character.pathname.split("/")?.slice(-2); // Extract the last two values
   const [showBidInput, setShowBidInput] = useState(false);
   const [bidPlaced, setBidPlaced] = useState(false);
   const [bidValue, setBidValue] = useState("");
@@ -221,19 +221,19 @@ export default React.memo(function ItemonBid({ ds }) {
     itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1]
       .bid.length > 0
       ? itemAuctionDetails?.item?.bids[
-          itemAuctionDetails?.item?.bids.length - 1
-        ].bid.reduce((maxBid, currentBid) =>
-          currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
-        ).bidderAddress
+        itemAuctionDetails?.item?.bids.length - 1
+      ].bid.reduce((maxBid, currentBid) =>
+        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+      ).bidderAddress
       : "No bids";
   const highestBid =
     itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1]
       .bid.length > 0
       ? itemAuctionDetails.item.bids[
-          itemAuctionDetails.item.bids.length - 1
-        ].bid.reduce((maxBid, currentBid) =>
-          currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
-        ).bidAmount
+        itemAuctionDetails.item.bids.length - 1
+      ].bid.reduce((maxBid, currentBid) =>
+        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+      ).bidAmount
       : "";
   return (
     <>
@@ -258,7 +258,7 @@ export default React.memo(function ItemonBid({ ds }) {
                   <div>
                     <h1 className="name">{ItemName}</h1>
                     <span>Owned by </span>
-                    <span>{currentOwner.slice(0, 7)}</span>{" "}
+                    <span>{currentOwner?.slice(0, 7)}</span>{" "}
                     <div className="Categor">
                       <h2>
                         Category : <span className="ca desc">{Category}</span>
