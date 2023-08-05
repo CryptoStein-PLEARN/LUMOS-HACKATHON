@@ -5,59 +5,60 @@ export default function PastOwners({ transaction }) {
   const [ShowEvents, setShowEvents] = useState(false);
   const [Loading, isLoading] = useState(false);
   console.log(transaction == null);
-  if (transaction[0]) {
-    return (
-      <Container
-        onClick={() => {
-          setShowEvents(!ShowEvents);
-        }}
-      >
-        <div className="fixed">
-          <h1>Item History </h1>
 
-          <span className="qodef-accordion-mark">
-            <svg
-              style={{
-                transform: `scaleY(${ShowEvents ? "-1" : "1"})`,
-                transition: "transform 0.4s cubic-bezier(0.39, .1, 0, .98)",
-              }}
-              className="qodef-svg--accordion-arrow"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-              width="26"
-              height="20.35"
-              viewBox="0 0 26 20.35"
-            >
-              <path d="M26,0,12.974,20.35,0,0ZM13.026,12.608l5.336-8.423H7.638Z"></path>
-            </svg>
-          </span>
-        </div>
-        <div
-          style={{ display: `${ShowEvents ? "inherit" : "none"}` }}
-          className="p-2 mx-auto sm:p-4 dark:text-gray-100"
-        >
-          <div>
-            <table className="w-full p-6 text-xs text-left whitespace-nowrap">
-              <colgroup>
-                <col className="w-5" />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col />
-                <col className="w-5" />
-              </colgroup>
-              <thead>
-                <tr className="dark:bg-gray-700">
-                  <th className="p-3">Event</th>
-                  <th className="p-3">From</th>
-                  <th className="p-3">To</th>
-                  <th className="p-3">Date</th>
-                  <th className="p-3">Price</th>
-                </tr>
-              </thead>
-              <tbody className="border-b overflow dark:bg-gray-900 dark:border-gray-700">
-                {transaction?.map((item, index) => (
+  return (
+    <Container
+      onClick={() => {
+        setShowEvents(!ShowEvents);
+      }}
+    >
+      <div className="fixed">
+        <h1>Item History </h1>
+
+        <span className="qodef-accordion-mark">
+          <svg
+            style={{
+              transform: `scaleY(${ShowEvents ? "-1" : "1"})`,
+              transition: "transform 0.4s cubic-bezier(0.39, .1, 0, .98)",
+            }}
+            className="qodef-svg--accordion-arrow"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            width="26"
+            height="20.35"
+            viewBox="0 0 26 20.35"
+          >
+            <path d="M26,0,12.974,20.35,0,0ZM13.026,12.608l5.336-8.423H7.638Z"></path>
+          </svg>
+        </span>
+      </div>
+      <div
+        style={{ display: `${ShowEvents ? "inherit" : "none"}` }}
+        className="p-2 mx-auto sm:p-4 dark:text-gray-100"
+      >
+        <div>
+          <table className="w-full p-6 text-xs text-left whitespace-nowrap">
+            <colgroup>
+              <col className="w-5" />
+              <col />
+              <col />
+              <col />
+              <col />
+              <col />
+              <col className="w-5" />
+            </colgroup>
+            <thead>
+              <tr className="dark:bg-gray-700">
+                <th className="p-3">Event</th>
+                <th className="p-3">From</th>
+                <th className="p-3">To</th>
+                <th className="p-3">Date</th>
+                <th className="p-3">Price</th>
+              </tr>
+            </thead>
+            <tbody className="border-b overflow dark:bg-gray-900 dark:border-gray-700">
+              {(transaction[0]) &&
+                transaction?.map((item, index) => (
                   <React.Fragment key={index}>
                     <tr>
                       <td colSpan="5">
@@ -89,13 +90,13 @@ export default function PastOwners({ transaction }) {
                     </tr>
                   </React.Fragment>
                 ))}
-              </tbody>{" "}
-            </table>
-          </div>
+            </tbody>{" "}
+          </table>
         </div>
-      </Container>
-    );
-  }
+      </div>
+    </Container>
+  );
+
   return <></>;
 }
 const Container = styled.div`
