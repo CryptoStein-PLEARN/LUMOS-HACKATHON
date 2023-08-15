@@ -221,19 +221,19 @@ export default React.memo(function ItemonBid({ ds }) {
     itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1]
       .bid.length > 0
       ? itemAuctionDetails?.item?.bids[
-        itemAuctionDetails?.item?.bids.length - 1
-      ].bid.reduce((maxBid, currentBid) =>
-        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
-      ).bidderAddress
+          itemAuctionDetails?.item?.bids.length - 1
+        ].bid.reduce((maxBid, currentBid) =>
+          currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+        ).bidderAddress
       : "No bids";
   const highestBid =
     itemAuctionDetails?.item?.bids[itemAuctionDetails?.item?.bids.length - 1]
       .bid.length > 0
       ? itemAuctionDetails.item.bids[
-        itemAuctionDetails.item.bids.length - 1
-      ].bid.reduce((maxBid, currentBid) =>
-        currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
-      ).bidAmount
+          itemAuctionDetails.item.bids.length - 1
+        ].bid.reduce((maxBid, currentBid) =>
+          currentBid.bidAmount > maxBid.bidAmount ? currentBid : maxBid
+        ).bidAmount
       : "";
   return (
     <>
@@ -614,7 +614,6 @@ const Container = styled.div`
 
   .bidArea {
     display: flex;
-    height: 25vh;
     gap: 40px;
     justify-content: space-between;
     align-items: flex-start;
@@ -646,6 +645,31 @@ const Container = styled.div`
     padding-top: 5vh;
     display: flex;
     grid-gap: 6%;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .head,
+    .lfr {
+      flex-direction: column;
+    }
+
+    .description {
+      width: 78vw !important;
+    }
+    .left,
+    .right {
+      max-width: 100% !important;
+      width: 100% !important;
+    }
+
+    .top {
+      margin-top: 10vh;
+    }
+    .notification {
+      position: relative;
+      width: 30vw;
+      height: 9vh;
+    }
   }
   .right {
     max-width: 60%;
@@ -846,7 +870,7 @@ const Container = styled.div`
     position: relative;
     padding: 20px 0 0;
     width: 100%;
-    max-width: 180px;
+    width: 180px;
   }
 
   .form__field {

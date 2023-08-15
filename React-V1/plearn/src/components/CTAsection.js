@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import Styled from "styled-components";
+import PhoneInput from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import bg from "../assets/bg.png";
 export default React.memo(function CTAsection() {
   const [name, setName] = useState("");
   const [nameError, setnameError] = useState("");
@@ -7,6 +10,7 @@ export default React.memo(function CTAsection() {
   const [emailError, setemailError] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
   const [phoneNumberError, setphoneNumberError] = useState("");
+  const [value, setValue] = useState();
   const [emptyError, setEmptyerror] = useState("");
   const [selectedOption, setSelectedOption] = useState("Subject line");
   const [Message, setMessage] = useState("");
@@ -91,66 +95,55 @@ export default React.memo(function CTAsection() {
   return (
     <Container>
       <div id="container">
-        <h1>&bull; Get in Touch &bull;</h1>
-        <div className="underline"></div>
-        <div className="icon_wrapper">
-          <svg className="icon" viewBox="0 0 145.192 145.192">
-            <path d="M126.82,32.694c-2.804,0-5.08,2.273-5.08,5.075v2.721c-1.462,0-2.646,1.185-2.646,2.647v1.995    c0,1.585,1.286,2.873,2.874,2.873h20.577c1.462,0,2.646-1.185,2.646-2.647v-3.041c0-1.009-0.816-1.825-1.823-1.825v-2.722    c0-2.802-2.276-5.075-5.079-5.075h-1.985v-3.829c0-3.816-3.095-6.912-6.913-6.912h-0.589h-20.45c0-2.67-2.164-4.835-4.833-4.835    H56.843c-2.67,0-4.835,2.165-4.835,4.835H34.356v-3.384h-9.563v3.384v1.178h-7.061v1.416c-2.67,0.27-10.17,1.424-13.882,5.972    c-1.773,2.17-2.44,4.791-1.983,7.793c0.463,3.043,1.271,6.346,2.128,9.841c2.354,9.616,5.024,20.515,0.549,28.077    C2.647,79.44-3.125,90.589,2.201,99.547c4.123,6.935,13.701,10.44,28.5,10.44c1.186,0,2.405-0.023,3.658-0.068v9.028h-0.296    c-2.516,0-4.558,2.039-4.558,4.558v4.566h100.04v-4.564c0-2.519-2.039-4.558-4.558-4.558h-0.297V84.631h0.297    c2.519,0,4.558-2.037,4.558-4.556v-0.009c0-2.516-2.039-4.556-4.556-4.556l-36.786-0.009V61.973c0-2.193-1.777-3.971-3.972-3.971    v-4.711h0.456c1.629,0,2.952-1.32,2.952-2.949h14.227V34.459h1.658c2.672,0,4.834-2.165,4.834-4.834h20.45v3.069H126.82z     M34.06,75.511c-2.518,0-4.558,2.04-4.558,4.556v0.009c0,2.519,2.042,4.556,4.558,4.556h0.296v24.12l-0.042-1.168    c-15.994,0.574-26.122-2.523-30.106-9.229C-0.464,90.5,4.822,80.347,6.55,77.423c4.964-8.382,2.173-19.774-0.29-29.825    c-0.843-3.442-1.639-6.696-2.088-9.638c-0.354-2.35,0.129-4.3,1.484-5.958c3.029-3.714,9.509-4.805,12.076-5.1v1.233h7.061v1.49    v2.684c-2.403,1.114-4.153,2.997-4.676,5.237H18.15c-0.584,0-1.056,0.474-1.056,1.056v0.83c0,0.584,0.475,1.056,1.056,1.056h1.984    c0.561,2.18,2.304,3.999,4.658,5.092v0.029c0,0-2.282,20.823,16.479,22.099v1.102c0,1.177,0.955,2.133,2.133,2.133h3.297    c1.178,0,2.133-0.956,2.133-2.133V50.135c0-1.177-0.955-2.132-2.133-2.132h-3.297c-1.178,0-2.133,0.955-2.133,2.132    c-1.575-0.235-5.532-1.17-6.635-4.547c2.36-1.092,4.109-2.913,4.669-5.097h1.308c0.722,0,1.309-0.584,1.309-1.308v-0.578    c0-0.584-0.475-1.056-1.056-1.056h-1.539c-0.542-2.332-2.416-4.271-4.968-5.363v-2.559h17.651c0,2.67,2.166,4.835,4.836,4.835 h2.392v15.88h13.639c0,1.629,1.321,2.949,2.951,2.949h0.899v4.711c-2.194,0-3.972,1.778-3.972,3.971v13.529L34.06,75.511z     M95.188,101.78c0,8.655-7.012,15.665-15.664,15.665c-8.653,0-15.667-7.01-15.667-15.665c0-8.647,7.014-15.664,15.667-15.664    C88.177,86.116,95.188,93.132,95.188,101.78z M97.189,45.669h-9.556c0-0.896-0.726-1.62-1.619-1.62H74.494    c-0.896,0-1.621,0.727-1.621,1.62h-8.967v-11.21h33.283V45.669z"></path>
-            <path d="M70.865,101.78c0,4.774,3.886,8.657,8.66,8.657c4.774,0,8.657-3.883,8.657-8.657c0-4.773-3.883-8.656-8.657-8.656    C74.751,93.124,70.865,97.006,70.865,101.78z"></path>
-          </svg>
-        </div>
+        <h1>Interest form </h1>
         <form autoComplete="off" action="#" method="post" id="contact_form">
-          <div className="name">
-            <label for="name"></label>
-            <input
-              type="text"
-              autoComplete="off"
-              value={name}
-              placeholder="Name"
-              className={`Firstname ${
-                nameError.length > 0 || emptyError.length > 0 ? "invalid" : "."
-              } `}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              id="name_input"
-            />{" "}
-            {nameError && <div className="error">{nameError}</div>}
+          <div className="flex">
+            <div className="name">
+              <label for="name"></label>
+              <input
+                type="text"
+                autoComplete="off"
+                value={name}
+                placeholder="Name"
+                className={`Firstname ${
+                  nameError.length > 0 || emptyError.length > 0
+                    ? "invalid"
+                    : "."
+                } `}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                id="name_input"
+              />{" "}
+              {nameError && <div className="error">{nameError}</div>}
+            </div>
+            <div className="email">
+              <label for="email"></label>
+              <input
+                type="email"
+                className={`email ${
+                  emailError.length > 0 || emptyError.length > 0
+                    ? "invalid"
+                    : "."
+                } `}
+                placeholder="Email"
+                value={Email}
+                onChange={(e) => {
+                  setmail(e.target.value);
+                }}
+                name="email"
+                id="email_input"
+              />{" "}
+              {emailError && <div className="error">{emailError}</div>}
+            </div>
           </div>
-          <div className="email">
-            <label for="email"></label>
-            <input
-              type="email"
-              className={`email ${
-                emailError.length > 0 || emptyError.length > 0 ? "invalid" : "."
-              } `}
-              placeholder="Email"
-              value={Email}
-              onChange={(e) => {
-                setmail(e.target.value);
-              }}
-              name="email"
-              id="email_input"
-            />{" "}
-            {emailError && <div className="error">{emailError}</div>}
-          </div>
-          <div className="telephone">
+
+          <div className="telephone ">
             <label for="name"></label>
-            <input
-              type="text"
-              autoComplete="off"
-              className={`phone${
-                phoneNumberError.length > 0 || emptyError.length > 0
-                  ? "invalid"
-                  : "."
-              } `}
-              placeholder="Phone Number"
-              value={phonenumber}
-              onChange={(e) => {
-                setPhonenumber(e.target.value);
-              }}
-              name="telephone"
-              id="telephone_input"
+            <PhoneInput
+              placeholder="Enter phone number"
+              value={value}
+              onChange={setValue}
             />
             {phoneNumberError && (
               <div className="error">{phoneNumberError}</div>
@@ -169,7 +162,8 @@ export default React.memo(function CTAsection() {
               <option disabled hidden selected>
                 Subject line
               </option>
-              <option>I'd like to GIVE A FEEDBACK</option>
+
+              <option className="bgBlack">I'd like to give a feedback</option>
               <option>I'd like to ask a question</option>
               <option>I'd like to make a proposal</option>
             </select>{" "}
@@ -189,841 +183,145 @@ export default React.memo(function CTAsection() {
               rows="5"
             ></textarea>
           </div>
-          <div className="submit">
-            <div className="button" onClick={handleSubmit}>
-              Submit
-            </div>
+          <div className="btnW">
+            <button
+              onClick={() => {
+                handleSubmit();
+              }}
+            >
+              <span class="box">Submit</span>
+            </button>
           </div>
         </form>
-      </div>{" "}
+      </div>
     </Container>
   );
 });
 const Container = Styled.div`
 display: flex;
-    padding:40px;
+background:black;
+background-repeat:no-repeat;
+background-size:cover;    background-position: center;
+background-image:url('https://cosmos.network/_nuxt/img/184b48b.png');
+padding: 10vw;
     align-items: center;
     justify-content: center;
-.submit { 
-  .button {
-    cursor: pointer;
-    margin: 20px;
-    width: 100px;
-    padding: 15px 20px;
-    font-size: 16px;
-    background: transparent;
-    border: none;
-    position: relative;
-    color: #f0f0f0;
-    z-index: 1;
-  }
-
-  .button::after,
-  .button::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    z-index: -99999;
-    transition: all 0.4s;
-  }
-
-  .button::before {
-    transform: translate(0%, 0%);
-    width: 100%;
-    height: 100%;
-    background: #28282d;
-    border-radius: 10px;
-  }
-
-  .button::after {
-    transform: translate(10px, 10px);
-    width: 35px;
-    height: 35px;
-    background: #ffffff15;
-    backdrop-filter: blur(5px);
-    border-radius: 50px;
-  }
-
-  .button:hover::before {
-    transform: translate(5%, 20%);
-    width: 110%;
-    height: 110%;
-  }
-
-  .button:hover::after {
-    border-radius: 10px;
-    transform: translate(0, 0);
-    width: 100%;
-    height: 100%;
-  }
-
-  .button:active::after {
-    transition: 0s;
-    transform: translate(0, 5%);
-  }
-}
-input:-internal-autofill-selected {
-  appearance: menulist-button;
-  background-image: none !important;
-  background-color: transparent!important;
-  color: Wheat !important;
-}
-.invalid {
-  animation: justshake 0.3s forwards;
-  color:  #03e9f4 !important;
-  border-bottom: 2px solid  #03e9f4 !important;
-}
-.error {
-  color: red; 
-  margin-bottom: 20px;
-}
-@keyframes justshake {
-  25% {
-    transform: translateX(5px);
-  }
-
-  50% {
-    transform: translateX(-5px);
-  }
-
-  75% {
-    transform: translateX(5px);
-  }
-
-  100% {
-    transform: translateX-(5px);
-  }
-}
-button {
-  overflow: visible;
-}
-
-button, select {
-  text-transform: none;
-}
-
-button, select, textarea {
-  color: wheat;
-  font: inherit;
-  margin: 0;
-}
-
-input {
-  color:wheat;
-  line-height: normal;
-}
-input:placeholder{
-  color:black;
-}
-textarea {
-  overflow: auto;
-}
-
-#container {
-  background:black;
-  border: solid 3px wheat;
-  width: 45vw; 
-  height: 110vh; 
-  border-radius: 50px;
-}
-
-form {
-  padding: 20px 35px;
- 
+ h1{
+  font-size: calc(1.57625rem + 4.37833vw);
+  letter-spacing:-2px; 
+ }
+ #container,form{  
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly; 
   align-items: flex-start;
-  gap:10px;
-}
-
-h1 {
-  color: wheat;
-  font-size: 32px;
-  font-weight: 700;
-  letter-spacing: 7px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-.underline {
-  border-bottom: solid 2px wheat;
-  margin: -0.512em auto;
-  width: 120px;
-}
-
-.icon_wrapper {
-  margin: 50px auto 0;
+ }
+ form{
+  gap:5vh;
+ }
+ #container{
+  gap:10vh;
+ }
+ .flex{
+  display: flex; 
+  justify-content: space-evenly;
+  align-items: center;
+  gap:5vw; 
+ }
+ input,textarea,select{
+  outline: none;
   width: 100%;
-}
-
-.icon {
-  display: block;
-  fill:wheat;
-  height: 50px;
-  margin: 0 auto;
-  width: 50px;
-}
-
-.email {
-	float: right;
-	width: 100%;
-}
-
-input[type='text'], [type='email'], select, textarea {
-	background: none;
   border: none;
-	border-bottom: solid 2px wheat;
-	color: wheat;
-	font-size: 1.000em;
-  font-weight: 400;
-  letter-spacing: 1px;
-	margin: 0em 0 1.875em 0;
-	padding: 0 0 0.875em 0;
-  text-transform: uppercase;
-	width: 100%;
- 	box-sizing: border-box;
- 	transition: all 0.3s;
-}
-
-input[type='text']:focus, [type='email']:focus, textarea:focus {
-	outline: none;
-	padding: 0 0 0.875em 0;
-}
-
-.message {
-	float: none;
-  width:100%;
-}
-option{
-color:black
-}
-.name {
-	float: left;
-	width: 100%;
-
-}
-
-select {
-  background: url('https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-arrow-down-32.png') no-repeat right;
-  outline: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-}
-
-select::-ms-expand {
-  display: none;
-}
-
-.subject {
- 
-  width: 100%;
-}
-
-.telephone {
-  width: 100%;
-}
-
-textarea {
-	line-height: 150%;
-	height: 150px;
-	resize: none;
-  width: 100%;
-}
-
-::-webkit-input-placeholder {
-	color: wheat;
-}
- 
- 
-#form_button {
-  background: none;
-  border: solid 2px #474544;
-  color: #474544;
-  cursor: pointer;
-  display: inline-block;
-  font-family: 'Helvetica', Arial, sans-serif;
-  font-size: 0.875em;
-  font-weight: bold;
-  outline: none;
-  padding: 20px 35px;
-  text-transform: uppercase;
-  -webkit-transition: all 0.3s;
-	-moz-transition: all 0.3s;
-	-ms-transition: all 0.3s;
-	-o-transition: all 0.3s;
-	transition: all 0.3s;
-}
-
-#form_button:hover {
-  background: #474544;
-  color: #F2F3EB;
-}
-
-@media screen and (max-width: 768px) {
-  #container {
-    margin: 20px auto;
-    width: 95%;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  h1 {
-    font-size: 26px;
-  }
-  
-  .underline {
-    width: 68px;
-  }
-  
-  #form_button {
-    padding: 15px 25px;
-  }
-}
-
-@media screen and (max-width: 420px) {
-  h1 {
-    font-size: 18px;
-  }
-  
-  .icon {
-    height: 35px;
-    width: 35px;
-  }
-  
-  .underline {
-    width: 53px;
-  }
-  
-  input[type='text'], [type='email'], select, textarea {
-    font-size: 0.875em;
-  }
-}
-.signupSection {
-  background: url(https://source.unsplash.com/TV2gg2kZD1o/1600x800);
-  background-repeat: no-repeat; 
-  width: 800px;
-  height: 450px;
-  text-align: center;
-  display: flex;
-  color: white;
-  box-shadow: 3px 10px 20px 5px rgba(0, 0, 0, .5);
-}
-.info {
-	width: 100%;
-
-  background: rgba(20, 20, 20, .8);
-  padding: 30px 0;
-  border-right: 5px solid rgba(30, 30, 30, .8);
-  h2 {
-    padding-top: 30px;
-    font-weight: 300;
-  }
-  p {
-    font-size: 18px;
-  }
-  .icon {
-    font-size: 8em;
-    padding: 20px 0;
-    color: rgba(10, 180, 180, 1);
-  }
-}
-
-.signupForm {
-  width: 70%;
-  padding: 30px 0;
-  background: rgba(20, 40, 40, .8);
-  transition: .2s;
-  h2 {
-    padding:10px 30px;
-    font-weight: 300;
-    font-size:26px;
-  }
-}
-
-.inputFields {
-  margin: 15px 0;
-  font-size: 16px;
-  padding: 10px;
-  width: 250px;
-  border: 1px solid rgba(10, 180, 180, 1);
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  background: rgba(20, 20, 20, .2);
-  color: white;
-  outline: none;
-}
-
-.noBullet {
-  list-style-type: none;
-  padding: 0;
-}
-
-#join-btn {
-  border: 1px solid wheat;
-  background: rgba(20, 20, 20, .6);
-  font-size: 18px;
-  color: white;
-  margin-top: 20px;
-  padding: 10px 30px;
-  cursor: pointer;
-  transition: .4s;
-  &:hover {
-    background: rgba(20, 20, 20, .8);
-    color:wheat;
-    padding: 15px 50px;
-  }
-}
-
-
-.section-item {
-    display: flex;
-    justify-content: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100%;
-    padding-top:65px;
-    margin-top: 0px;
-    .container {
-        width: 1200px;
-        .section__content{
-            .promo-banner-fw{ 
-    background-position: right; 
-                    height: 345px;
-                    padding-left: 62px;
-                    border-radius: 16px;
-                    background-color:rgb(217,238,255);
-                    background-size: 35%;
-                    color: var(--color-grey);
-                    background-repeat: no-repeat; 
-                    display: flex; 
-                    flex-direction: column; 
-                    justify-content: center; 
-           
-                .block-title-inline {
-                    display: -webkit-box;
-                    display: -webkit-flex;
-                    display: -ms-flexbox;
-                    display: flex;
-                    -webkit-box-align: center;
-                    -webkit-align-items: center;
-                    -ms-flex-align: center;
-                    align-items: center;
-                    color: #1F2128;
-                    .image {
-                        width: 20px;
-                        height: 16px;
-                        margin-right: 13px;max-width: 100%;
-                        vertical-align: middle;
-                        display: inline-block;  
-                          border: 0;
-                    }.heading-3 {
-                        color: #1F2128;
-                        letter-spacing: 5.5px;font-size: 18px;
-                        line-height: 24px;
-                        margin-top: 10px;
-                    }
-                }
-                .promo-banner-fw__heading {
-                    max-width: 670px;
-                    margin-top: 0px;
-                    margin-bottom: 24px;
-                    font-size: 36px;
-                    line-height: 47px;   
-                    color: #1F2128;
-                    font-weight: 600;
-                }
-                .tnp-subscription-nft {  
-                      transform: translateY(0px);
-                    opacity: 1;
-                    max-width: 400px;
-                    .sub-nft {
-                        display: flex;margin-top: 0em;
-                        input {
-                            line-height: normal;    color: inherit;
-                            font: inherit;
-                            margin: 0;
-                        }input[type="hidden" i] {
-                            appearance: none;
-                            background-color: initial;
-                            cursor: default;
-                            display: none !important;
-                            padding: initial;
-                            border: initial;
-                        }
-                        .tnp-field-email {
-                            height: 46px;
-                            width: 100%;
-                            border-radius: 8px 0 0 8px;
-                            background-color: rgba(31, 33, 40, 0.11);
-                            input[type=email] {
-                                width: 100%;
-                                height: 100%;
-                                border: 1px none #000;
-                                border-radius: 0px;
-                                background-color: transparent;
-                                color: var(--color-grey);
-                                font-size: 14px;
-                                font-weight: 700;
-                                outline: none;
-                                padding: 8px 12px;
-                                display: block;
-                                line-height: 1.428571429;
-                                margin-bottom: 10px; 
-                                margin: 0;
-                            }
-                        }
-                       .tnp-field-button {
-                            background-color: var(--color-grey);
-                            color: #f0f2f6;
-                            border: 0;
-                            padding: 6px 18px;
-                            border-radius: 8px;
-                            cursor: pointer;
-                            display: flex;
-                            flex: 0 0 auto;
-                            position: relative;
-                            left: -10px;
-                            input[type="submit"] {
-                                position: inherit;
-                                border: 0;
-                                text-transform: uppercase;
-                                font-size: 14px;
-                                font-weight: 700;color: inherit; 
-                                margin: 0;
-                        
-                                text-decoration: none;
-                                vertical-align: middle;    cursor: pointer;
-                                background: transparent;    transition: all 200ms ease-in-out;
-                            }
-                        }
-                    }.w-form {
-                        margin: 0 0 15px;
-                        display: block;
-                        max-width: 400px;
-                        width: 100%;
-                        height: auto;
-                        -webkit-box-pack: start;
-                        -webkit-justify-content: flex-start;
-                        -ms-flex-pack: start;
-                        justify-content: flex-start;
-                        -webkit-box-align: start;
-                        -webkit-align-items: flex-start;
-                        -ms-flex-align: start;
-                        align-items: flex-start;
-                        border-radius: 8px;
-                        background-color: transparent;
-                        .checkbox-field {
-                            margin-top: 10px;    display: block;
-                            margin-bottom: 5px;
-                            padding-left: 20px;    font-weight: bold;
-                        }
-                    }
-                    .w-checkbox::before {
-                        content: " ";
-                        display: table;
-                        -ms-grid-column-span: 1;
-                        grid-column-end: 2;
-                        -ms-grid-column: 1;
-                        grid-column-start: 1;
-                        -ms-grid-row-span: 1;
-                        grid-row-end: 2;
-                        -ms-grid-row: 1;
-                        grid-row-start: 1;
-                    }.checkbox {
-                        width: 13px;
-                        float: left;
-                        margin-bottom: 0px;
-                        margin-left: -20px;
-                        margin-right: 0px;
-                        margin-top: 4px;
-                        line-height: normal;
-                        height: 13px;
-                        border-style: none;
-                        border-radius: 4px;
-                        background-color:  #808191;;
-                        color:  #808191;;border-top-width: 1px;
-                        border-bottom-width: 1px;
-                        border-left-width: 1px;
-                        border-right-width: 1px;
-                        border-top-color: #ccc;
-                        border-bottom-color: #ccc;
-                        border-left-color: #ccc;
-                        border-right-color: #ccc;
-                    }
-                     
-                    .w-chck {
-                        line-height: normal;    box-sizing: border-box;
-                        padding: 0;    opacity: 0;
-                        position: absolute;
-                        z-index: -1;
-                    }
-                   
-                    .checkbox-label {
-                        font-size: 14px;display: inline-block;
-                        cursor: pointer;
-                        font-weight: normal;
-                        margin-bottom: 0px;
-                        a{
-                            color: var(--color-grey);
-    text-decoration: underline;
-} 
-                    }
-                }
-                .w-checkbox::after {
-                    content: " ";
-                    display: table;
-                    -ms-grid-column-span: 1;
-                    grid-column-end: 2;
-                    -ms-grid-column: 1;
-                    grid-column-start: 1;
-                    -ms-grid-row-span: 1;
-                    grid-row-end: 2;
-                    -ms-grid-row: 1;
-                    grid-row-start: 1;
-                    clear: both;
-                }
-            }
-        }
-  }
-
-}
-
-@media only screen and (max-width: 991px) {
-    .promo-banner-fw {
-      height: auto !important;
-      width: 100%!important;;
-      background-image: unset!important;;
-      padding: 40px!important;;
-      background-size: cover!important;;
-    }
-  }
-  @media only screen and (max-width: 480px) {
-    .promo-banner-fw {
-      padding: 40px 20px!important;;
-    }
-  }
-  @media only screen and (max-width: 480px) {
-    .promo-banner-fw .block-title-inline {
-      justify-content: center!important;;
-      align-content: center!important;;
-      margin: 0!important;;
-    }
-  }
-  @media only screen and (max-width: 480px) {
-    .promo-banner-fw .block-title-inline h4 {
-      letter-spacing: 2.5px!important;;
-    }
-  }
-  @media only screen and (max-width: 480px) {
-    .promo-banner-fw .form__newsletter-button--grey,
-  .promo-banner-fw .btn.btn--black.btn--xl {
-      width: 100%!important;;
-      max-width: unset!important;;
-      height: 46px!important;;
-      padding: 0!important;;
-      display: flex!important;;
-      align-items: center!important;;
-      justify-content: center!important;;
-    }
-  }
-  .form{
-    display: block;
-    max-width: 400px;
-    width: 100%;
+  color:white;
+  border-radius: 0.5rem;
+  padding:  1rem 4rem  1rem 1.5rem;;
+  transition: color .15s ease-out,background .15s ease-out;
+  background: hsla(0,0%,100%,0.1);
+ }
+ .PhoneInputCountry{
+  outline: none; 
+  border: none;
+  color:white;
+  border-radius: 0.5rem;
+  padding:  1rem ;
+  transition: color .15s ease-out,background .15s ease-out;
+  background: hsla(0,0%,100%,0.1);
+ }
+ .telephone,.subject,.message{
+  width: 100%; 
+ }
+ .btnW{
+  .box {
+    width: 140px;
     height: auto;
-    -webkit-box-pack: start;
-    -webkit-justify-content: flex-start;
-    -ms-flex-pack: start;
-    justify-content: flex-start;
-    -webkit-box-align: start;
-    -webkit-align-items: flex-start;
-    -ms-flex-align: start;
-    align-items: flex-start;
-    border-radius: 8px;
-    background-color: transparent;
-  }
-  .material-symbols-outlined{
-    color:white;
-    width: 0px;
     float: left;
-    margin-bottom: 0px;
-    margin-left: -1px;
-    margin-right: 0px;
-    margin-top: -3px;
-    line-height: normal;
-    height: 8px;
-    border-style: none;    font-size: 15px;
-
-    border-radius: 4px;
+    transition: .5s linear;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 15px;
+    color:white;
+    text-align: center;
+    margin: 0 5px;
+    background: transparent;
+    text-transform: uppercase;
+    font-weight: 900;
   }
-
-
-
-
   
-.container {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-style: italic;
-  font-weight: bold;
-  display: flex;
-  margin: auto;
-  aspect-ratio: 16/9;
-  align-items: center;
-  justify-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  flex-direction: column;
-  gap: 1em;
-}
-
-.input-container {
-  filter: drop-shadow(46px 36px 24px #4090b5) drop-shadow(-55px -40px 25px #9e30a9);
-  animation: blinkShadowsFilter 8s ease-in infinite;
-}
-
-.input-content {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  align-items: center;
-  text-align: center;
-  padding-inline: 1em;
-}
-
-.input-content::before {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  filter: blur(40px);
-  -webkit-clip-path: polygon(26% 0, 66% 0, 92% 0, 100% 8%, 100% 89%, 91% 100%, 7% 100%, 0 92%, 0 0);
-  clip-path: polygon(26% 0, 66% 0, 92% 0, 100% 8%, 100% 89%, 91% 100%, 7% 100%, 0 92%, 0 0);
-  background: rgba(122, 251, 255, 0.5568627451);
-  transition: all 1s ease-in-out;
-}
-
-.input-content::after {
-  content: "";
-  position: absolute;
-  width: 98%;
-  height: 98%;
-  box-shadow: inset 0px 0px 20px 20px #212121;
-  background: repeating-linear-gradient(to bottom, transparent 0%, rgba(64, 144, 181, 0.6) 1px, rgb(0, 0, 0) 3px, hsl(295, 60%, 12%) 5px, #153544 4px, transparent 0.5%), repeating-linear-gradient(to left, hsl(295, 60%, 12%) 100%, hsla(295, 60%, 12%, 0.99) 100%);
-  -webkit-clip-path: polygon(26% 0, 31% 5%, 61% 5%, 66% 0, 92% 0, 100% 8%, 100% 89%, 91% 100%, 7% 100%, 0 92%, 0 0);
-  clip-path: polygon(26% 0, 31% 5%, 61% 5%, 66% 0, 92% 0, 100% 8%, 100% 89%, 91% 100%, 7% 100%, 0 92%, 0 0);
-  animation: backglitch 50ms linear infinite;
-}
-
-.input-dist {
-  z-index: 80;
-  display: grid;
-  align-items: center;
-  text-align: center;
-  width: 100%;
-  padding-inline: 1em;
-  padding-block: 1.2em;
-  grid-template-columns: 1fr;
-}
-
-.input-type {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  gap: 1em;
-  font-size: 1.1rem;
-  background-color: transparent;
-  width: 100%;
-  border: none;
-}
-
-.input-is {
-  color: #fff;
-  font-size: 0.9rem;
-  background-color: transparent;
-  width: 100%;
-  box-sizing: border-box;
-  padding-inline: 0.5em;
-  padding-block: 0.7em;
-  border: none;
-  transition: all 1s ease-in-out;
-  border-bottom: 1px solid hsl(221, 26%, 43%);
-}
-
-.input-is:hover {
-  transition: all 1s ease-in-out;
-  background: linear-gradient(90deg, transparent 0%, rgba(102, 224, 255, 0.2) 27%, rgba(102, 224, 255, 0.2) 63%, transparent 100%);
-}
-
-.input-content:focus-within::before {
-  transition: all 1s ease-in-out;
-  background: hsla(0, 0%, 100%, 0.814);
-}
-
-.input-is:focus {
-  outline: none;
-  border-bottom: 1px solid hsl(192, 100%, 100%);
-  color: hsl(192, 100%, 88%);
-  background: linear-gradient(90deg, transparent 0%, rgba(102, 224, 255, 0.2) 27%, rgba(102, 224, 255, 0.2) 63%, transparent 100%);
-}
-
-.input-is::-moz-placeholder {
-  color: hsla(192, 100%, 88%, 0.806);
-}
-
-.input-is::placeholder {
-  color: hsla(192, 100%, 88%, 0.806);
-}
-
-@keyframes backglitch {
-  0% {
-    box-shadow: inset 0px 20px 20px 30px #212121;
+  .box:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    width: 100%;
+    border-bottom: 4px solid transparent;
+    border-left: 4px solid transparent;
+    box-sizing: border-box;
+    transform: translateX(100%);
   }
-
-  50% {
-    box-shadow: inset 0px -20px 20px 30px hsl(297, 42%, 10%);
+  
+  .box:after {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    border-top: 4px solid transparent;
+    border-right: 4px solid transparent;
+    box-sizing: border-box;
+    transform: translateX(-100%);
   }
-
-  to {
-    box-shadow: inset 0px 20px 20px 30px #212121;
+  
+  .box:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 100, 0.5);
   }
-}
-
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg) translate(-50%, 20%);
+  
+  .box:hover:before {
+    border-color: #fff;
+    height: 100%;
+    transform: translateX(0);
+    transition: .3s transform linear, .3s height linear .3s;
   }
-
-  50% {
-    transform: rotate(180deg) translate(40%, 10%);
+  
+  .box:hover:after {
+    border-color: #fff;
+    height: 100%;
+    transform: translateX(0);
+    transition: .3s transform linear, .3s height linear .5s;
   }
-
-  to {
-    transform: rotate(360deg) translate(-50%, 20%);
+  
+  button {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: transparent;
   }
-}
-
-@keyframes blinkShadowsFilter {
-  0% {
-    filter: drop-shadow(46px 36px 28px rgba(64, 144, 181, 0.3411764706)) drop-shadow(-55px -40px 28px #9e30a9);
-  }
-
-  25% {
-    filter: drop-shadow(46px -36px 24px rgba(64, 144, 181, 0.8980392157)) drop-shadow(-55px 40px 24px #9e30a9);
-  }
-
-  50% {
-    filter: drop-shadow(46px 36px 30px rgba(64, 144, 181, 0.8980392157)) drop-shadow(-55px 40px 30px rgba(159, 48, 169, 0.2941176471));
-  }
-
-  75% {
-    filter: drop-shadow(20px -18px 25px rgba(64, 144, 181, 0.8980392157)) drop-shadow(-20px 20px 25px rgba(159, 48, 169, 0.2941176471));
-  }
-
-  to {
-    filter: drop-shadow(46px 36px 28px rgba(64, 144, 181, 0.3411764706)) drop-shadow(-55px -40px 28px #9e30a9);
-  }
-}
+ }
+ option{
+  color:black; 
+ }
 `;

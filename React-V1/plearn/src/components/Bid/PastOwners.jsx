@@ -57,7 +57,7 @@ export default function PastOwners({ transaction }) {
               </tr>
             </thead>
             <tbody className="border-b overflow dark:bg-gray-900 dark:border-gray-700">
-              {(transaction[0]) &&
+              {transaction[0] &&
                 transaction?.map((item, index) => (
                   <React.Fragment key={index}>
                     <tr>
@@ -96,13 +96,14 @@ export default function PastOwners({ transaction }) {
       </div>
     </Container>
   );
-
-  return <></>;
 }
 const Container = styled.div`
   background-image: url("https://1.bp.blogspot.com/-Fo3iRt97ZXY/XvSG4EMwi0I/AAAAAAAAVEo/mrApRTcVVRk1m-fX9K-ffNwRUXlHUocdwCLcBGAsYHQ/s1600/h.jpg");
   background-color: #181828;
   width: 50%;
+  @media only screen and (max-width: 900px) {
+    width: 97% !important;
+  }
   cursor: pointer;
   border-radius: 10px;
   border-bottom: 1px solid white;

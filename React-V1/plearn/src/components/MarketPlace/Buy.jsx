@@ -59,7 +59,7 @@ export default React.memo(function Buy({ ds }) {
       sellerAddress: ds.currentOwner,
       cost: ds.cost,
       timestamp: new Date(),
-      event: ds.currentOwner !== null ? "Sale" : "Minted"
+      event: ds.currentOwner !== null ? "Sale" : "Minted",
     };
 
     const requestData = {
@@ -148,7 +148,8 @@ export default React.memo(function Buy({ ds }) {
               <div className="bottom">
                 {isOwned ? (
                   <div className="Overlay">
-                    <button className="sellBtn"
+                    <button
+                      className="sellBtn"
                       onClick={() => {
                         handleOpen();
                       }}
@@ -228,7 +229,7 @@ const Container = styled.div`
   .notification {
     position: relative;
     width: 20vw;
-    height: 6vh;
+    height: 8vh;
     background-color: @e69c9c;
     border-radius: 10px;
     -webkit-box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -271,6 +272,8 @@ const Container = styled.div`
     font-size: 20px;
     font-weight: bold;
     margin-right: 10px;
+
+    text-wrap: nowrap;
   }
 
   .next-level-button {
@@ -334,10 +337,9 @@ const Container = styled.div`
     }
   }
   .price {
-    width: 35%;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 15px;
 
+    text-wrap: nowrap;
     letter-spacing: 1px;
     font-size: 12px;
     font-weight: bold;
@@ -417,6 +419,34 @@ const Container = styled.div`
   }
   h3 {
     font-size: 16px;
+  }
+
+  @media only screen and (max-width: 900px) {
+    .head {
+      flex-direction: column;
+    }
+    .left,
+    .right {
+      max-width: 100%;
+    }
+    .Image img {
+      width: 100%;
+    }
+    .top {
+      margin-top: 10vh;
+    }
+    .notification {
+      position: relative;
+      width: 30vw;
+      height: 9vh;
+    }
+  }
+  @media only screen and (max-width: 660px) {
+    .notification {
+      position: relative;
+      width: 60vw;
+      height: 9vh;
+    }
   }
   .desc {
     font-family: "Space Mono", sans-serif;
@@ -642,41 +672,41 @@ const Container = styled.div`
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
   }
-  
+
   .sellBtn:hover {
     animation: sh0 0.5s ease-in-out both;
   }
-  
+
   @keyframes sh0 {
     0% {
       transform: rotate(0deg) translate3d(0, 0, 0);
     }
-  
+
     25% {
       transform: rotate(7deg) translate3d(0, 0, 0);
     }
-  
+
     50% {
       transform: rotate(-7deg) translate3d(0, 0, 0);
     }
-  
+
     75% {
       transform: rotate(1deg) translate3d(0, 0, 0);
     }
-  
+
     100% {
       transform: rotate(0deg) translate3d(0, 0, 0);
     }
   }
-  
+
   .sellBtn:hover span {
     animation: storm 0.7s ease-in-out both;
     animation-delay: 0.06s;
   }
-  
+
   .sellBtn::before,
   .sellBtn::after {
-    content: '';
+    content: "";
     position: absolute;
     right: 0;
     bottom: 0;
@@ -685,24 +715,24 @@ const Container = styled.div`
     border-radius: 50%;
     background: #fff;
     opacity: 0;
-    transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: transform 0.15s cubic-bezier(0.02, 0.01, 0.47, 1),
+      opacity 0.15s cubic-bezier(0.02, 0.01, 0.47, 1);
     z-index: -1;
     transform: translate(100%, -25%) translate3d(0, 0, 0);
   }
-  
+
   .sellBtn:hover::before,
   .sellBtn:hover::after {
     opacity: 0.15;
-    transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1), opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+    transition: transform 0.2s cubic-bezier(0.02, 0.01, 0.47, 1),
+      opacity 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
   }
-  
+
   .sellBtn:hover::before {
     transform: translate3d(50%, 0, 0) scale(0.9);
   }
-  
+
   .sellBtn:hover::after {
     transform: translate(50%, 0) scale(1.1);
   }
-  
-  
 `;
