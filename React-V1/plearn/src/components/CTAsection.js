@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Styled from "styled-components";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import bg from "../assets/bg.png";
 export default React.memo(function CTAsection() {
   const [name, setName] = useState("");
   const [nameError, setnameError] = useState("");
