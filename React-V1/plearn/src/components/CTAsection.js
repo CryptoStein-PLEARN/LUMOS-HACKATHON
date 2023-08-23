@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Styled from "styled-components";
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import {
+  getCountries,
+  getCountryCallingCode,
+} from "react-phone-number-input/input";
+import emailjs from "@emailjs/browser";
 export default React.memo(function CTAsection() {
   const [name, setName] = useState("");
   const [nameError, setnameError] = useState("");
@@ -9,7 +12,7 @@ export default React.memo(function CTAsection() {
   const [emailError, setemailError] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
   const [phoneNumberError, setphoneNumberError] = useState("");
-  const [value, setValue] = useState();
+  const [country, setCountry] = useState();
   const [emptyError, setEmptyerror] = useState("");
   const [selectedOption, setSelectedOption] = useState("Subject line");
   const [Message, setMessage] = useState("");
@@ -22,80 +25,52 @@ export default React.memo(function CTAsection() {
       Message: "",
     },
   ]);
-  const handleSubmit = () => {
-    if (name === "" || Email === "" || Message === " ") {
-      setEmptyerror("All fields are mondatory");
-      setTimeout(() => {
-        setEmptyerror("");
-      }, 1350);
-      return false;
-    }
-    if (!name.match(/^[A-Za-z ]+$/)) {
-      setnameError("Name should contain only Aphabets");
-      setTimeout(() => {
-        setnameError("");
-        setName("");
-      }, 1350);
-      return false;
-    }
 
-    if (!phonenumber.match(/^\d+$/)) {
-      setphoneNumberError(
-        "Phone number should contain only Numerals without any spaces"
-      );
-      setTimeout(() => {
-        setphoneNumberError("");
-        setPhonenumber("");
-      }, 1350);
-      return false;
-    }
-    if (phonenumber.charAt(0) === 0) {
-      setphoneNumberError("Phone number cannot start with 0");
-      setTimeout(() => {
-        setphoneNumberError("");
-        setPhonenumber("");
-      }, 1350);
-      return false;
-    }
-    if (!Email.includes("@")) {
-      setemailError("Email must contain @");
-      setTimeout(() => {
-        setemailError("");
-        setmail("");
-      }, 1350);
-      return false;
-    }
-    if (phonenumber.length !== 10) {
-      setphoneNumberError("Phone number must be of 10 digits");
-      setTimeout(() => {
-        setphoneNumberError("");
-        setPhonenumber("");
-      }, 1350);
-      return false;
-    }
-    if (selectedOption === "Subject line") {
-      setSelectedOptionerror("Please select an pption ");
-      setTimeout(() => {
-        setSelectedOptionerror("");
-        setSelectedOption("Subject line");
-      }, 1350);
-      return false;
-    }
-    setData([
+  const handleSubmit = (e) => {
+    const formEle = { Name: name, Email: Email };
+    const formDatab = new FormData(formEle);
+    fetch(
+      "https://script.google.com/macros/s/AKfycbzBj8jGgdy8uCS0P7u1GrqOF-4pFld0SyOtdnxPVK4zb3Bm9TrsCshvgrrKi6TEoMcqzA/exec",
       {
-        name: name,
-        phonenumber: phonenumber,
-        email: Email,
-        Message: Message,
-      },
-    ]);
-    return true;
+        method: "POST",
+        body: formDatab,
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    // emailjs
+    //   .sendForm(
+    //     "service_bjmhs3a",
+    //     "template_2af3gba",
+    //     form.current,
+    //     "UoV0VvRc7Blz8fzTE"
+    //   )
+    //   .then(
+    //     (result) => {
+    //       handleSubmit();
+    //     },
+    //     (error) => {
+    //       console.log(error.text);
+    //     }
+    //   );
   };
   return (
     <Container>
       <div id="container">
         <h1>Interest form </h1>
-        <form autoComplete="off" action="#" method="post" id="contact_form">
+        <form autoComplete="off" ref={form} onSubmit={sendEmail}>
           <div className="flex">
             <div className="name">
               <label for="name"></label>
@@ -103,6 +78,7 @@ export default React.memo(function CTAsection() {
                 type="text"
                 autoComplete="off"
                 value={name}
+                name="from_name"
                 placeholder="Name"
                 className={`Firstname ${
                   nameError.length > 0 || emptyError.length > 0
@@ -117,8 +93,8 @@ export default React.memo(function CTAsection() {
               {nameError && <div className="error">{nameError}</div>}
             </div>
             <div className="email">
-              <label for="email"></label>
               <input
+                name="user_email"
                 type="email"
                 className={`email ${
                   emailError.length > 0 || emptyError.length > 0
@@ -130,7 +106,6 @@ export default React.memo(function CTAsection() {
                 onChange={(e) => {
                   setmail(e.target.value);
                 }}
-                name="email"
                 id="email_input"
               />{" "}
               {emailError && <div className="error">{emailError}</div>}
@@ -138,21 +113,35 @@ export default React.memo(function CTAsection() {
           </div>
 
           <div className="telephone ">
-            <label for="name"></label>
-            <PhoneInput
+            {" "}
+            <select
+              name="CC"
+              value={country}
+              onChange={(event) => setCountry(event.target.value || undefined)}
+            >
+              <option value=""> +{getCountryCallingCode("US")}</option>
+              {getCountries().map((country) => (
+                <option key={country} value={country}>
+                  +{getCountryCallingCode(country)}
+                </option>
+              ))}
+            </select>
+            <input
               placeholder="Enter phone number"
-              value={value}
-              onChange={setValue}
+              value={phonenumber}
+              name="user_Phone"
+              onChange={(e) => {
+                setPhonenumber(e.target.value);
+              }}
             />
             {phoneNumberError && (
               <div className="error">{phoneNumberError}</div>
             )}
           </div>
           <div className="subject">
-            <label for="subject"></label>
             <select
               placeholder="Subject line"
-              name="subject"
+              name="user_Subject"
               id="subject_input"
               className={`${selectedOptionError.length > 0 ? "invalid" : "."} `}
               value={selectedOption}
@@ -161,7 +150,6 @@ export default React.memo(function CTAsection() {
               <option disabled hidden selected>
                 Subject line
               </option>
-
               <option className="bgBlack">I'd like to give a feedback</option>
               <option>I'd like to ask a question</option>
               <option>I'd like to make a proposal</option>
@@ -182,12 +170,15 @@ export default React.memo(function CTAsection() {
               rows="5"
             ></textarea>
           </div>
-          <div className="btnW">
-            <button
-              onClick={() => {
-                handleSubmit();
-              }}
-            >
+          <div
+            type="submit"
+            value="Send"
+            onClick={() => {
+              handleSubmit();
+            }}
+            className="btnW"
+          >
+            <button>
               <span class="box">Submit</span>
             </button>
           </div>
@@ -225,7 +216,7 @@ padding: 10vw;
   display: flex; 
   justify-content: space-evenly;
   align-items: center;
-  gap:5vw; 
+  gap:2vw; 
  }
  input,textarea,select{
   outline: none;
@@ -248,6 +239,13 @@ padding: 10vw;
  }
  .telephone,.subject,.message{
   width: 100%; 
+ }
+ .telephone{
+  display:flex;
+  select{
+    width:auto;
+    padding:0.4rem !important;
+  }
  }
  .btnW{
   .box {
