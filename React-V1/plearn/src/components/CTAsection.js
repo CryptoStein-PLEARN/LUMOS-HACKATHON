@@ -27,7 +27,7 @@ export default React.memo(function CTAsection() {
   ]);
 
   const handleSubmit = (e) => {
-    const formEle = { Name: name, Email: Email };
+    const formEle = document.querySelector("form");
     const formDatab = new FormData(formEle);
     fetch(
       "https://script.google.com/macros/s/AKfycbzBj8jGgdy8uCS0P7u1GrqOF-4pFld0SyOtdnxPVK4zb3Bm9TrsCshvgrrKi6TEoMcqzA/exec",
@@ -50,27 +50,32 @@ export default React.memo(function CTAsection() {
   const sendEmail = (e) => {
     e.preventDefault();
 
-    // emailjs
-    //   .sendForm(
-    //     "service_bjmhs3a",
-    //     "template_2af3gba",
-    //     form.current,
-    //     "UoV0VvRc7Blz8fzTE"
-    //   )
-    //   .then(
-    //     (result) => {
-    //       handleSubmit();
-    //     },
-    //     (error) => {
-    //       console.log(error.text);
-    //     }
-    //   );
+    emailjs
+      .sendForm(
+        "service_bjmhs3a",
+        "template_2af3gba",
+        form.current,
+        "UoV0VvRc7Blz8fzTE"
+      )
+      .then(
+        (result) => {
+          handleSubmit();
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
   };
   return (
     <Container>
       <div id="container">
         <h1>Interest form </h1>
-        <form autoComplete="off" ref={form} onSubmit={sendEmail}>
+        <form
+          className="form"
+          autoComplete="off"
+          ref={form}
+          onSubmit={sendEmail}
+        >
           <div className="flex">
             <div className="name">
               <label for="name"></label>
