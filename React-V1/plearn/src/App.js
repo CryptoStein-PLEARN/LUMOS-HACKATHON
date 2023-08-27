@@ -5,20 +5,18 @@ import Nav from "./components/Nav";
 import WalletContext from "./contexts/WalletContext";
 import Animate from "./components/Routes/Animate";
 import axios from "axios";
-import { updateCards } from "./Store/Slice/userSlice";
+import { SetCards } from "./Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
 import { SetOwned } from "./Store/Slice/Owned";
 
 export default React.memo(function App() {
   const [userAccount, setUserAccount] = useState(null);
-  const [OwnedData, setOwnedData] = useState({});
   useEffect(() => {
     if (localStorage.length !== 0) {
       setUserAccount(localStorage.getItem("1"));
     }
-  }, [localStorage.length !== 0]);
+  }, []);
   const dispatch = useDispatch();
-
   useEffect(() => {
     async function fetchDataFromMarketplace() {
       try {
@@ -30,12 +28,12 @@ export default React.memo(function App() {
 
         response.data.forEach((category) => {
           category.details.forEach(async (item) => {
-            if(item.inAuction === true)
-            {
-              const res = await axios.get(`https://plearn-backend.onrender.com/getAuctionDetails/${category.category}/${item.id}`);
+            if (item.inAuction === true) {
+              const res = await axios.get(
+                `https://plearn-backend.onrender.com/getAuctionDetails/${category.category}/${item.id}`
+              );
               // const res = await axios.get(`http://localhost:8080/getAuctionDetails/${category.category}/${item.id}`);
               console.log(res.data);
-              
             }
 
             // else if(item.forSale === true)
@@ -44,10 +42,10 @@ export default React.memo(function App() {
             //   // const res = await axios.get(`http://localhost:8080/getSaleDetails/${category.category}/${item.id}`);
             //   console.log(res.data);
             // }
-          })
-        })
+          });
+        });
 
-        dispatch(updateCards(response.data));
+        dispatch(SetCards(response.data));
       } catch (error) {
         console.log(error);
       }

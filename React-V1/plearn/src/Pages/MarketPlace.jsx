@@ -15,37 +15,14 @@ export default React.memo(function MarketPlace() {
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
-
-  const filterActive = useSelector((state) => state.tools.filterActive);
-  const card = useSelector((state) => state.tools.cards);
-  const filteredCards = useSelector((state) => state.tools.filteredCards);
-  const cardData = filterActive ? filteredCards : card;
-  const [ShopState, SetShop] = useState(true);
-  const Root = React.memo(() => {
-    return (
-      <>
-        <div className="left">
-          {Object.entries(card).map(([category, { details }]) => (
-            <div className="Mainfold" key={category}>
-              <div className="Head">
-                <h1>{card[category].category}</h1>
-                <div
-                  className="span"
-                  onClick={() => {
-                    SetShop(false);
-                  }}
-                >
-                  View all
-                </div>
-              </div>
-              <CardLoader data={details} cat={card[category].category} />
-            </div>
-          ))}
-        </div>
-      </>
-    );
-  });
-
+  let card = useSelector((state) => state.tools.cards);
+  const search = useSelector((state) => state.tools.currentSearch);
+  const currentFilter = useSelector((state) => state.tools.currentFilter);
+  if (currentFilter) {
+    card = card.filter((item) => item.category === currentFilter);
+  }
+  if (search) {
+  }
   return (
     <>
       {showLoader ? (
@@ -53,29 +30,39 @@ export default React.memo(function MarketPlace() {
       ) : (
         <div className="MainFs">
           <Header />
-          <SortingTab ShopState={ShopState} />
+          <SortingTab />
           <div className="Markt">
             <div className="left">
-              {ShopState === false ? (
-                !cardData ? (
-                  <>
-                    please wait till the data is loaded
-                    <p>
-                      Please make sure to connect your wallet to see the data
-                    </p>
-                  </>
-                ) : (
-                  <>
-                    <Category />
-                    <div className="shopAll">
-                      {Object.entries(cardData).map(([category, { details }]) =>
-                        details.map((ds) => <Cards data={ds} />)
-                      )}
-                    </div>
-                  </>
-                )
+              {!card ? (
+                <>
+                  please wait till the data is loaded
+                  <p>Please make sure to connect your wallet to see the data</p>
+                </>
               ) : (
-                <Root />
+                <>
+                  <Category />
+                  <div className="shopAll">
+                    {search === "" ? (
+                      Object.entries(card).map(([category, { details }]) =>
+                        details.map((ds) => <Cards data={ds} />)
+                      )
+                    ) : (
+                      <>
+                        {Object.entries(card).map(([category, { details }]) =>
+                          details
+                            .filter(
+                              (item) =>
+                                search.toLowerCase() === "" ||
+                                item.name
+                                  .toLowerCase()
+                                  .includes(search.toLowerCase())
+                            )
+                            .map((ds) => <Cards key={ds.id} data={ds} />)
+                        )}
+                      </>
+                    )}
+                  </div>
+                </>
               )}
             </div>
           </div>

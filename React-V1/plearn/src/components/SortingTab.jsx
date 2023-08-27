@@ -1,15 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { setSearchQuery } from "../Store/Slice/userSlice";
+import { setSearch } from "../Store/Slice/userSlice";
 
-export default React.memo(function SortingTab({ ShopState }) {
-  const dispatch = useDispatch();
+export default React.memo(function SortingTab() {
   var Name = useSelector((state) => state.Blog.Name);
-
-  const handleSearch = (event) => {
-    dispatch(setSearchQuery(event.target.value));
-  };
+  const location = useLocation();
+  const isSearch = location.pathname !== "/marketplace";
+  const dispatch = useDispatch();
+  const search = useSelector((state) => state.tools.currentSearch);
   return (
     <Container className="container">
       <div className="lft">
@@ -17,8 +17,7 @@ export default React.memo(function SortingTab({ ShopState }) {
       </div>
       <div
         className="wrapper"
-        // style={{ display: `${ShopState ? "None" : "Inherit "}` }}
-        style={{ display: `None` }}
+        style={{ display: `${isSearch ? "None" : "Inherit "}` }}
       >
         <div className="input-wrapper">
           <button className="icon">
@@ -50,7 +49,10 @@ export default React.memo(function SortingTab({ ShopState }) {
             className="input"
             name="text"
             type="text"
-            onChange={handleSearch}
+            value={search}
+            onChange={(e) => {
+              dispatch(setSearch(e.target.value));
+            }}
           />
         </div>
       </div>

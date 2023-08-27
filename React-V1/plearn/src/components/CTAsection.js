@@ -26,45 +26,26 @@ export default React.memo(function CTAsection() {
     },
   ]);
 
-  const handleSubmit = (e) => {
-    const formEle = document.querySelector("form");
-    const formDatab = new FormData(formEle);
-    fetch(
-      "https://script.google.com/macros/s/AKfycbzBj8jGgdy8uCS0P7u1GrqOF-4pFld0SyOtdnxPVK4zb3Bm9TrsCshvgrrKi6TEoMcqzA/exec",
-      {
-        method: "POST",
-        body: formDatab,
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   const form = useRef();
 
   const sendEmail = (e) => {
     e.preventDefault();
 
-    emailjs
-      .sendForm(
-        "service_bjmhs3a",
-        "template_2af3gba",
-        form.current,
-        "UoV0VvRc7Blz8fzTE"
-      )
-      .then(
-        (result) => {
-          handleSubmit();
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
+    // emailjs
+    //   .sendForm(
+    //     "service_bjmhs3a",
+    //     "template_2af3gba",
+    //     form.current,
+    //     "UoV0VvRc7Blz8fzTE"
+    //   )
+    //   .then(
+    //     (result) => {
+    //       // handleSubmit();
+    //     },
+    //     (error) => {
+    //       console.log(error.text);
+    //     }
+    //   );
   };
   return (
     <Container>
@@ -124,6 +105,7 @@ export default React.memo(function CTAsection() {
               value={country}
               onChange={(event) => setCountry(event.target.value || undefined)}
             >
+              {/* country flag */}
               <option value=""> +{getCountryCallingCode("US")}</option>
               {getCountries().map((country) => (
                 <option key={country} value={country}>
@@ -175,14 +157,7 @@ export default React.memo(function CTAsection() {
               rows="5"
             ></textarea>
           </div>
-          <div
-            type="submit"
-            value="Send"
-            onClick={() => {
-              handleSubmit();
-            }}
-            className="btnW"
-          >
+          <div type="submit" value="Send" className="btnW">
             <button>
               <span class="box">Submit</span>
             </button>

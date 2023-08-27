@@ -2,12 +2,14 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { filterCards } from "../../Store/Slice/userSlice";
-
 export default React.memo(function Category() {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.tools.cards);
-  const handleFilterClick = (category) => {
-    dispatch(filterCards(category));
+  const data = useSelector((state) => state.tools.cards);
+  const categories = data;
+  const currentFilter = useSelector((state) => state.tools.currentFilter);
+  const handleCategoryClick = (category) => {
+    const isSameFilter = category === currentFilter;
+    dispatch(filterCards({ filter: category, isSameFilter }));
   };
   return (
     <div>
@@ -15,7 +17,7 @@ export default React.memo(function Category() {
         {Object.entries(categories).map(([category, { details }]) => (
           <button
             key={categories[category].category}
-            onClick={() => handleFilterClick(categories[category].category)}
+            onClick={() => handleCategoryClick(categories[category].category)}
           >
             {categories[category].category}
           </button>
@@ -27,9 +29,18 @@ export default React.memo(function Category() {
 const Cat = styled.div`
   display: flex;
   display: flex;
-  max-width: 40vw;
+  width: 100%;
   margin-top: 40px;
-  justify-content: space-evenly;
+  margin-bottom: 40px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  gap: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  justify-content: flex-start;
   button {
     background: #fbca1f;
     font-family: inherit;

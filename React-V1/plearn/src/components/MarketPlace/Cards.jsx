@@ -5,8 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Tilt from "react-parallax-tilt";
 
 export default React.memo(function Cards(props) {
-  // console.log("obj");
-  // console.log(props.data);
   const { name, id, imgUri, cost, unlockLevel, _id, itemAvailable, inAuction } =
     props.data;
   const category = props.category;
@@ -21,7 +19,6 @@ export default React.memo(function Cards(props) {
 
   return (
     <Container>
-
       <Tilt
         className="parallax-effect"
         perspective={900}
@@ -70,22 +67,27 @@ export default React.memo(function Cards(props) {
   );
 });
 const Container = styled.div`
-.parallax-effect { 
-  transform-style: preserve-3d; 
-  background:none;
-  .inner-element {
-    display: flex;
-    height:100%;
-    width:100%; 
-    flex-direction: column; 
-    align-items: center;
-    justify-content: flex-end;
-    font-size: 15px;
-    font-style: italic;
-    color: white;
-    transform: translateZ(90px);
+  .parallax-effect {
+    transform-style: preserve-3d;
+    background: none;
+    .inner-element {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 15px;
+      font-style: italic;
+      color: white;
+      transtion: 0.5s all;
+      transform: translateZ(90px);
+    }
+    .inner-element:hover {
+      transform: scale(0.9) translateZ(90px);
+      transition: 0.5s all ease-in;
+    }
   }
-}
   .desp {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -196,15 +198,15 @@ const Container = styled.div`
   }
   .card {
     align-self: center;
-    background: 
-    #E2E2D9;
-    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-    backdrop-filter: blur( 1px ); 
+    background: #e2e2d9;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(1px);
     border-radius: 10px;
-    border: 1px solid rgba( 255, 255, 255, 0.38 );
+    border: 1px solid rgba(255, 255, 255, 0.38);
     overflow: hidden;
     transition: 0.5s all;
-    border-radius: 20px;  cursor:pointer;
+    border-radius: 20px;
+    cursor: pointer;
 
     max-height: 640px;
     user-select: none;
@@ -212,17 +214,17 @@ const Container = styled.div`
     margin: 5rem auto;
     border: 1px solid rgb(84 90 106);
     border-radius: 0.7rem;
-    backdrop-filter: blur(3px); 
-    overflow: hidden;    height:100%;
-    width:100%;
+    backdrop-filter: blur(3px);
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
     transition: 0.5s all;
-    h1{
-      color:black;
-      font-family:bold;  
-      text-transform: uppercase; 
+    h1 {
+      color: black;
+      font-family: bold;
+      text-transform: uppercase;
       transform-style: preserve-3d;
-    transform: translateZ(60px);
-       
+      transform: translateZ(60px);
     }
     &::before {
       position: fixed;
@@ -250,8 +252,8 @@ const Container = styled.div`
     background-size: cover !important;
     background-position: center !important;
     height: 250px;
-    border-bottom-right-radius:50px;
-    border-bottom-left-radius:50px;
+    border-bottom-right-radius: 50px;
+    border-bottom-left-radius: 50px;
   }
   .product {
     align-items: center;
