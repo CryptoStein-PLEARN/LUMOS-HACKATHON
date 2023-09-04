@@ -11,6 +11,7 @@ import ItemonBid from "../Bid/ItemonBid";
 import { useSelector } from "react-redux";
 import Sell from "../Sell/Sell";
 import Contact from "../../Pages/Contact";
+import AboutUs from "../../Pages/AboutUs";
 
 //need to create routes from db and make dynamic routes
 export default function Animate() {
@@ -31,6 +32,7 @@ export default function Animate() {
         ))
       )}
       <Route exact path="/Buy/:itemcategory/:itemName" element={<Sell />} />
+      <Route exact path="/About" element={<AboutUs />} />
       {/* <Route exact path="/Sell/:itemName" element={<Sell />} /> */}
       <Route
         exact

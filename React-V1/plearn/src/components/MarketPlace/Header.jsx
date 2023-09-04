@@ -4,7 +4,7 @@ import Lottie from "lottie-react";
 import animationData from "../../assets/animation_lkwl10co.json";
 export default React.memo(function Header() {
   return (
-    <Container className="p-5">
+    <Container className="p-5 ">
       <div className="w-full  rounded-md bg-center bg-cover flex flex-col justify-center px-4">
         <h1 className="mb-4 display-5">
           Welcome to <br /> Plearns' Marketplace - <br /> ready to help you find
@@ -22,6 +22,7 @@ export default React.memo(function Header() {
 });
 const Container = styled.div`
   display: flex;
+  padding-top: 100px !important;
   height: 80vh;
   align-items: center;
   h1 {

@@ -1,9 +1,11 @@
 import React, { useRef, useState } from "react";
 import Styled from "styled-components";
-import {
+import PhoneInput, {
   getCountries,
   getCountryCallingCode,
 } from "react-phone-number-input/input";
+import flags from "react-phone-number-input/flags";
+
 import emailjs from "@emailjs/browser";
 export default React.memo(function CTAsection() {
   const [name, setName] = useState("");
@@ -106,10 +108,10 @@ export default React.memo(function CTAsection() {
               onChange={(event) => setCountry(event.target.value || undefined)}
             >
               {/* country flag */}
-              <option value=""> +{getCountryCallingCode("US")}</option>
+              <option value=""> {flags.RU("")}</option>
               {getCountries().map((country) => (
                 <option key={country} value={country}>
-                  +{getCountryCallingCode(country)}
+                  {flags.RU("")} h
                 </option>
               ))}
             </select>

@@ -93,7 +93,8 @@ export default React.memo(function Error() {
   );
 });
 const Container = styled.div`
-  .flex {
+padding-top: 120px;  
+.flex {
     display: flex;
     flex-direction: column;
     justify-content: center;

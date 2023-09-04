@@ -107,6 +107,7 @@ body {
 
 .hero {
   display: flex;
+  padding-top: 60px;
   height: 640px;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
@@ -1834,5 +1835,10 @@ font-size: 22px;
     display: none;
   }
   
+}
+.navbar2{
+  backdrop-filter: blur(16px) saturate(180%); 
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.125);
 }
  

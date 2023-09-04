@@ -40,6 +40,7 @@ export default function Nav() {
 
     { name: "Tokenomics" },
     { name: "Get in Touch" },
+
     // { name: "NFT" },
   ];
 
@@ -110,7 +111,7 @@ export default function Nav() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg  bg-black navbar-dark shadow-5-strong ">
+      <nav className="navbar navbar2 navbar-expand-lg p-0  fixed-top navbar-dark shadow-5-strong ">
         <div className="container-fluid">
           <div className="logo-thumbnail navbar-brand logo-custom-css">
             {" "}
