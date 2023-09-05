@@ -18,6 +18,7 @@ const {startAuction} = require("../controller/user")
 const {getAuctionDetails} = require("../controller/user")
 const {placeBid} = require("../controller/user");
 const {startSale, cancelSale} = require("../controller/user")
+const {postGetInTouchDetails, getGetInTouchDetails} = require("../controller/user")
 
 router.post("/preregistration", preRegisterUser);
 
@@ -68,5 +69,9 @@ router.post('/updateBankDeposit', updateBankDeposit);
 router.get('/getEntrepreneurshipBusiness/:level', getEntrepreneurshipBusiness);
 
 router.get('/checkAnswer/:level/:selectedAnswerIndex/:playerAnswer', checkAnswer);
+
+router.post('/postGetInTouchDetails', postGetInTouchDetails);
+
+router.get('/getGetInTouchDetails', getGetInTouchDetails);
 
 module.exports = router;
