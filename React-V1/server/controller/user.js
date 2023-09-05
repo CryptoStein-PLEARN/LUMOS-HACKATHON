@@ -727,6 +727,31 @@ const getGetInTouchDetails = async (req, res) => {
     })
 }
 
+const markAsResolved = async (req, res) => {
+    const {_id} = req.body;
+
+    const request = await getInTouchDetails.findOne({_id: _id});
+
+    if(request)
+    {
+        const updateResult = await getInTouchDetails.updateOne(
+            {_id: _id},
+            {
+                $set: 
+                {
+                    resolved: true
+                }
+            }
+        )
+
+        res.status(200).json({success: true, message: "Query resolved successfully."});
+    }
+    else
+    {
+        res.send({message: "Query not found. Something is wrong."})
+    }
+}
+
 const getOwnedNFTs = (req,res) => {
     const {userAccount} = req.params;
 
@@ -1010,4 +1035,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, markAsResolved};
