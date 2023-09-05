@@ -728,29 +728,30 @@ const getGetInTouchDetails = async (req, res) => {
 }
 
 const markAsResolved = async (req, res) => {
-    const {_id} = req.body;
-
-    const request = await getInTouchDetails.findOne({_id: _id});
-
-    if(request)
-    {
+    const { _id } = req.body;
+  
+    try {
+      const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
+  
+      if (request) {
         const updateResult = await getInTouchDetails.updateOne(
-            {_id: _id},
-            {
-                $set: 
-                {
-                    resolved: true
-                }
+          { _id: mongoose.Types.ObjectId(_id) },
+          {
+            $set: {
+              resolved: true
             }
-        )
-
-        res.status(200).json({success: true, message: "Query resolved successfully."});
+          }
+        );
+  
+        res.status(200).json({ success: true, message: "Query resolved successfully." });
+      } else {
+        res.status(404).json({ message: "Query not found. Something is wrong." });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error." });
     }
-    else
-    {
-        res.send({message: "Query not found. Something is wrong."})
-    }
-}
+  };
+  
 
 const getOwnedNFTs = (req,res) => {
     const {userAccount} = req.params;
