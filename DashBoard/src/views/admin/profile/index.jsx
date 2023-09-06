@@ -1,6 +1,15 @@
 import General from "./components/General";
+import axios from "axios";
+
 const ProfileOverview = () => {
   // Call for api
+
+  const getGetInTouchDetails = async () => {
+    const res = await axios.get('https://plearn-backend.onrender.com/getGetInTouchDetails');
+
+    //send 'res' into General component
+  }
+  getGetInTouchDetails()
 
   return (
     <div className="flex w-full flex-col gap-5">
@@ -22,7 +31,7 @@ const ProfileOverview = () => {
       {/* <div className="col-span-5 lg:col-span-6 lg:mb-0 3xl:col-span-4">
           <Project />
         </div> */}
-
+      
       <General />
 
       {/* <div className="col-span-5 lg:col-span-12 lg:mb-0 3xl:!col-span-3">

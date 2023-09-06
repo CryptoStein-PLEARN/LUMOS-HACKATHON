@@ -7,28 +7,45 @@ import PhoneInput, {
 import flags from "react-phone-number-input/flags";
 
 import emailjs from "@emailjs/browser";
+import axios from "axios";
 export default React.memo(function CTAsection() {
   const [name, setName] = useState("");
   const [nameError, setnameError] = useState("");
-  const [Email, setmail] = useState("");
+  const [email, setmail] = useState("");
   const [emailError, setemailError] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
+  const [phoneNumber, setPhonenumber] = useState("");
   const [phoneNumberError, setphoneNumberError] = useState("");
   const [country, setCountry] = useState();
   const [emptyError, setEmptyerror] = useState("");
-  const [selectedOption, setSelectedOption] = useState("Subject line");
-  const [Message, setMessage] = useState("");
+  const [subject, setSelectedOption] = useState("Subject line");
+  const [description, setMessage] = useState("");
   const [selectedOptionError, setSelectedOptionerror] = useState("");
   const [Data, setData] = useState([
     {
       name: "",
-      phonenumber: "",
       email: "",
-      Message: "",
+      phoneNumber: "",
+      subject: "",
+      description: ""
     },
   ]);
 
   const form = useRef();
+
+  const postGetInTouchDetails = async () => {
+    const data = {
+      name: name,
+      email : email,
+      phoneNumber: phoneNumber,
+      subject: subject,
+      description: description
+    }
+
+    await axios.post('https://plearn-backend.onrender.com/postGetInTouchDetails', data)
+    .then((response) => {
+      console.log(response.data);
+    })
+  }
 
   const sendEmail = (e) => {
     e.preventDefault();
@@ -90,7 +107,7 @@ export default React.memo(function CTAsection() {
                     : "."
                 } `}
                 placeholder="Email"
-                value={Email}
+                value={email}
                 onChange={(e) => {
                   setmail(e.target.value);
                 }}
@@ -117,7 +134,7 @@ export default React.memo(function CTAsection() {
             </select>
             <input
               placeholder="Enter phone number"
-              value={phonenumber}
+              value={phoneNumber}
               name="user_Phone"
               onChange={(e) => {
                 setPhonenumber(e.target.value);
@@ -133,7 +150,7 @@ export default React.memo(function CTAsection() {
               name="user_Subject"
               id="subject_input"
               className={`${selectedOptionError.length > 0 ? "invalid" : "."} `}
-              value={selectedOption}
+              value={subject}
               onChange={(event) => setSelectedOption(event.target.value)}
             >
               <option disabled hidden selected>
@@ -154,13 +171,13 @@ export default React.memo(function CTAsection() {
               placeholder="I'd like to chat about"
               id="message_input"
               cols="30"
-              value={Message}
+              value={description}
               onChange={(event) => setMessage(event.target.value)}
               rows="5"
             ></textarea>
           </div>
           <div type="submit" value="Send" className="btnW">
-            <button>
+            <button onClick={postGetInTouchDetails}>
               <span class="box">Submit</span>
             </button>
           </div>

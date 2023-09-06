@@ -17,11 +17,18 @@ const marketplaceSchema = new mongoose.Schema({
             cost: { type: Number },
             timestamp: { type: Date, default: Date.now },
             event: { type: String, default: ""},
-            // transfer - 'Transfer'
-            // airdrop - 'Airdrop'
         }],
         inAuction: {type: Boolean, default: false},
         auctionEndTime: {type: Date, default: Date.now},
+    }],
+    subAssets: [{    
+        subAssetID: {type: Number},
+        subAssetName: {type: String},
+        subAssetCost: {type: Number},
+        subAssetImgURI :{type:String},
+        subAssetCurrentOwner: {type: String},
+        subAssetAvailable: {type: Boolean, default: true},
+        subAssetDescription: {type: String}
     }]
 });
 
