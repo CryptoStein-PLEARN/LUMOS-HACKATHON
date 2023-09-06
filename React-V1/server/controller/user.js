@@ -12,6 +12,7 @@ const preRegistrationDetail = require("../model/preregistration");
 const entrepreneurshipDetail = require("../model/entrepreneurship");
 const marketplaceDetail = require("../model/marketplace");
 const auctionDetail = require("../model/Auction")
+const getInTouchDetails = require("../model/GetInTouch");
 
 const app = express();
 
@@ -696,6 +697,62 @@ const cancelSale = async (req,res) => {
     }
 }
 
+const postGetInTouchDetails = async (req, res) => {
+    const {name, email, phoneNumber, subject, description} = req.body;
+
+    const newRequest = new getInTouchDetails({
+        name : name,
+        email : email,
+        phoneNumber : phoneNumber,
+        subject: subject,
+        description: description
+    })
+
+    await newRequest.save();
+
+    res.send({message: "Request submitted successfully"});
+}
+
+const getGetInTouchDetails = async (req, res) => {
+    
+    getInTouchDetails.find({}, (err, records) => {
+        if(err)
+        {
+            res.send(err);
+        }
+        else
+        {
+            res.send(records);
+        }
+    })
+}
+
+const markAsResolved = async (req, res) => {
+    const { _id } = req.body;
+  
+    try {
+      const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
+  
+      if (request) {
+        const updateResult = await getInTouchDetails.updateOne(
+          { _id: mongoose.Types.ObjectId(_id) },
+          {
+            $set: {
+              resolved: true
+            }
+          }
+        );
+  
+        res.status(200).json({ success: true, message: "Query resolved successfully." });
+      } else {
+        res.status(404).json({ message: "Query not found. Something is wrong." });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error." });
+    }
+  };
+  
+
 const getOwnedNFTs = (req,res) => {
     const {userAccount} = req.params;
 
@@ -979,4 +1036,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, markAsResolved};

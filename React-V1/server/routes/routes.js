@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express();
-const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction} = require("../controller/user");
+const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, markAsResolved} = require("../controller/user");
 const {getPlayer} = require("../controller/user");
 const {saveDetails} = require("../controller/user");
 const {getMarketplaceDetails} = require("../controller/user");
@@ -18,6 +18,7 @@ const {startAuction} = require("../controller/user")
 const {getAuctionDetails} = require("../controller/user")
 const {placeBid} = require("../controller/user");
 const {startSale, cancelSale} = require("../controller/user")
+const {postGetInTouchDetails, getGetInTouchDetails} = require("../controller/user")
 
 router.post("/preregistration", preRegisterUser);
 
@@ -68,5 +69,11 @@ router.post('/updateBankDeposit', updateBankDeposit);
 router.get('/getEntrepreneurshipBusiness/:level', getEntrepreneurshipBusiness);
 
 router.get('/checkAnswer/:level/:selectedAnswerIndex/:playerAnswer', checkAnswer);
+
+router.post('/postGetInTouchDetails', postGetInTouchDetails);
+
+router.get('/getGetInTouchDetails', getGetInTouchDetails);
+
+router.post('/markAsResolved', markAsResolved)
 
 module.exports = router;
