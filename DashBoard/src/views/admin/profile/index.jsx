@@ -7,6 +7,8 @@ const ProfileOverview = () => {
   const getGetInTouchDetails = async () => {
     const res = await axios.get('https://plearn-backend.onrender.com/getGetInTouchDetails');
 
+    console.log(res.data);
+
     //send 'res' into General component
   }
   getGetInTouchDetails()
