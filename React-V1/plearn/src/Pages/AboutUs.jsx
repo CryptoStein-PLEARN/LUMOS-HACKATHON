@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import cardBg from "../assets/cardPng.jpg";
 function AboutUs() {
   return (
     <Container>
@@ -8,7 +9,7 @@ function AboutUs() {
           <div class="col-lg-12">
             <div class="inner">
               <h1 class="title theme-gradient">
-                A finance <br /> agency.{" "}
+                A Digital <br /> finance Corp.  
               </h1>
             </div>
           </div>
@@ -74,7 +75,7 @@ function AboutUs() {
           <div class="row row--35 align-items-center ">
             <div class="col-lg-6">
               <div class="thumbnail">
-                <div className="crd">
+                <div className="crd" style={{ background: `url(${cardBg})` }}>
                   <div className="boxx">
                     <svg
                       data-v-8e7e85dc=""
@@ -92,19 +93,8 @@ function AboutUs() {
                         d="M19.5976 8.36445V17.6162C19.5973 17.7181 19.5704 17.8182 19.5194 17.9063C19.4685 17.9945 19.3953 18.0677 19.3072 18.1185L14.8671 20.6888C14.8232 20.7144 14.7733 20.7279 14.7225 20.728C14.6718 20.7281 14.6218 20.7148 14.5778 20.6894C14.5338 20.664 14.4972 20.6274 14.4718 20.5833C14.4463 20.5393 14.4329 20.4892 14.4329 20.4383V11.3544C14.4329 11.2524 14.4062 11.1523 14.3555 11.0639C14.3048 10.9755 14.2318 10.902 14.1439 10.8508L6.29686 6.30952C6.25286 6.2841 6.21631 6.24751 6.19089 6.20342C6.16548 6.15934 6.1521 6.10932 6.1521 6.05839C6.1521 6.00747 6.16548 5.95745 6.19089 5.91336C6.21631 5.86927 6.25286 5.83268 6.29686 5.80726L10.7435 3.23565C10.8316 3.18479 10.9315 3.15802 11.0332 3.15802C11.1349 3.15802 11.2348 3.18479 11.3229 3.23565L19.3124 7.8622C19.4005 7.91303 19.4737 7.98619 19.5247 8.07435C19.5756 8.16251 19.6026 8.26256 19.6028 8.36445"
                         fill="white"
                       ></path>{" "}
-                      <path
-                        d="M32.4823 19.303C36.3992 19.303 39.2934 16.9528 40.0333 13.6669H36.8562C36.2469 15.4078 34.5713 16.5394 32.504 16.5394C29.6316 16.5394 27.5426 14.385 27.5426 11.4038C27.5426 8.46607 29.6316 6.26821 32.504 6.26821C34.5931 6.26821 36.2469 7.42154 36.8127 9.18418H39.9463C39.1629 5.92004 36.421 3.50458 32.504 3.50458C27.8472 3.50458 24.5396 6.92104 24.5396 11.4038C24.5396 15.9301 27.8254 19.303 32.4823 19.303Z"
-                        fill="white"
-                      ></path>{" "}
-                      <path
-                        d="M41.4881 19.0201H50.5406V16.4523H44.3823V3.78747H41.4881V19.0201Z"
-                        fill="white"
-                      ></path>{" "}
-                      <path
-                        d="M51.958 19.0201H54.8522V3.78747H51.958V19.0201Z"
-                        fill="white"
-                      ></path>
                     </svg>
+                    PLEARN
                     <div className="flexb">
                       <div data-v-8e7e85dc="" data-v-706ceafa="" strength="-20">
                         <p data-v-8e7e85dc="" data-v-706ceafa="" class="mt-10">
@@ -113,7 +103,7 @@ function AboutUs() {
                         <p
                           data-v-8e7e85dc=""
                           data-v-706ceafa=""
-                          class="card__cta tm-rf0 tm-lh-title tm-medium tm-muted tm-link mt-7"
+                          class="card__cta mt-7"
                         >
                           Start building ↗
                         </p>
@@ -138,19 +128,22 @@ function AboutUs() {
                 <div class="row mt--30 mt_sm--10">
                   <div class="col-lg-6 col-md-12 col-sm-12 col-12">
                     <div class="about-us-list">
-                      <h3 class="title">Who we are</h3>
+                      <h3 class="title">Our Mission</h3>
                       <p>
-                        There are many vtions of passages of Lorem Ipsum
-                        available, but the majority have suffered.
+                        Enhancing the recognition of the significance of
+                        educating financial literacy and sustainable finance,
+                        and emphasizing the certainty that the youth demographic
+                        will be faced with sustainable investment alternatives
+                        when making asset allocation decisions
                       </p>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-12 col-sm-12 col-12">
                     <div class="about-us-list">
-                      <h3 class="title">Who we are</h3>
+                      <h3 class="title">Our Vision</h3>
                       <p>
-                        There are many vtions of passages of Lorem Ipsum
-                        available, but the majority have suffered.
+                        Empowering youth through strong financial literacy to be
+                        able to make savvy financial decisions.
                       </p>
                     </div>
                   </div>
@@ -170,11 +163,23 @@ function AboutUs() {
                   There are many variations of passages of Lorem Ipsum
                   available, but the majority have suffered alteration.
                 </p>
-                <div class="service-btn">
-                  <a class="btn-transparent rn-btn-dark">
-                    <span class="text">Reach out to us!</span>
-                  </a>
-                </div>
+                <button class="uiverse">
+                  <div class="wrapper">
+                    <span>Reach out to us</span>
+                    <div class="circle circle-12"></div>
+                    <div class="circle circle-11"></div>
+                    <div class="circle circle-10"></div>
+                    <div class="circle circle-9"></div>
+                    <div class="circle circle-8"></div>
+                    <div class="circle circle-7"></div>
+                    <div class="circle circle-6"></div>
+                    <div class="circle circle-5"></div>
+                    <div class="circle circle-4"></div>
+                    <div class="circle circle-3"></div>
+                    <div class="circle circle-2"></div>
+                    <div class="circle circle-1"></div>
+                  </div>
+                </button>
               </div>
             </div>
             <div class="col-lg-8 col-12 mt_md--50">
@@ -341,6 +346,14 @@ const Container = styled.div`
   .p-3 {
     padding: 10vh !important;
   }
+  .card__cta {
+    cursor: pointer;
+    transition: 0.3s all ease-in;
+    &:hover {
+      opacity: 0.6;
+      color: black;
+    }
+  }
   .flex {
     display: flex;
     flex-direction: column;
@@ -363,7 +376,7 @@ const Container = styled.div`
     position: relative;
     overflow: hidden;
     justify-content: space-between;
-    background-image: url("https://cosmos.network/_nuxt/img/ecd3f94.jpg");
+
     .boxx {
       width: 20rem;
     }
@@ -428,6 +441,7 @@ const Container = styled.div`
     content: "";
     left: 0;
     top: 0;
+    transition: 0.3s all ease-in-out;
     background-image: linear-gradient(90deg, #5200ff, #ef0963);
     width: 100%;
     height: 100%;
@@ -483,5 +497,302 @@ const Container = styled.div`
     -webkit-text-fill-color: transparent;
     display: inline-block;
     background: linear-gradient(145deg, rgb(61, 106, 255), #ee076e);
+  }
+  .uiverse {
+    --duration: 7s;
+    --easing: linear;
+    --c-color-1: rgba(255, 163, 26, 0.7);
+    --c-color-2: #1a23ff;
+    --c-color-3: #e21bda;
+    --c-color-4: rgba(255, 232, 26, 0.7);
+    --c-shadow: rgba(255, 223, 87, 0.5);
+    --c-shadow-inset-top: rgba(255, 223, 52, 0.9);
+    --c-shadow-inset-bottom: rgba(255, 250, 215, 0.8);
+    --c-radial-inner: #ffd215;
+    --c-radial-outer: #fff172;
+    --c-color: #fff;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: none;
+    outline: none;
+    position: relative;
+    cursor: pointer;
+    border: none;
+    display: table;
+    border-radius: 24px;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    color: var(--c-color);
+    background: radial-gradient(
+      circle,
+      var(--c-radial-inner),
+      var(--c-radial-outer) 80%
+    );
+    box-shadow: 0 0 14px var(--c-shadow);
+  }
+
+  .uiverse:before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    z-index: 3;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 24px;
+    box-shadow: inset 0 3px 12px var(--c-shadow-inset-top),
+      inset 0 -3px 4px var(--c-shadow-inset-bottom);
+  }
+
+  .uiverse .wrapper {
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    overflow: hidden;
+    border-radius: 24px;
+    min-width: 152px;
+    padding: 12px 0;
+  }
+
+  .uiverse .wrapper span {
+    display: inline-block;
+    position: relative;
+    z-index: 1;
+  }
+
+  .uiverse .wrapper .circle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    filter: blur(var(--blur, 8px));
+    background: var(--background, transparent);
+    transform: translate(var(--x, 0), var(--y, 0)) translateZ(0);
+    animation: var(--animation, none) var(--duration) var(--easing) infinite;
+  }
+
+  .uiverse .wrapper .circle.circle-1,
+  .uiverse .wrapper .circle.circle-9,
+  .uiverse .wrapper .circle.circle-10 {
+    --background: var(--c-color-4);
+  }
+
+  .uiverse .wrapper .circle.circle-3,
+  .uiverse .wrapper .circle.circle-4 {
+    --background: var(--c-color-2);
+    --blur: 14px;
+  }
+
+  .uiverse .wrapper .circle.circle-5,
+  .uiverse .wrapper .circle.circle-6 {
+    --background: var(--c-color-3);
+    --blur: 16px;
+  }
+
+  .uiverse .wrapper .circle.circle-2,
+  .uiverse .wrapper .circle.circle-7,
+  .uiverse .wrapper .circle.circle-8,
+  .uiverse .wrapper .circle.circle-11,
+  .uiverse .wrapper .circle.circle-12 {
+    --background: var(--c-color-1);
+    --blur: 12px;
+  }
+
+  .uiverse .wrapper .circle.circle-1 {
+    --x: 0;
+    --y: -40px;
+    --animation: circle-1;
+  }
+
+  .uiverse .wrapper .circle.circle-2 {
+    --x: 92px;
+    --y: 8px;
+    --animation: circle-2;
+  }
+
+  .uiverse .wrapper .circle.circle-3 {
+    --x: -12px;
+    --y: -12px;
+    --animation: circle-3;
+  }
+
+  .uiverse .wrapper .circle.circle-4 {
+    --x: 80px;
+    --y: -12px;
+    --animation: circle-4;
+  }
+
+  .uiverse .wrapper .circle.circle-5 {
+    --x: 12px;
+    --y: -4px;
+    --animation: circle-5;
+  }
+
+  .uiverse .wrapper .circle.circle-6 {
+    --x: 56px;
+    --y: 16px;
+    --animation: circle-6;
+  }
+
+  .uiverse .wrapper .circle.circle-7 {
+    --x: 8px;
+    --y: 28px;
+    --animation: circle-7;
+  }
+
+  .uiverse .wrapper .circle.circle-8 {
+    --x: 28px;
+    --y: -4px;
+    --animation: circle-8;
+  }
+
+  .uiverse .wrapper .circle.circle-9 {
+    --x: 20px;
+    --y: -12px;
+    --animation: circle-9;
+  }
+
+  .uiverse .wrapper .circle.circle-10 {
+    --x: 64px;
+    --y: 16px;
+    --animation: circle-10;
+  }
+
+  .uiverse .wrapper .circle.circle-11 {
+    --x: 4px;
+    --y: 4px;
+    --animation: circle-11;
+  }
+
+  .uiverse .wrapper .circle.circle-12 {
+    --blur: 14px;
+    --x: 52px;
+    --y: 4px;
+    --animation: circle-12;
+  }
+
+  @keyframes circle-1 {
+    33% {
+      transform: translate(0px, 16px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(12px, 64px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-2 {
+    33% {
+      transform: translate(80px, -10px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(72px, -48px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-3 {
+    33% {
+      transform: translate(20px, 12px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(12px, 4px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-4 {
+    33% {
+      transform: translate(76px, -12px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(112px, -8px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-5 {
+    33% {
+      transform: translate(84px, 28px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(40px, -32px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-6 {
+    33% {
+      transform: translate(28px, -16px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(76px, -56px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-7 {
+    33% {
+      transform: translate(8px, 28px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(20px, -60px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-8 {
+    33% {
+      transform: translate(32px, -4px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(56px, -20px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-9 {
+    33% {
+      transform: translate(20px, -12px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(80px, -8px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-10 {
+    33% {
+      transform: translate(68px, 20px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(100px, 28px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-11 {
+    33% {
+      transform: translate(4px, 4px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(68px, 20px) translateZ(0);
+    }
+  }
+
+  @keyframes circle-12 {
+    33% {
+      transform: translate(56px, 0px) translateZ(0);
+    }
+
+    66% {
+      transform: translate(60px, -32px) translateZ(0);
+    }
   }
 `;
