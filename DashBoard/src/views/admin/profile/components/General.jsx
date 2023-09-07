@@ -56,8 +56,11 @@ const General = ({ data }) => {
     ));
     return (
       <div>
-        <BtnBack onClick={() => history(`/admin/User/`)}>
-          <button className="my-3 rounded-xl">
+        <BtnBack>
+          <button
+            onClick={() => history(`/admin/User/`)}
+            className="my-3 rounded-xl"
+          >
             <svg
               height="16"
               width="16"
