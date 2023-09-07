@@ -27,3 +27,6 @@ input.defaultCheckbox::before {
 input:checked.defaultCheckbox::before { 
 	opacity: 1;
 }
+.shadow:hover{
+	box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+}
