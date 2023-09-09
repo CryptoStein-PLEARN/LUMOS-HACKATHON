@@ -11,15 +11,14 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
-import Progress from "components/progress";
 import Checkbox from "components/checkbox";
 import { MdCancel, MdCheckCircle, MdOutlineError } from "react-icons/md";
 
 const DevelopmentTable = (props) => {
-  const { columnsData, tableData } = props;
+  const { columnsData, dataSet } = props;
 
   const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]);
+  const data = useMemo(() => dataSet || [], [dataSet]);
 
   const tableInstance = useTable(
     {
@@ -40,6 +39,11 @@ const DevelopmentTable = (props) => {
     initialState,
   } = tableInstance;
   initialState.pageSize = 11;
+  const handleDate = (dateString) => {
+    const date = new Date(dateString);
+    const normalDate = date.toISOString().split("T")[0];
+    return normalDate;
+  };
 
   return (
     <Card extra={"w-full h-full p-4"}>
@@ -51,100 +55,76 @@ const DevelopmentTable = (props) => {
       </div>
 
       <div class="h-full overflow-x-scroll xl:overflow-x-hidden">
-        <table
-          {...getTableProps()}
-          className="mt-8 h-max w-full"
-          variant="simple"
-          color="gray-500"
-          mb="24px"
-        >
-          <thead>
-            {headerGroups.map((headerGroup, index) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={index}>
-                {headerGroup.headers.map((column, index) => (
-                  <th
-                    {...column.getHeaderProps(column.getSortByToggleProps())}
-                    className="border-b border-gray-200 pr-32 pb-[10px] text-start dark:!border-navy-700 "
-                    key={index}
-                  >
-                    <div className="text-xs font-bold tracking-wide text-gray-600">
-                      {column.render("Header")}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, index) => {
-              prepareRow(row);
-              return (
-                <tr {...row.getRowProps()} key={index}>
-                  {row.cells.map((cell, index) => {
-                    let data = "";
-                    if (cell.column.Header === "NAME") {
-                      data = (
-                        <p className="text-sm font-bold text-navy-700 dark:text-white">
-                          {cell.value}
-                        </p>
-                      );
-                    } else if (cell.column.Header === "STATUS") {
-                      data = (
-                        <div className="flex items-center gap-2">
-                          <div className={`rounded-full text-xl`}>
-                            {cell.value === "Approved" ? (
-                              <MdCheckCircle className="text-green-500" />
-                            ) : cell.value === "Rejected" ? (
-                              <MdCancel className="text-red-500" />
-                            ) : cell.value === "Error" ? (
-                              <MdOutlineError className="text-orange-500" />
-                            ) : null}
-                          </div>
+        {dataSet ? (
+          <table
+            {...getTableProps()}
+            className="mt-8 h-max w-full"
+            variant="simple"
+            color="gray-500"
+            mb="24px"
+          >
+            <thead>
+              {headerGroups.map((headerGroup, index) => (
+                <tr {...headerGroup.getHeaderGroupProps()} key={index}>
+                  {headerGroup.headers.map((column, index) => (
+                    <th
+                      {...column.getHeaderProps(column.getSortByToggleProps())}
+                      className="border-b border-gray-200 pr-32 pb-[10px] text-start dark:!border-navy-700 "
+                      key={index}
+                    >
+                      <div className="text-xs font-bold tracking-wide text-gray-600">
+                        {column.render("Header")}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              ))}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {page.map((row, index) => {
+                prepareRow(row);
+                console.log(row);
+                return (
+                  <tr {...row.getRowProps()} key={index}>
+                    {row.cells.map((cell, index) => {
+                      let data = "";
+                      if (cell.column.Header === "NAME") {
+                        data = (
                           <p className="text-sm font-bold text-navy-700 dark:text-white">
                             {cell.value}
                           </p>
-                        </div>
+                        );
+                      } else if (cell.column.Header === "Date") {
+                        data = (
+                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                            {handleDate(cell.value)}
+                          </p>
+                        );
+                      } else if (cell.column.Header === "Email") {
+                        data = (
+                          <div className="flex w-full items-center">
+                            {cell.value}
+                          </div>
+                        );
+                      }
+                      return (
+                        <td
+                          {...cell.getCellProps()}
+                          key={index}
+                          className="pt-[14px] pb-3 text-[14px]"
+                        >
+                          {data}
+                        </td>
                       );
-                    } else if (cell.column.Header === "MESSAGE") {
-                      data = (
-                        <div className="flex items-center gap-2">
-                          {cell.value.map((item, key) => {
-                            return (
-                              <div className="text-[22px] text-gray-600 dark:text-white">
-                                "Hi I would like to.."
-                              </div>
-                            );
-                          })}
-                        </div>
-                      );
-                    } else if (cell.column.Header === "DATE") {
-                      data = (
-                        <p className="text-sm font-bold text-navy-700 dark:text-white">
-                          {cell.value}
-                        </p>
-                      );
-                    } else if (cell.column.Header === "PROGRESS") {
-                      data = (
-                        <div className="flex w-full items-center">
-                          <Checkbox />
-                        </div>
-                      );
-                    }
-                    return (
-                      <td
-                        {...cell.getCellProps()}
-                        key={index}
-                        className="pt-[14px] pb-3 text-[14px]"
-                      >
-                        {data}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <span className="mt-8">Data is loading... please wait</span>
+        )}
       </div>
     </Card>
   );

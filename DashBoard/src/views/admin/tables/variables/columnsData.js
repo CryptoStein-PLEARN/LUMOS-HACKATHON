@@ -3,18 +3,13 @@ export const columnsDataDevelopment = [
     Header: "NAME",
     accessor: "name",
   },
-
   {
-    Header: "STATUS",
-    accessor: "status",
+    Header: "Email",
+    accessor: "email",
   },
   {
-    Header: "DATE",
-    accessor: "date",
-  },
-  {
-    Header: "MESSAGE",
-    accessor: "Message",
+    Header: "Date",
+    accessor: "datePosted",
   },
 ];
 

@@ -100,7 +100,19 @@ const General = ({ data }) => {
     );
   } else {
     if (data) {
-      const components = data?.map((item) => (
+      const uniqueNamesMap = new Map();
+
+      // Filter and remove duplicates based on the 'name' property
+      const filteredData = data?.filter((item) => {
+        const name = item.name.toLowerCase(); // Normalize to lowercase for case-insensitive comparison
+        if (!uniqueNamesMap.has(name)) {
+          uniqueNamesMap.set(name, true);
+          return true;
+        }
+        return false;
+      });
+
+      const components = filteredData?.map((item) => (
         <Card
           key={item.id}
           onClick={() => {

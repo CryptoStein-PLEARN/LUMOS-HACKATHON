@@ -1,49 +1,49 @@
 [
   {
-    "name": "James", "Message": ["apple"],
+    "name": "James", 
     "status": "Approved",
     "date": "24.Jan.2021",
     "progress": 30
   },
   {
-    "name": "BabuBhaiya", "Message": ["apple"],
+    "name": "BabuBhaiya", 
     "status": "Rejected",
     "date": "30.Dec.2021",
     "progress": 30
   },
   {
-    "name": "Arjun", "Message": ["apple"],
+    "name": "Arjun", 
     "status": "Error",
     "date": "20.May.2021",
     "progress": 30
   },
   {
-    "name": "Nagraj", "Message": ["apple"],
+    "name": "Nagraj", 
     "status": "Approved",
     "date": "12.Jul.2021",
     "progress": 30
   }, {
-    "name": "Karan", "Message": ["apple"],
+    "name": "Karan", 
     "status": "Approved",
     "date": "12.Jul.2021",
     "progress": 30
   }, {
-    "name": "June", "Message": ["apple"],
+    "name": "June", 
     "status": "Approved",
     "date": "12.Jul.2021",
     "progress": 30
   } , {
-    "name": "June", "Message": ["apple"],
+    "name": "June", 
     "status": "Approved",
     "date": "12.Jul.2021",
     "progress": 30
   } , {
-    "name": "June", "Message": ["apple"],
+    "name": "June", 
     "status": "Approved",
     "date": "12.Jul.2021",
     "progress": 30
   } , {
-    "name": "June", "Message": ["apple"], 
+    "name": "June",  
     "status": "Approved",
     "date": "12.Jul.2021",
     "progress": 30
