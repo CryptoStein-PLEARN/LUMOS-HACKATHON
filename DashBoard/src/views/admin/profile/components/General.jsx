@@ -1,3 +1,4 @@
+import axios from "axios";
 import Card from "components/card";
 import Radio from "components/radio";
 import React, { useEffect, useState } from "react";
@@ -11,9 +12,15 @@ const General = ({ data }) => {
   const handleClick = (e) => {
     history(`/admin/User/${e}`);
   };
-  const handleReslove = (e) => {
+  const handleReslove = (_id, e) => {
+    const data = {
+      _id: _id,
+    }
     if (!e) {
-      // api call
+      axios.post("https://plearn-backend.onrender.com/markAsResolved", data)
+      .then((response) => {
+        console.log(response )
+      })
     }
   };
   if (user) {
@@ -34,7 +41,7 @@ const General = ({ data }) => {
                   <span className="text-orange-400">Mark as Done</span>{" "}
                   <Radio
                     onClick={() => {
-                      handleReslove(item.resolved);
+                      handleReslove(item._id, item.resolved);
                     }}
                   ></Radio>
                 </div>
