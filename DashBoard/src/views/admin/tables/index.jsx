@@ -13,7 +13,6 @@ const Tables = () => {
 
     console.log(res.data);
     setData(res.data);
-    //send 'res' into General component
   };
   useEffect(() => {
     getGetInTouchDetails();

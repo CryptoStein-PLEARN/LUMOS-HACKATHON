@@ -26,7 +26,7 @@ export default React.memo(function CTAsection() {
       email: "",
       phoneNumber: "",
       subject: "",
-      description: ""
+      description: "",
     },
   ]);
 
@@ -35,17 +35,18 @@ export default React.memo(function CTAsection() {
   const postGetInTouchDetails = async () => {
     const data = {
       name: name,
-      email : email,
+      email: email,
       phoneNumber: phoneNumber,
       subject: subject,
-      description: description
-    }
+      description: description,
+    };
 
-    await axios.post('https://plearn-backend.onrender.com/postGetInTouchDetails', data)
-    .then((response) => {
-      console.log(response.data);
-    })
-  }
+    await axios
+      .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
+      .then((response) => {
+        console.log(response.data);
+      });
+  };
 
   const sendEmail = (e) => {
     e.preventDefault();

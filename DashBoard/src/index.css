@@ -14,19 +14,36 @@
 }
 
 input.defaultCheckbox::before {
-	content: url(../src/assets/svg/checked.svg); 
+	content: url(../src/assets/svg/checked.svg);
 	color: white;
-	opacity: 0; 
-	height: 16px; 
+	opacity: 0;
+	height: 16px;
 	width: 16px;
-	position: absolute; 
+	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0px);
-} 
+}
 
-input:checked.defaultCheckbox::before { 
+input:checked.defaultCheckbox::before {
 	opacity: 1;
 }
-.shadow:hover{
+
+.shadow:hover {
 	box-shadow: 9px 9px 33px #d1d1d1, -9px -9px 33px #ffffff;
+}
+
+option {
+	cursor: pointer !important;
+}
+
+.bg-neutral-800 {
+	background-color: rgb(38 38 38 / 0.8);
+}
+
+.group:hover .group-hover\:text-transparent {
+	color: transparent;
+}
+
+.bg-black {
+	background-color: rgb(17, 16, 16);
 }

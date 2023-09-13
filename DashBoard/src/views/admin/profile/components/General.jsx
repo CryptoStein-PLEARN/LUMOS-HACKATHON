@@ -1,9 +1,13 @@
 import axios from "axios";
 import Card from "components/card";
+import Dropdown from "components/dropdown";
+import avatar from "assets/img/avatars/avatar4.png";
 import Radio from "components/radio";
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import Modal from "./Modal";
 const General = ({ data }) => {
   const location = useLocation();
   const history = useNavigate();
@@ -12,69 +16,188 @@ const General = ({ data }) => {
   const handleClick = (e) => {
     history(`/admin/User/${e}`);
   };
+  const [subject, setSelectedOption] = useState("Subject line");
+
+  const handleClose = () => {
+    const val = isOpen;
+    setOpen(!val);
+  };
+  const [modalData, SetModal] = useState();
+  const [isOpen, setOpen] = useState(false);
   const handleReslove = (_id, e) => {
-    const data = {
-      _id: _id,
-    }
-    if (!e) {
-      axios.post("https://plearn-backend.onrender.com/markAsResolved", data)
-      .then((response) => {
-        console.log(response )
-      })
-    }
+    // const data = {
+    //   _id: _id,
+    // }
+    // if (!e) {
+    //   axios.post("https://plearn-backend.onrender.com/markAsResolved", data)
+    //   .then((response) => {
+    //     console.log(response )
+    //   })
+    // }
   };
   if (user) {
     const userInput = user.toLowerCase();
     const userData = data?.filter((item) =>
       item.name.toLowerCase().includes(userInput)
     );
+    console.log(userData);
     const components = userData?.map(
-      (item) =>
-        !item?.resolved && (
-          <Card key={item.id} extra={"w-full h-full p-3"}>
-            <div className="mt-2 w-full ">
-              <div className="flex  items-start justify-between px-3 py-4  ">
-                <h4 className="px-2 text-xl font-bold text-navy-700 dark:text-white">
-                  User - {item.name}
-                </h4>{" "}
-                <div className="flex items-center gap-3">
-                  <span className="text-orange-400">Mark as Done</span>{" "}
-                  <Radio
-                    onClick={() => {
-                      handleReslove(item._id, item.resolved);
-                    }}
-                  ></Radio>
-                </div>
-              </div>
-              <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500  dark:!bg-navy-700 dark:shadow-none">
-                <p className="text-sm text-gray-600">Subject line</p>
-                <p className="text-base font-medium text-navy-700 dark:text-white">
-                  {item.subject}
+      (item) => (
+        // !item?.resolved && (
+        <Card key={item._id} extra={"w-full h-full pt-12 pb-5 px-5"}>
+          <div className="mt-2 w-full ">
+            <div className="relative flex items-start justify-between px-3 py-2 pt-4  ">
+              <div className="flex w-full items-center justify-between">
+                <p className="mt-3 text-base font-medium text-navy-700 dark:text-white">
+                  Request-ID: {item._id.slice(0, 6)}
+                </p>{" "}
+                <p className="text-sm text-gray-700">
+                  Date :{" "}
+                  <span className="text-navy-800 underline underline-offset-2">
+                    {" "}
+                    {item.datePosted.slice(0, 10)}
+                  </span>{" "}
                 </p>
               </div>
-              <h3 className="mt-3 border-t-2 px-2 ">Message</h3>
-              <p className="  px-2 pt-2 pb-8 text-base text-gray-600">
-                {item.description}
+              <div className="absolute right-0 -top-8 flex items-center justify-center gap-3 px-3  ">
+                <span className=" whitespace-nowrap text-sm font-medium text-orange-400">
+                  Request status{" "}
+                </span>{" "}
+                <select
+                  onChange={(event) => setSelectedOption(event.target.value)}
+                  class="  w-30 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                >
+                  <option disabled hidden selected>
+                    New
+                  </option>
+                  <option className="cursor-pointer">Urgent</option>
+                  <option className="cursor-pointer">Pending</option>
+                  <option className="cursor-pointer">Ignore</option>
+                  <option className="cursor-pointer">Done</option>
+                </select>
+                {/* <Radio
+                  checked={item.resolved}
+                  onClick={() => {
+                    handleReslove(item._id, item.resolved);
+                  }}
+                ></Radio> */}
+              </div>
+              <div className="absolute -top-8 left-0 flex items-center gap-3 px-3  ">
+                <h4 className="text-xl font-bold capitalize text-navy-700 dark:text-white">
+                  User : {item.name}
+                </h4>
+                {/* <Radio
+                  checked={item.resolved}
+                  onClick={() => {
+                    handleReslove(item._id, item.resolved);
+                  }}
+                ></Radio> */}
+              </div>
+            </div>
+            <div className=" flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-xl shadow-gray-200  dark:!bg-navy-700 dark:shadow-none">
+              <p className="text-sm text-gray-600">Subject line</p>
+              <p className="text-base font-medium text-navy-700 dark:text-white">
+                {item.subject}
+              </p>{" "}
+            </div>
+            <h3 className="mt-3 border-t-2 px-2 ">Message</h3>
+            <p className="  px-2 pt-2 pb-8 text-base text-gray-600">
+              {item.description}
+            </p>
+          </div>
+          {/* Cards */}
+          <div className="grid grid-cols-2 gap-4  px-2">
+            <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+              <p className="text-sm text-gray-600">Email</p>
+              <p className="text-base font-medium text-navy-700 dark:text-white">
+                {item.email}
               </p>
             </div>
-            {/* Cards */}
-            <div className="grid grid-cols-2 gap-4  px-2">
-              <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                <p className="text-sm text-gray-600">Email</p>
-                <p className="text-base font-medium text-navy-700 dark:text-white">
-                  {item.email}
-                </p>
+
+            <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
+              <p className="text-sm text-gray-600">Phone number</p>
+              <p className="text-base font-medium text-navy-700 dark:text-white">
+                {item.phoneNumber}
+              </p>
+            </div>
+          </div>
+          <div className="mt-3 flex justify-end gap-4">
+            <button
+              onClick={() => {
+                if (!isOpen) {
+                  SetModal(item);
+                  setOpen(true);
+                } else {
+                  setOpen(false);
+                }
+              }}
+              class="z-1 group relative flex items-center rounded-lg bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 px-4 py-2 font-medium text-white transition-all duration-200 ease-in-out hover:bg-gradient-to-br active:scale-95 active:shadow-inner"
+            >
+              <div class="absolute -inset-0.5 -z-10 animate-pulse rounded-xl bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-xl group-hover:inset-10 group-hover:opacity-100"></div>
+              <div class="svg-wrapper duration-400 transform transition-all group-hover:translate-x-5 group-hover:rotate-45">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                  class=""
+                >
+                  <path fill="none" d="M0 0h24v24H0z"></path>
+                  <path
+                    fill="#fff"
+                    d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                  ></path>
+                </svg>
+              </div>
+              <span class="group-hover:text-transparent ml-1 text-white transition-all duration-300">
+                Reply
+              </span>
+            </button>
+            <button class="group relative flex cursor-pointer items-center justify-center gap-4 overflow-hidden rounded bg-red-600 px-4 py-2 text-white shadow shadow-red-300 focus:outline-none active:shadow-green-200">
+              <span class="transition-transform duration-200 group-hover:-translate-x-40">
+                Delete
+              </span>
+
+              <div class="h-4 w-0.5 bg-red-800 transition-transform duration-200 group-hover:-translate-x-40"></div>
+
+              <div class="svg-wrapper transition-transform duration-200 group-hover:-translate-x-11">
+                <svg
+                  class="h-6 w-6"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 18L18 6M6 6l12 12"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  ></path>
+                </svg>
               </div>
 
-              <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
-                <p className="text-sm text-gray-600">Phone number</p>
-                <p className="text-base font-medium text-navy-700 dark:text-white">
-                  {item.phoneNumber}
-                </p>
+              <div class="svg-wrapper absolute hidden   h-full w-full items-center justify-center group-active:flex group-active:bg-green-600">
+                <svg
+                  class="h-6 w-6"
+                  stroke="currentColor"
+                  stroke-width="4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M4.5 12.75l6 6 9-13.5"
+                    stroke-linejoin="round"
+                    stroke-linecap="round"
+                  ></path>
+                </svg>
               </div>
-            </div>
-          </Card>
-        )
+            </button>
+          </div>
+        </Card>
+      )
+      // )
     );
     return (
       <div>
@@ -96,6 +219,9 @@ const General = ({ data }) => {
           </button>
         </BtnBack>
         <div className="grid grid-cols-2 gap-5">{components} </div>
+        {isOpen && (
+          <Modal handleClose={handleClose} user={modalData} isOpen={isOpen} />
+        )}
       </div>
     );
   } else {
