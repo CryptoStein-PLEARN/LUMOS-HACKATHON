@@ -1,10 +1,5 @@
-import axios from "axios";
 import Card from "components/card";
-import Dropdown from "components/dropdown";
-import avatar from "assets/img/avatars/avatar4.png";
-import Radio from "components/radio";
-
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "./Modal";
@@ -12,11 +7,11 @@ const General = ({ data }) => {
   const location = useLocation();
   const history = useNavigate();
   const user = location.pathname.split("/")[3];
-  console.log(history);
   const handleClick = (e) => {
     history(`/admin/User/${e}`);
   };
   const [subject, setSelectedOption] = useState("Subject line");
+  const [Priority, setPriority] = useState("");
 
   const handleClose = () => {
     const val = isOpen;
@@ -40,11 +35,10 @@ const General = ({ data }) => {
     const userData = data?.filter((item) =>
       item.name.toLowerCase().includes(userInput)
     );
-    console.log(userData);
     const components = userData?.map(
       (item) => (
         // !item?.resolved && (
-        <Card key={item._id} extra={"w-full h-full pt-12 pb-5 px-5"}>
+        <Card key={item._id} extra={"w-full h-full pt-20 pb-5 px-5"}>
           <div className="mt-2 w-full ">
             <div className="relative flex items-start justify-between px-3 py-2 pt-4  ">
               <div className="flex w-full items-center justify-between">
@@ -59,8 +53,24 @@ const General = ({ data }) => {
                   </span>{" "}
                 </p>
               </div>
-              <div className="absolute right-0 -top-8 flex items-center justify-center gap-3 px-3  ">
-                <span className=" whitespace-nowrap text-sm font-medium text-orange-400">
+              <div className="absolute right-0 -top-6 flex items-center justify-center gap-3 px-3  ">
+                <span className=" whitespace-nowrap text-sm font-bold text-red-400">
+                  Priority
+                </span>{" "}
+                <select
+                  onChange={(event) => setPriority(event.target.value)}
+                  class="  w-30 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                >
+                  <option disabled hidden selected>
+                    Low
+                  </option>
+                  <option className="cursor-pointer">Low</option>
+                  <option className="cursor-pointer">Mediun</option>
+                  <option className="cursor-pointer">High</option>
+                </select>
+              </div>{" "}
+              <div className="absolute left-0 -top-6 flex items-center justify-center gap-3 px-3  ">
+                <span className=" whitespace-nowrap text-sm font-medium ">
                   Request status{" "}
                 </span>{" "}
                 <select
@@ -75,35 +85,43 @@ const General = ({ data }) => {
                   <option className="cursor-pointer">Ignore</option>
                   <option className="cursor-pointer">Done</option>
                 </select>
-                {/* <Radio
-                  checked={item.resolved}
-                  onClick={() => {
-                    handleReslove(item._id, item.resolved);
-                  }}
-                ></Radio> */}
               </div>
-              <div className="absolute -top-8 left-0 flex items-center gap-3 px-3  ">
+              <div className="absolute -top-20 left-0 mt-3 flex items-center gap-3 px-3  ">
                 <h4 className="text-xl font-bold capitalize text-navy-700 dark:text-white">
                   User : {item.name}
                 </h4>
-                {/* <Radio
-                  checked={item.resolved}
-                  onClick={() => {
-                    handleReslove(item._id, item.resolved);
-                  }}
-                ></Radio> */}
               </div>
             </div>
-            <div className=" flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-xl shadow-gray-200  dark:!bg-navy-700 dark:shadow-none">
-              <p className="text-sm text-gray-600">Subject line</p>
-              <p className="text-base font-medium text-navy-700 dark:text-white">
-                {item.subject}
-              </p>{" "}
+            <div className=" flex-col items-start justify-center  rounded-2xl bg-white bg-clip-border  py-4   dark:!bg-navy-700  ">
+              <div className="mb-2 flex flex-col rounded-md border-2 border-blue-300 p-2">
+                <p className="text-sm  text-navy-700 ">Subject line</p>
+                <p className="text-base   text-gray-600 dark:text-white">
+                  {item.subject}
+                </p>{" "}
+              </div>
+              <div className="flex flex-col rounded-md border-2 border-blue-300 p-2">
+                <p className="text-sm text-navy-700 "> Request heading</p>
+                <p className=" text-base text-gray-600 dark:text-white">
+                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                  Accusantium repellat excepturi
+                </p>{" "}
+              </div>
             </div>
-            <h3 className="mt-3 border-t-2 px-2 ">Message</h3>
-            <p className="  px-2 pt-2 pb-8 text-base text-gray-600">
-              {item.description}
-            </p>
+            <div className="mb-4 flex flex-col items-start  justify-center rounded-2xl border-t-2 border-teal-200 bg-white px-3 py-4 shadow-md  shadow-teal-200   dark:!bg-navy-700 ">
+              <h3 className=" w-full border-b-2 px-2 pt-4 pb-2 text-2xl">
+                Message
+              </h3>
+              <p className="  px-2 pt-2 pb-8 text-base text-gray-700">
+                {item.description}
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam
+                sapiente ipsum quisquam dicta. Quas atque nisi eum explicabo
+                quia dolores, maiores vero ipsa reprehenderit, quae rerum quam
+                sed eos esse. Lorem ipsum dolor sit, amet consectetur
+                adipisicing elit. Totam sapiente ipsum quisquam dicta. Quas
+                atque nisi eum explicabo quia dolores, maiores vero ipsa
+                reprehenderit, quae rerum quam sed eos esse.
+              </p>
+            </div>
           </div>
           {/* Cards */}
           <div className="grid grid-cols-2 gap-4  px-2">
@@ -252,16 +270,13 @@ const General = ({ data }) => {
             <h4 className="px-2 text-xl font-bold  text-navy-700   dark:text-white">
               User - {item.name}
             </h4>
-            <div className="flex flex-col items-start justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500  dark:!bg-navy-700 dark:shadow-none">
-              <p className="text-sm text-gray-600">Subject line</p>
+            <div className="mt-4 flex flex-col items-start justify-center rounded-2xl border-t-2   border-teal-200 bg-white   bg-clip-border px-3 py-4 shadow-md   shadow-shadow-500  dark:!bg-navy-700 dark:shadow-none">
+              <p className="text-sm text-gray-600">Request heading</p>
               <p className="text-base font-medium text-navy-700 dark:text-white">
-                {item.subject}
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Corrupti impedit optio in
               </p>
             </div>
-            <h3 className="mt-3 border-t-2   px-2 ">Message</h3>
-            <p className="  px-2 pt-2 pb-8 text-base text-gray-600">
-              {item.description}
-            </p>
           </div>
         </Card>
       ));
