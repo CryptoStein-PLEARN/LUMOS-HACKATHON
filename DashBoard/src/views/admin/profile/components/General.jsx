@@ -92,14 +92,14 @@ const General = ({ data }) => {
                 </h4>
               </div>
             </div>
-            <div className=" flex-col items-start justify-center  rounded-2xl bg-white bg-clip-border  py-4   dark:!bg-navy-700  ">
-              <div className="mb-2 flex flex-col rounded-md border-2 border-blue-300 p-2">
+            <div className=" mb-4 flex-col items-start  justify-center rounded-2xl   bg-white bg-clip-border py-4 shadow-xl shadow-shadow-500   dark:!bg-navy-700  ">
+              <div className="mb-2 flex flex-col rounded-md border-b-2 p-2">
                 <p className="text-sm  text-navy-700 ">Subject line</p>
                 <p className="text-base   text-gray-600 dark:text-white">
                   {item.subject}
                 </p>{" "}
               </div>
-              <div className="flex flex-col rounded-md border-2 border-blue-300 p-2">
+              <div className="flex flex-col rounded-md    p-2">
                 <p className="text-sm text-navy-700 "> Request heading</p>
                 <p className=" text-base text-gray-600 dark:text-white">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
@@ -107,7 +107,7 @@ const General = ({ data }) => {
                 </p>{" "}
               </div>
             </div>
-            <div className="mb-4 flex flex-col items-start  justify-center rounded-2xl border-t-2 border-teal-200 bg-white px-3 py-4 shadow-md  shadow-teal-200   dark:!bg-navy-700 ">
+            <div className="mb-4 flex flex-col items-start  justify-center rounded-2xl  bg-white px-3 py-4 shadow-md  shadow-teal-200   dark:!bg-navy-700 ">
               <h3 className=" w-full border-b-2 px-2 pt-4 pb-2 text-2xl">
                 Message
               </h3>
