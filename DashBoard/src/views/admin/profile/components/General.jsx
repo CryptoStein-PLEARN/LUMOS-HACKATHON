@@ -40,20 +40,18 @@ const General = ({ data }) => {
         // !item?.resolved && (
         <Card key={item._id} extra={"w-full h-full pt-20 pb-5 px-5"}>
           <div className="mt-2 w-full ">
-            <div className="relative flex items-start justify-between px-3 py-2 pt-4  ">
+            <div className="relative flex items-start justify-between   py-2 px-2 pt-4  ">
               <div className="flex w-full items-center justify-between">
-                <p className="mt-3 text-base font-medium text-navy-700 dark:text-white">
-                  Request-ID: {item._id.slice(0, 6)}
+                <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
+                  <span className="font-bold text-navy-700"> Request-ID :</span>{" "}
+                  {item._id.slice(0, 6)}
                 </p>{" "}
-                <p className="text-sm text-gray-700">
-                  Date :{" "}
-                  <span className="text-navy-800 underline underline-offset-2">
-                    {" "}
-                    {item.datePosted.slice(0, 10)}
-                  </span>{" "}
-                </p>
+                <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
+                  <span className="font-bold text-navy-700"> Request-Type</span>{" "}
+                  : {item.subject}
+                </p>{" "}
               </div>
-              <div className="absolute right-0 -top-6 flex items-center justify-center gap-3 px-3  ">
+              <div className="absolute right-0 -top-6 flex items-center justify-center gap-3 px-2    ">
                 <span className=" whitespace-nowrap text-sm font-bold text-red-400">
                   Priority
                 </span>{" "}
@@ -69,8 +67,8 @@ const General = ({ data }) => {
                   <option className="cursor-pointer">High</option>
                 </select>
               </div>{" "}
-              <div className="absolute left-0 -top-6 flex items-center justify-center gap-3 px-3  ">
-                <span className=" whitespace-nowrap text-sm font-medium ">
+              <div className="absolute left-0 -top-6 flex items-center justify-center gap-3 px-2    ">
+                <span className=" whitespace-nowrap text-sm font-bold text-navy-700 ">
                   Request status{" "}
                 </span>{" "}
                 <select
@@ -86,22 +84,27 @@ const General = ({ data }) => {
                   <option className="cursor-pointer">Done</option>
                 </select>
               </div>
-              <div className="absolute -top-20 left-0 mt-3 flex items-center gap-3 px-3  ">
+              <div className="absolute -top-20 left-0 mt-3 flex w-full items-center justify-between px-2 ">
                 <h4 className="text-xl font-bold capitalize text-navy-700 dark:text-white">
-                  User : {item.name}
+                  User :{" "}
+                  <span className="font-bold text-gray-700">{item.name}</span>
                 </h4>
+                <p className="text-sm text-gray-700">
+                  Date :
+                  <span className="text-navy-800 underline underline-offset-2">
+                    {" "}
+                    {item.datePosted.slice(0, 10)}
+                  </span>{" "}
+                </p>
               </div>
             </div>
-            <div className=" mb-4 flex-col items-start  justify-center rounded-2xl   bg-white bg-clip-border py-4 shadow-xl shadow-shadow-500   dark:!bg-navy-700  ">
-              <div className="mb-2 flex flex-col rounded-md border-b-2 p-2">
-                <p className="text-sm  text-navy-700 ">Subject line</p>
-                <p className="text-base   text-gray-600 dark:text-white">
-                  {item.subject}
-                </p>{" "}
-              </div>
+            <div className="   mb-4 flex-col  items-start justify-center   rounded-2xl  bg-white py-4  dark:!bg-navy-700  ">
               <div className="flex flex-col rounded-md    p-2">
-                <p className="text-sm text-navy-700 "> Request heading</p>
-                <p className=" text-base text-gray-600 dark:text-white">
+                <p className="mb-2 text-base font-bold text-navy-700 ">
+                  {" "}
+                  Request heading
+                </p>
+                <p className=" text-sm text-gray-600 dark:text-white">
                   Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                   Accusantium repellat excepturi
                 </p>{" "}
@@ -236,7 +239,7 @@ const General = ({ data }) => {
             <span>Back</span>
           </button>
         </BtnBack>
-        <div className="grid grid-cols-2 gap-5">{components} </div>
+        <div className="grid grid-cols-2 gap-6">{components} </div>
         {isOpen && (
           <Modal handleClose={handleClose} user={modalData} isOpen={isOpen} />
         )}

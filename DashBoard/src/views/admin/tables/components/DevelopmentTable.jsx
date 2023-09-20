@@ -1,9 +1,5 @@
 import CardMenu from "components/card/CardMenu";
 import Card from "components/card";
-import { DiApple } from "react-icons/di";
-import { DiAndroid } from "react-icons/di";
-import { DiWindows } from "react-icons/di";
-
 import React, { useMemo } from "react";
 import {
   useGlobalFilter,
@@ -11,15 +7,15 @@ import {
   useSortBy,
   useTable,
 } from "react-table";
-import Checkbox from "components/checkbox";
-import { MdCancel, MdCheckCircle, MdOutlineError } from "react-icons/md";
-
+import { useNavigate } from "react-router-dom";
 const DevelopmentTable = (props) => {
+  const history = useNavigate();
   const { columnsData, dataSet } = props;
-
+  const handleClick = (e) => {
+    history(`/admin/User/${e}`);
+  };
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => dataSet || [], [dataSet]);
-
   const tableInstance = useTable(
     {
       columns,
@@ -83,14 +79,21 @@ const DevelopmentTable = (props) => {
             <tbody {...getTableBodyProps()}>
               {page.map((row, index) => {
                 prepareRow(row);
-                console.log(row);
+
                 return (
                   <tr {...row.getRowProps()} key={index}>
                     {row.cells.map((cell, index) => {
                       let data = "";
+                      // if (cell.value) {
+                      //   console.log(cell);
                       if (cell.column.Header === "NAME") {
                         data = (
-                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                          <p
+                            onClick={() => {
+                              handleClick(cell.value);
+                            }}
+                            className="text-sm font-bold text-navy-700 hover:cursor-pointer dark:text-white"
+                          >
                             {cell.value}
                           </p>
                         );
@@ -100,13 +103,32 @@ const DevelopmentTable = (props) => {
                             {handleDate(cell.value)}
                           </p>
                         );
+                      } else if (cell.column.Header === "Type") {
+                        data = (
+                          <p className="text-sm font-bold text-navy-700 dark:text-white">
+                            {cell.value}
+                          </p>
+                        );
                       } else if (cell.column.Header === "Email") {
                         data = (
                           <div className="flex w-full items-center">
                             {cell.value}
                           </div>
                         );
+                      } else if (cell.column.Header === "Status") {
+                        data = (
+                          <div className="flex w-full items-center font-bold text-green-400">
+                            Done
+                          </div>
+                        );
+                      } else if (cell.column.Header === "Priority") {
+                        data = (
+                          <div className="flex w-full items-center font-bold text-red-400">
+                            High
+                          </div>
+                        );
                       }
+                      // }
                       return (
                         <td
                           {...cell.getCellProps()}

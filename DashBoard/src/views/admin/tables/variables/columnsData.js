@@ -8,8 +8,20 @@ export const columnsDataDevelopment = [
     accessor: "email",
   },
   {
+    Header: "Type",
+    accessor: "subject",
+  },
+  {
     Header: "Date",
     accessor: "datePosted",
+  },
+  {
+    Header: "Status",
+    accessor: "status",
+  },
+  {
+    Header: "Priority",
+    accessor: "priority",
   },
 ];
 

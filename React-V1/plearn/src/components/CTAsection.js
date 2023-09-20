@@ -5,7 +5,7 @@ import PhoneInput, {
   getCountryCallingCode,
 } from "react-phone-number-input/input";
 import flags from "react-phone-number-input/flags";
-
+import en from "react-phone-number-input/locale/en.json";
 import emailjs from "@emailjs/browser";
 import axios from "axios";
 export default React.memo(function CTAsection() {
@@ -17,7 +17,7 @@ export default React.memo(function CTAsection() {
   const [phoneNumberError, setphoneNumberError] = useState("");
   const [country, setCountry] = useState();
   const [emptyError, setEmptyerror] = useState("");
-  const [subject, setSelectedOption] = useState("Subject line");
+  const [subject, setSelectedOption] = useState("Topic");
   const [description, setMessage] = useState("");
   const [selectedOptionError, setSelectedOptionerror] = useState("");
   const [Data, setData] = useState([
@@ -67,6 +67,27 @@ export default React.memo(function CTAsection() {
     //     }
     //   );
   };
+  const CountrySelect = ({ value, onChange, labels, ...rest }) => (
+    <select
+      {...rest}
+      value={value}
+      onChange={(event) => {
+        onChange(event.target.value || undefined);
+      }}
+    >
+      <option value="">country</option>
+      {getCountries().map((country) => (
+        <option key={country} value={country}>
+          {/* <img
+            src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
+            alt=""
+          /> */}
+          +{getCountryCallingCode(country)}
+        </option>
+      ))}
+    </select>
+  );
+
   return (
     <Container>
       <div id="container">
@@ -120,19 +141,13 @@ export default React.memo(function CTAsection() {
 
           <div className="telephone ">
             {" "}
-            <select
-              name="CC"
+            <CountrySelect
+              className={`border-b-2 bg-none outline-none  text-xs  `}
+              labels={en}
               value={country}
-              onChange={(event) => setCountry(event.target.value || undefined)}
-            >
-              {/* country flag */}
-              <option value=""> {flags.RU("")}</option>
-              {getCountries().map((country) => (
-                <option key={country} value={country}>
-                  {flags.RU("")} h
-                </option>
-              ))}
-            </select>
+              onChange={setCountry}
+              name="countrySelect"
+            />
             <input
               placeholder="Enter phone number"
               value={phoneNumber}
@@ -145,9 +160,10 @@ export default React.memo(function CTAsection() {
               <div className="error">{phoneNumberError}</div>
             )}
           </div>
+
           <div className="subject">
             <select
-              placeholder="Subject line"
+              placeholder="Topic"
               name="user_Subject"
               id="subject_input"
               className={`${selectedOptionError.length > 0 ? "invalid" : "."} `}
@@ -155,15 +171,27 @@ export default React.memo(function CTAsection() {
               onChange={(event) => setSelectedOption(event.target.value)}
             >
               <option disabled hidden selected>
-                Subject line
+                Topic
               </option>
-              <option className="bgBlack">I'd like to give a feedback</option>
-              <option>I'd like to ask a question</option>
-              <option>I'd like to make a proposal</option>
+              <option className="bgBlack"> Feedback</option>
+              <option>Question</option>
+              <option>Proposal</option>
             </select>{" "}
             {selectedOptionError && (
               <div className="error">{selectedOptionError}</div>
             )}
+          </div>
+          <div className="message">
+            <label for="message"></label>
+            <textarea
+              name="message"
+              placeholder="Subject"
+              id="message_input"
+              cols="10"
+              value={description}
+              onChange={(event) => setMessage(event.target.value)}
+              rows="1"
+            ></textarea>
           </div>
           <div className="message">
             <label for="message"></label>
