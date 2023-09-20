@@ -77,7 +77,13 @@ export default React.memo(function CTAsection() {
     >
       <option value="">country</option>
       {getCountries().map((country) => (
-        <option key={country} value={country}>
+        <option
+          style={{
+            background: `url(${`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}) `,
+          }}
+          key={country}
+          value={country}
+        >
           {/* <img
             src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
             alt=""

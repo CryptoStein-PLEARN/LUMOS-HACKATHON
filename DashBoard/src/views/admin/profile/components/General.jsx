@@ -47,8 +47,8 @@ const General = ({ data }) => {
                   {item._id.slice(0, 6)}
                 </p>{" "}
                 <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
-                  <span className="font-bold text-navy-700"> Request-Type</span>{" "}
-                  : {item.subject}
+                  <span className="font-bold text-navy-700">Topic</span> :{" "}
+                  {item.subject}
                 </p>{" "}
               </div>
               <div className="absolute right-0 -top-6 flex items-center justify-center gap-3 px-2    ">
@@ -100,13 +100,12 @@ const General = ({ data }) => {
             </div>
             <div className="   mb-4 flex-col  items-start justify-center   rounded-2xl  bg-white py-4  dark:!bg-navy-700  ">
               <div className="flex flex-col rounded-md    p-2">
-                <p className="mb-2 text-base font-bold text-navy-700 ">
+                <p className="mb-2 text-lg font-bold text-navy-700 ">
                   {" "}
-                  Request heading
+                  Subject
                 </p>
-                <p className=" text-sm text-gray-600 dark:text-white">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Accusantium repellat excepturi
+                <p className=" text-base text-gray-600 dark:text-white">
+                  Lorem ipsum dolor sit, amet consectetur
                 </p>{" "}
               </div>
             </div>
