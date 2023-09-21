@@ -729,30 +729,91 @@ const getGetInTouchDetails = async (req, res) => {
     })
 }
 
-const markAsResolved = async (req, res) => {
-    const { _id } = req.body;
-  
+const handleStatus = async (req, res) => {
+    const {_id, status} = req.body;
+
     try {
-      const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
-  
-      if (request) {
-        const updateResult = await getInTouchDetails.updateOne(
-          { _id: mongoose.Types.ObjectId(_id) },
-          {
-            $set: {
-              resolved: true
-            }
-          }
-        );
-  
-        res.status(200).json({ success: true, message: "Query resolved successfully." });
-      } else {
-        res.status(404).json({ message: "Query not found. Something is wrong." });
-      }
-    } catch (error) {
-      res.status(500).json({ message: "Internal server error." });
+        const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
+
+        if(request)
+        {
+            const updateResult = await getGetInTouchDetails.updateOne(
+                { _id: mongoose.Types.ObjectId(_id) },
+                {
+                    $set: 
+                    {
+                        status: status
+                    }
+                }
+            )
+
+            res.status(200).json({ success: true, message: "Query's status changed successfully." });
+        }
+        else
+        {
+            res.status(404).json({ message: "Query not found. Something is wrong." });
+        }
     }
-  };
+    catch(error)
+    {
+        res.status(500).json({ message: "Internal server error." });
+    }
+}
+
+const handlePriority = async (req, res) => {
+    const {_id, priority} = req.body;
+
+    try {
+        const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
+        if(request)
+        {
+            const updateResult = await getGetInTouchDetails.updateOne(
+                { _id: mongoose.Types.ObjectId(_id) },
+                {
+                    $set: 
+                    {
+                        priority: priority
+                    }
+                }
+            )
+
+            res.status(200).json({ success: true, message: "Query's priority changed successfully." });
+        }
+        else
+        {
+            res.status(404).json({ message: "Query not found. Something is wrong." });
+        }
+    }
+    catch(error)
+    {
+        res.status(500).json({ message: "Internal server error." });
+    }
+}
+
+// const markAsResolved = async (req, res) => {
+//     const { _id } = req.body;
+  
+//     try {
+//       const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
+  
+//       if (request) {
+//         const updateResult = await getInTouchDetails.updateOne(
+//           { _id: mongoose.Types.ObjectId(_id) },
+//           {
+//             $set: {
+//               resolved: true
+//             }
+//           }
+//         );
+  
+//         res.status(200).json({ success: true, message: "Query resolved successfully." });
+//       } else {
+//         res.status(404).json({ message: "Query not found. Something is wrong." });
+//       }
+//     } catch (error) {
+//       res.status(500).json({ message: "Internal server error." });
+//     }
+//   };
   
 
 const getOwnedNFTs = (req,res) => {
@@ -1038,4 +1099,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, markAsResolved};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority};

@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "./Modal";
+import axios from "axios";
 const General = ({ data }) => {
   const location = useLocation();
   const history = useNavigate();
@@ -19,7 +20,7 @@ const General = ({ data }) => {
   };
   const [modalData, SetModal] = useState();
   const [isOpen, setOpen] = useState(false);
-  const handleReslove = (_id, e) => {
+  // const handleReslove = (_id, e) => {
     // const data = {
     //   _id: _id,
     // }
@@ -29,7 +30,32 @@ const General = ({ data }) => {
     //     console.log(response )
     //   })
     // }
-  };
+  // };
+
+  const handleStatus = (_id, status) => {
+    const data = {
+      _id: _id,
+      status: status
+    }
+
+    axios.post("https://plearn-backend.onrender.com/changeStatus", data)
+    .then((response) => {
+      console.log(response.data);
+    })
+  }
+
+  const handlePriority = (_id, priority) => {
+    const data = {
+      _id: _id,
+      priority: priority
+    }
+
+    axios.post("https://plearn-backend.onrender.com/changePriority", data)
+    .then((response) => {
+      console.log(response.data);
+    })
+  }
+
   if (user) {
     const userInput = user.toLowerCase();
     const userData = data?.filter((item) =>
@@ -56,14 +82,13 @@ const General = ({ data }) => {
                   Priority
                 </span>{" "}
                 <select
-                  onChange={(event) => setPriority(event.target.value)}
+                  onChange={(event) => {setPriority(event.target.value); handlePriority(item._id, event.target.value)}}
                   class="  w-30 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 >
-                  <option disabled hidden selected>
+                  <option selected>
                     Low
                   </option>
-                  <option className="cursor-pointer">Low</option>
-                  <option className="cursor-pointer">Mediun</option>
+                  <option className="cursor-pointer">Medium</option>
                   <option className="cursor-pointer">High</option>
                 </select>
               </div>{" "}
@@ -72,14 +97,13 @@ const General = ({ data }) => {
                   Request status{" "}
                 </span>{" "}
                 <select
-                  onChange={(event) => setSelectedOption(event.target.value)}
+                  onChange={(event) => {setSelectedOption(event.target.value); handleStatus(item._id, event.target.value)}}
                   class="  w-30 rounded-lg border border-gray-300 bg-gray-50 px-2 py-1 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                 >
-                  <option disabled hidden selected>
+                  <option selected>
                     New
                   </option>
-                  <option className="cursor-pointer">Urgent</option>
-                  <option className="cursor-pointer">Pending</option>
+                  <option className="cursor-pointer">In progress</option>
                   <option className="cursor-pointer">Ignore</option>
                   <option className="cursor-pointer">Done</option>
                 </select>
