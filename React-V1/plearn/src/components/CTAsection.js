@@ -20,10 +20,12 @@ export default React.memo(function CTAsection() {
   const [subject, setSelectedOption] = useState("Topic");
   const [description, setMessage] = useState("");
   const [selectedOptionError, setSelectedOptionerror] = useState("");
+  const [topic, setTopic] = useState("Query");
   const [Data, setData] = useState([
     {
       name: "",
       email: "",
+      topic: "",
       phoneNumber: "",
       subject: "",
       description: "",
@@ -36,12 +38,12 @@ export default React.memo(function CTAsection() {
     const data = {
       name: name,
       email: email,
-      countryCode: '+' + getCountryCallingCode(country),
+      countryCode: "+" + getCountryCallingCode(country),
       phoneNumber: phoneNumber,
+      topic: topic,
       subject: subject,
       description: description,
     };
-
     console.log(data);
 
     // await axios
@@ -176,8 +178,8 @@ export default React.memo(function CTAsection() {
               name="user_Subject"
               id="subject_input"
               className={`${selectedOptionError.length > 0 ? "invalid" : "."} `}
-              value={subject}
-              onChange={(event) => setSelectedOption(event.target.value)}
+              value={topic}
+              onChange={(event) => setTopic(event.target.value)}
             >
               <option disabled hidden selected>
                 Topic
@@ -186,19 +188,17 @@ export default React.memo(function CTAsection() {
               <option>Question</option>
               <option>Proposal</option>
             </select>{" "}
-            {selectedOptionError && (
-              <div className="error">{selectedOptionError}</div>
-            )}
           </div>
           <div className="message">
             <label for="message"></label>
             <textarea
               name="message"
               placeholder="Subject"
+              className={`${selectedOptionError.length > 0 ? "invalid" : "."} `}
               id="message_input"
               cols="10"
-              value={description}
-              onChange={(event) => setMessage(event.target.value)}
+              value={subject}
+              onChange={(event) => setSelectedOption(event.target.value)}
               rows="1"
             ></textarea>
           </div>
