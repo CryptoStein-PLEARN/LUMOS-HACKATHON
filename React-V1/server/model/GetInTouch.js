@@ -5,6 +5,7 @@ const getInTouchSchema = new mongoose.Schema({
     email: {type: String},
     countryCode: {type: String},
     phoneNumber: {type: String},
+    topic: {type: String},
     subject: {type: String},
     description: {type: String},
     datePosted: { type: Date, default: Date.now },

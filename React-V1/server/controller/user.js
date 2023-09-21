@@ -698,13 +698,14 @@ const cancelSale = async (req,res) => {
 }
 
 const postGetInTouchDetails = async (req, res) => {
-    const {name, email, countryCode,phoneNumber, subject, description} = req.body;
+    const {name, email, countryCode, phoneNumber, topic, subject, description} = req.body;
 
     const newRequest = new getInTouchDetails({
         name : name,
         email : email,
         countryCode: countryCode,
         phoneNumber : phoneNumber,
+        topic: topic,
         subject: subject,
         description: description
     })
