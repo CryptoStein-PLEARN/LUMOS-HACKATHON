@@ -21,6 +21,7 @@ export default React.memo(function CTAsection() {
   const [description, setMessage] = useState("");
   const [selectedOptionError, setSelectedOptionerror] = useState("");
   const [topic, setTopic] = useState("Feedback");
+  const [priority, setPriority] = useState("");
   const [Data, setData] = useState([
     {
       name: "",
@@ -35,6 +36,19 @@ export default React.memo(function CTAsection() {
   const form = useRef();
 
   const postGetInTouchDetails = async () => {
+    if(topic === "Question")
+    {
+      setPriority("High");
+    }
+    else if(topic === "Proposal")
+    {
+      setPriority("Medium")
+    }
+    else if(topic === "Feedback")
+    {
+      setPriority("Low")
+    }
+
     const data = {
       name: name,
       email: email,
@@ -43,6 +57,7 @@ export default React.memo(function CTAsection() {
       topic: topic,
       subject: subject,
       description: description,
+      priority: priority
     };
     console.log(data);
 

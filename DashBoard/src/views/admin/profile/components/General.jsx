@@ -74,7 +74,7 @@ const General = ({ data }) => {
                 </p>{" "}
                 <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
                   <span className="font-bold text-navy-700">Topic</span> :{" "}
-                  {item.subject}
+                  {item.topic}
                 </p>{" "}
               </div>
               <div className="absolute right-0 -top-6 flex items-center justify-center gap-3 px-2    ">
@@ -129,7 +129,7 @@ const General = ({ data }) => {
                   Subject
                 </p>
                 <p className=" text-base text-gray-600 dark:text-white">
-                  Lorem ipsum dolor sit, amet consectetur
+                  {item.subject}
                 </p>{" "}
               </div>
             </div>
@@ -139,13 +139,6 @@ const General = ({ data }) => {
               </h3>
               <p className="  px-2 pt-2 pb-8 text-base text-gray-700">
                 {item.description}
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam
-                sapiente ipsum quisquam dicta. Quas atque nisi eum explicabo
-                quia dolores, maiores vero ipsa reprehenderit, quae rerum quam
-                sed eos esse. Lorem ipsum dolor sit, amet consectetur
-                adipisicing elit. Totam sapiente ipsum quisquam dicta. Quas
-                atque nisi eum explicabo quia dolores, maiores vero ipsa
-                reprehenderit, quae rerum quam sed eos esse.
               </p>
             </div>
           </div>
@@ -161,7 +154,7 @@ const General = ({ data }) => {
             <div className="flex flex-col justify-center rounded-2xl bg-white bg-clip-border px-3 py-4 shadow-3xl shadow-shadow-500 dark:!bg-navy-700 dark:shadow-none">
               <p className="text-sm text-gray-600">Phone number</p>
               <p className="text-base font-medium text-navy-700 dark:text-white">
-                {item.phoneNumber}
+                {item.countryCode} {item.phoneNumber}
               </p>
             </div>
           </div>
