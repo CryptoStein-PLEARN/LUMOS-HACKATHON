@@ -37,7 +37,7 @@ const General = ({ data }) => {
       _id: _id,
       status: status
     }
-
+    // axios.post("http://localhost:8080/changeStatus", data)
     axios.post("https://plearn-backend.onrender.com/changeStatus", data)
     .then((response) => {
       console.log(response.data);

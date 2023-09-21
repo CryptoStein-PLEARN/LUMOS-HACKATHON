@@ -737,7 +737,7 @@ const handleStatus = async (req, res) => {
 
         if(request)
         {
-            const updateResult = await getGetInTouchDetails.updateOne(
+            const updateResult = await getInTouchDetails.updateOne(
                 { _id: mongoose.Types.ObjectId(_id) },
                 {
                     $set: 
@@ -767,7 +767,7 @@ const handlePriority = async (req, res) => {
         const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
         if(request)
         {
-            const updateResult = await getGetInTouchDetails.updateOne(
+            const updateResult = await getInTouchDetails.updateOne(
                 { _id: mongoose.Types.ObjectId(_id) },
                 {
                     $set: 
