@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const getInTouchSchema = new mongoose.Schema({
     name: {type: String},
     email: {type: String},
+    countryCode: {type: String},
     phoneNumber: {type: String},
     subject: {type: String},
     description: {type: String},

@@ -36,16 +36,19 @@ export default React.memo(function CTAsection() {
     const data = {
       name: name,
       email: email,
+      countryCode: '+' + getCountryCallingCode(country),
       phoneNumber: phoneNumber,
       subject: subject,
       description: description,
     };
 
-    await axios
-      .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
-      .then((response) => {
-        console.log(response.data);
-      });
+    console.log(data);
+
+    // await axios
+    //   .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   });
   };
 
   const sendEmail = (e) => {
