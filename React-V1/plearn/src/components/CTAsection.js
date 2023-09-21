@@ -20,7 +20,7 @@ export default React.memo(function CTAsection() {
   const [subject, setSelectedOption] = useState("Topic");
   const [description, setMessage] = useState("");
   const [selectedOptionError, setSelectedOptionerror] = useState("");
-  const [topic, setTopic] = useState("Query");
+  const [topic, setTopic] = useState("Feedback");
   const [Data, setData] = useState([
     {
       name: "",
