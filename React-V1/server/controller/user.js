@@ -698,7 +698,7 @@ const cancelSale = async (req,res) => {
 }
 
 const postGetInTouchDetails = async (req, res) => {
-    const {name, email, countryCode, phoneNumber, topic, subject, description} = req.body;
+    const {name, email, countryCode, phoneNumber, topic, subject, description, priority} = req.body;
 
     const newRequest = new getInTouchDetails({
         name : name,
@@ -707,7 +707,8 @@ const postGetInTouchDetails = async (req, res) => {
         phoneNumber : phoneNumber,
         topic: topic,
         subject: subject,
-        description: description
+        description: description,
+        priority: priority
     })
 
     await newRequest.save();
