@@ -59,13 +59,12 @@ export default React.memo(function CTAsection() {
       description: description,
       priority: priority
     };
-    console.log(data);
 
-    // await axios
-    //   .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   });
+    await axios
+      .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
+      .then((response) => {
+        console.log(response.data);
+      });
   };
 
   const sendEmail = (e) => {
