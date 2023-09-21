@@ -118,13 +118,13 @@ const DevelopmentTable = (props) => {
                       } else if (cell.column.Header === "Status") {
                         data = (
                           <div className="flex w-full items-center font-bold text-green-400">
-                            Done
+                            {cell.value}
                           </div>
                         );
                       } else if (cell.column.Header === "Priority") {
                         data = (
                           <div className="flex w-full items-center font-bold text-red-400">
-                            High
+                            {cell.value}
                           </div>
                         );
                       }
