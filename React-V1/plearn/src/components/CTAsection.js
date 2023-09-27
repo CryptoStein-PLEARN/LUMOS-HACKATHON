@@ -17,10 +17,10 @@ export default React.memo(function CTAsection() {
   const [phoneNumberError, setphoneNumberError] = useState("");
   const [country, setCountry] = useState();
   const [emptyError, setEmptyerror] = useState("");
-  const [subject, setSelectedOption] = useState("Topic");
+  const [subject, setSelectedOption] = useState("");
   const [description, setMessage] = useState("");
   const [selectedOptionError, setSelectedOptionerror] = useState("");
-  const [topic, setTopic] = useState("Feedback");
+  const [topic, setTopic] = useState("Topic");
   const [priority, setPriority] = useState("");
   const [Data, setData] = useState([
     {
@@ -36,17 +36,12 @@ export default React.memo(function CTAsection() {
   const form = useRef();
 
   const postGetInTouchDetails = async () => {
-    if(topic === "Question")
-    {
+    if (topic === "Question") {
       setPriority("High");
-    }
-    else if(topic === "Proposal")
-    {
-      setPriority("Medium")
-    }
-    else if(topic === "Feedback")
-    {
-      setPriority("Low")
+    } else if (topic === "Proposal") {
+      setPriority("Medium");
+    } else if (topic === "Feedback") {
+      setPriority("Low");
     }
 
     const data = {
@@ -57,7 +52,7 @@ export default React.memo(function CTAsection() {
       topic: topic,
       subject: subject,
       description: description,
-      priority: priority
+      priority: priority,
     };
 
     await axios
@@ -198,9 +193,16 @@ export default React.memo(function CTAsection() {
               <option disabled hidden selected>
                 Topic
               </option>
-              <option className="bgBlack"> Feedback</option>
-              <option>Question</option>
-              <option>Proposal</option>
+              <option className="bgBlack"> General Inquiries</option>
+              <option>Billing and Payments</option>
+              <option>Feedback and Suggestions</option>
+              <option>Partnerships and Collaborations</option>
+              <option>Employment Opportunities</option>
+              <option>Website Issues</option>
+              <option>Game Issues </option>
+              <option>Privacy Concerns</option>
+              <option>Data Security </option>
+              <option>Language Options</option>
             </select>{" "}
           </div>
           <div className="message">

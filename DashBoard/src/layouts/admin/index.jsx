@@ -4,25 +4,18 @@ import Navbar from "components/navbar";
 import Sidebar from "components/sidebar";
 import Footer from "components/footer/Footer";
 import routes from "routes.js";
+import { getGetInTouchDetails } from "Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
-import axios from "axios";
-import { setData } from "Store/Slice/userSlice";
 export default function Admin(props) {
   const { ...rest } = props;
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
   const [currentRoute, setCurrentRoute] = React.useState("Main Dashboard");
   const dispatch = useDispatch();
-  const getGetInTouchDetails = async () => {
-    const res = await axios.get(
-      "https://plearn-backend.onrender.com/getGetInTouchDetails"
-    );
-    console.log(res.data);
-    dispatch(setData(res.data));
-  };
+
   useEffect(() => {
-    getGetInTouchDetails();
-  }, []);
+    dispatch(getGetInTouchDetails());
+  }, [dispatch]);
   React.useEffect(() => {
     window.addEventListener("resize", () =>
       window.innerWidth < 1200 ? setOpen(false) : setOpen(true)

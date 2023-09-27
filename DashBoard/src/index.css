@@ -36,6 +36,11 @@ option {
 	cursor: pointer !important;
 }
 
+.p-1\.5 {
+	padding: 0.305rem !important;
+	cursor: pointer;
+}
+
 .bg-neutral-800 {
 	background-color: rgb(38 38 38 / 0.8);
 }

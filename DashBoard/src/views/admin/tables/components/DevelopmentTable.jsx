@@ -11,9 +11,11 @@ import { useNavigate } from "react-router-dom";
 const DevelopmentTable = (props) => {
   const history = useNavigate();
   const { columnsData, dataSet } = props;
-  const handleClick = (e) => {
-    history(`/admin/User/${e}`);
-  };
+  function getNameIdByName(inputName, arrayOfObjects) {
+    const foundObject = arrayOfObjects.find((obj) => obj.name === inputName);
+    return foundObject ? foundObject._id : null;
+  }
+
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => dataSet || [], [dataSet]);
   const tableInstance = useTable(
@@ -40,7 +42,14 @@ const DevelopmentTable = (props) => {
     const normalDate = date.toISOString().split("T")[0];
     return normalDate;
   };
-
+  const NameId = data?.map((obj) => ({
+    name: obj.name,
+    _id: obj._id,
+  }));
+  const handleClick = (e) => {
+    const url = getNameIdByName(e, NameId);
+    history(`/admin/User/${e}_${url}`);
+  };
   return (
     <Card extra={"w-full h-full p-4"}>
       <div class="relative flex items-center justify-between">
@@ -84,8 +93,6 @@ const DevelopmentTable = (props) => {
                   <tr {...row.getRowProps()} key={index}>
                     {row.cells.map((cell, index) => {
                       let data = "";
-                      // if (cell.value) {
-                      //   console.log(cell);
                       if (cell.column.Header === "NAME") {
                         data = (
                           <p

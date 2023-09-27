@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const Tables = () => {
   const data = useSelector((state) => state.UserSlice.data);
-  console.log(data);
   return (
     <div>
       <div className="mt-5 grid h-full grid-cols-1 gap-5">
