@@ -80,11 +80,11 @@ export default React.memo(function CTAsection() {
   };
   const postGetInTouchDetails = async () => {
     setLoading(true);
-    if (topic === "Question") {
+    if (topic === "Billing and Payments" || topic === "Website Issues" || topic === "Game Issues" || topic === "Privacy Concerns" || topic === "Data Security") {
       setPriority("High");
-    } else if (topic === "Proposal") {
+    } else if (topic === "Feedback and Suggestions" || topic === "Partnerships and Collaborations" || topic === "Employment Opportunities") {
       setPriority("Medium");
-    } else if (topic === "Feedback") {
+    } else if (topic === "General Inquiries" || topic === "Language Options") {
       setPriority("Low");
     }
 
@@ -253,15 +253,15 @@ export default React.memo(function CTAsection() {
               <option disabled hidden selected>
                 Topic
               </option>
-              <option className="bgBlack"> General Inquiries</option>
+              <option className="bgBlack">General Inquiries</option>
               <option>Billing and Payments</option>
               <option>Feedback and Suggestions</option>
               <option>Partnerships and Collaborations</option>
               <option>Employment Opportunities</option>
               <option>Website Issues</option>
-              <option>Game Issues </option>
+              <option>Game Issues</option>
               <option>Privacy Concerns</option>
-              <option>Data Security </option>
+              <option>Data Security</option>
               <option>Language Options</option>
             </select>{" "}
           </div>
