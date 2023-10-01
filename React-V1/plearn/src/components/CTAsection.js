@@ -1,27 +1,25 @@
 import React, { useRef, useState } from "react";
 import Styled from "styled-components";
-import PhoneInput, {
+import {
   getCountries,
   getCountryCallingCode,
 } from "react-phone-number-input/input";
+import toast, { Toaster } from "react-hot-toast";
+
 import flags from "react-phone-number-input/flags";
-import en from "react-phone-number-input/locale/en.json";
+import { AiFillCaretDown } from "react-icons/ai";
 import emailjs from "@emailjs/browser";
 import axios from "axios";
 export default React.memo(function CTAsection() {
   const [name, setName] = useState("");
-  const [nameError, setnameError] = useState("");
   const [email, setmail] = useState("");
-  const [emailError, setemailError] = useState("");
   const [phoneNumber, setPhonenumber] = useState("");
-  const [phoneNumberError, setphoneNumberError] = useState("");
-  const [country, setCountry] = useState();
-  const [emptyError, setEmptyerror] = useState("");
+  const [country, setCountry] = useState("IN");
   const [subject, setSelectedOption] = useState("");
   const [description, setMessage] = useState("");
-  const [selectedOptionError, setSelectedOptionerror] = useState("");
   const [topic, setTopic] = useState("Topic");
   const [priority, setPriority] = useState("");
+  const [isVis, setIsvis] = useState(false);
   const [Data, setData] = useState([
     {
       name: "",
@@ -34,8 +32,54 @@ export default React.memo(function CTAsection() {
   ]);
 
   const form = useRef();
+  const [isLoading, setLoading] = useState(false);
+  const Loader = () => {
+    return (
+      <Load>
+        <div class="loader">
+          <span class="load"></span>
+        </div>
+      </Load>
+    );
+  };
 
+  function checkData(data) {
+    const errors = {};
+    if (!data.name || data.name.trim() === "") {
+      errors.name = "Name is required";
+    }
+    if (!data.subject || data.subject.trim() === "") {
+      errors.name = "Subject is required";
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!data.email || !emailRegex.test(data.email)) {
+      errors.email = "Invalid email address";
+    }
+    const phoneRegex = /^\d{10}$/;
+    if (!data.phoneNumber || !phoneRegex.test(data.phoneNumber)) {
+      errors.phoneNumber =
+        "Invalid phone number \n Phone number should be of 10 digits";
+    }
+
+    if (Object.keys(errors).length === 0) {
+      return true;
+    } else {
+      return { errorType: "validation", errorMessage: errors };
+    }
+  }
+  const clearAll = () => {
+    setName("");
+    setmail("");
+    setPhonenumber("");
+    setCountry("AU");
+    setSelectedOption("");
+    setMessage("");
+    setTopic("Topic");
+    setPriority("");
+    setIsvis(false);
+  };
   const postGetInTouchDetails = async () => {
+    setLoading(true);
     if (topic === "Question") {
       setPriority("High");
     } else if (topic === "Proposal") {
@@ -54,14 +98,31 @@ export default React.memo(function CTAsection() {
       description: description,
       priority: priority,
     };
+    const check = checkData(data);
+    console.log(check);
+    if (check === true) {
+      await axios
+        .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
+        .then((response) => {
+          console.log(response.data);
+          setLoading(false);
+          clearAll();
+        });
+    } else {
+      const errorMs = check.errorMessage;
+      if (errorMs.email) {
+        toast(`Opps! ${errorMs.email}`, { duration: 2000 });
+      }
+      if (errorMs.phoneNumber) {
+        toast(`Opps! ${errorMs.phoneNumber}`, { duration: 2000 });
+      }
+      if (errorMs.name) {
+        toast(`Opps! ${errorMs.name}`, { duration: 2000 });
+      }
 
-    await axios
-      .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
-      .then((response) => {
-        console.log(response.data);
-      });
+      setLoading(false);
+    }
   };
-
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -81,31 +142,45 @@ export default React.memo(function CTAsection() {
     //     }
     //   );
   };
-  const CountrySelect = ({ value, onChange, labels, ...rest }) => (
-    <select
-      {...rest}
-      value={value}
-      onChange={(event) => {
-        onChange(event.target.value || undefined);
+  const CountrySelect = ({ onChange, labels }) => (
+    <ul
+      className="boxx flex me-2"
+      onClick={() => {
+        setIsvis(!isVis);
       }}
     >
-      <option value="">country</option>
-      {getCountries().map((country) => (
-        <option
-          style={{
-            background: `url(${`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}) `,
-          }}
-          key={country}
-          value={country}
-        >
-          {/* <img
-            src={`https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
-            alt=""
-          /> */}
-          +{getCountryCallingCode(country)}
-        </option>
-      ))}
-    </select>
+      <li className="flex gap-2 start">
+        <img
+          style={{ height: "20px", width: "30px" }}
+          src={` https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
+          alt=""
+        />
+        <span className="px-2"> +{getCountryCallingCode(country)}</span>
+      </li>
+      <AiFillCaretDown />
+      <div
+        className="flex-col"
+        style={{ display: `${isVis ? "flex" : "none"}` }}
+      >
+        {getCountries().map((country) => (
+          <li
+            onClick={() => {
+              setCountry(`${country}`);
+              setIsvis(false);
+            }}
+            className="flex gap-2 start hov"
+          >
+            <img
+              className="mx-2"
+              style={{ height: "20px", width: "30px" }}
+              src={` https://purecatamphetamine.github.io/country-flag-icons/3x2/${country}.svg`}
+              alt=""
+            />
+            <span className="px-2"> +{getCountryCallingCode(country)}</span>
+          </li>
+        ))}
+      </div>
+    </ul>
   );
 
   return (
@@ -127,27 +202,19 @@ export default React.memo(function CTAsection() {
                 value={name}
                 name="from_name"
                 placeholder="Name"
-                className={`Firstname ${
-                  nameError.length > 0 || emptyError.length > 0
-                    ? "invalid"
-                    : "."
-                } `}
+                className={`Firstname  
+                     `}
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
                 id="name_input"
               />{" "}
-              {nameError && <div className="error">{nameError}</div>}
             </div>
             <div className="email">
               <input
                 name="user_email"
                 type="email"
-                className={`email ${
-                  emailError.length > 0 || emptyError.length > 0
-                    ? "invalid"
-                    : "."
-                } `}
+                className={`email   `}
                 placeholder="Email"
                 value={email}
                 onChange={(e) => {
@@ -155,7 +222,6 @@ export default React.memo(function CTAsection() {
                 }}
                 id="email_input"
               />{" "}
-              {emailError && <div className="error">{emailError}</div>}
             </div>
           </div>
 
@@ -163,9 +229,7 @@ export default React.memo(function CTAsection() {
             {" "}
             <CountrySelect
               className={`border-b-2 bg-none outline-none  text-xs  `}
-              labels={en}
               value={country}
-              onChange={setCountry}
               name="countrySelect"
             />
             <input
@@ -176,9 +240,6 @@ export default React.memo(function CTAsection() {
                 setPhonenumber(e.target.value);
               }}
             />
-            {phoneNumberError && (
-              <div className="error">{phoneNumberError}</div>
-            )}
           </div>
 
           <div className="subject">
@@ -186,7 +247,6 @@ export default React.memo(function CTAsection() {
               placeholder="Topic"
               name="user_Subject"
               id="subject_input"
-              className={`${selectedOptionError.length > 0 ? "invalid" : "."} `}
               value={topic}
               onChange={(event) => setTopic(event.target.value)}
             >
@@ -210,7 +270,6 @@ export default React.memo(function CTAsection() {
             <textarea
               name="message"
               placeholder="Subject"
-              className={`${selectedOptionError.length > 0 ? "invalid" : "."} `}
               id="message_input"
               cols="10"
               value={subject}
@@ -230,17 +289,36 @@ export default React.memo(function CTAsection() {
               rows="5"
             ></textarea>
           </div>
-          <div type="submit" value="Send" className="btnW">
-            <button onClick={postGetInTouchDetails}>
-              <span class="box">Submit</span>
+          <div
+            type="submit"
+            value="Send"
+            className={`btnW ${isLoading && "border-white"}`}
+          >
+            <button disabled={isLoading} onClick={postGetInTouchDetails}>
+              {isLoading ? <Loader></Loader> : <span class="box">Submit</span>}
             </button>
           </div>
         </form>
       </div>
+      <Toaster
+        toastOptions={{
+          style: {
+            border: "1px solid #713200",
+            padding: "16px",
+            color: "#713200",
+          },
+        }}
+      />
     </Container>
   );
 });
 const Container = Styled.div`
+.border-white{
+  border:2px solid white; 
+  width: 130px;
+  border-radius: 20px;
+  padding: 2px
+}
 display: flex;
 background:black;
 background-repeat:no-repeat;
@@ -262,6 +340,14 @@ padding: 10vw;
  form{
   gap:5vh;
  }
+ ul,li{
+  list-style:none;
+ }
+ .hov:hover{ 
+  transition:all;
+  background: rgba(0,0,0,0.7);
+  color:white;
+ }
  #container{
   gap:10vh;
  }
@@ -271,6 +357,45 @@ padding: 10vw;
   align-items: center;
   gap:2vw; 
  }
+ .start{
+  align-items: center;
+  justify-content: flex-start !important;
+  width:100%; 
+ }
+ .flex-col{
+  border:2px solid white;
+  border-radius:5px;
+  background: #F5F5F5;
+  color:black;
+  display:flex;
+  width:150px;
+  flex-direction:column;
+  position:absolute; 
+  bottom:-10px;
+  max-height:40vh;
+  overflow:auto;
+ } 
+ 
+
+ .flex-col::-webkit-scrollbar-track{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+	background-color: #F5F5F5 !important;
+
+	border-radius: 10px !important;
+}
+
+ .flex-col::-webkit-scrollbar
+{ 
+	width: 6px !important;
+	background-color: #F5F5F5 !important;
+}
+
+ .flex-col::-webkit-scrollbar-thumb
+{
+	border-radius: 10px !important;
+
+	background-color: red;
+}
  input,textarea,select{
   outline: none;
   width: 100%;
@@ -281,14 +406,19 @@ padding: 10vw;
   transition: color .15s ease-out,background .15s ease-out;
   background: hsla(0,0%,100%,0.1);
  }
- .PhoneInputCountry{
+ .PhoneInputCountry,.boxx{
   outline: none; 
   border: none;
   color:white;
   border-radius: 0.5rem;
+  height: 100%;
+  margin: 0px; 
   padding:  1rem ;
   transition: color .15s ease-out,background .15s ease-out;
   background: hsla(0,0%,100%,0.1);
+ }
+ .boxx{
+  cursor:pointer;
  }
  .telephone,.subject,.message{
   width: 100%; 
@@ -374,4 +504,125 @@ padding: 10vw;
  option{
   color:black; 
  }
+`;
+const Load = Styled.div`
+  .loader {
+    width: 50px;
+    height: 30px;
+    position: relative;
+  }
+
+  .loader-text {
+    position: absolute;
+    top: 0;
+    padding: 0;
+    margin: 0;
+    color: #c8b6ff;
+    animation: text_713 3.5s ease both infinite;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .load {
+    background-color: #9a79ff;
+    border-radius: 50px;
+    display: block;
+    height: 16px;
+    width: 16px;
+    bottom: 0;
+    position: absolute;
+    transform: translateX(64px);
+    animation: loading_713 3.5s ease both infinite;
+  }
+
+  .load::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #d1c2ff;
+    border-radius: inherit;
+    animation: loading2_713 3.5s ease both infinite;
+  }
+
+  @keyframes text_713 {
+    0% {
+      letter-spacing: 1px;
+      transform: translateX(0px);
+    }
+
+    40% {
+      letter-spacing: 2px;
+      transform: translateX(26px);
+    }
+
+    80% {
+      letter-spacing: 1px;
+      transform: translateX(32px);
+    }
+
+    90% {
+      letter-spacing: 2px;
+      transform: translateX(0px);
+    }
+
+    100% {
+      letter-spacing: 1px;
+      transform: translateX(0px);
+    }
+  }
+
+  @keyframes loading_713 {
+    0% {
+      width: 16px;
+      transform: translateX(0px);
+    }
+
+    40% {
+      width: 100%;
+      transform: translateX(0px);
+    }
+
+    80% {
+      width: 16px;
+      transform: translateX(64px);
+    }
+
+    90% {
+      width: 100%;
+      transform: translateX(0px);
+    }
+
+    100% {
+      width: 16px;
+      transform: translateX(0px);
+    }
+  }
+
+  @keyframes loading2_713 {
+    0% {
+      transform: translateX(0px);
+      width: 16px;
+    }
+
+    40% {
+      transform: translateX(0%);
+      width: 80%;
+    }
+
+    80% {
+      width: 100%;
+      transform: translateX(0px);
+    }
+
+    90% {
+      width: 80%;
+      transform: translateX(15px);
+    }
+
+    100% {
+      transform: translateX(0px);
+      width: 16px;
+    }
+  }
 `;
