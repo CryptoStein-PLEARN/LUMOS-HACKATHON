@@ -19,7 +19,7 @@ const {getAuctionDetails} = require("../controller/user")
 const {placeBid} = require("../controller/user");
 const {startSale, cancelSale} = require("../controller/user")
 const {postGetInTouchDetails, getGetInTouchDetails} = require("../controller/user")
-const {handleStatus, handlePriority} = require("../controller/user");
+const {handleStatus, handlePriority, deleteRequest} = require("../controller/user");
 
 router.post("/preregistration", preRegisterUser);
 
@@ -79,6 +79,6 @@ router.post('/changeStatus', handleStatus);
 
 router.post('/changePriority', handlePriority);
 
-// router.post('/markAsResolved', markAsResolved)
+router.post('/deleteRequest', deleteRequest);
 
 module.exports = router;

@@ -791,30 +791,34 @@ const handlePriority = async (req, res) => {
     }
 }
 
-// const markAsResolved = async (req, res) => {
-//     const { _id } = req.body;
+const deleteRequest = async (req, res) => {
+    const { _id } = req.body;
   
-//     try {
-//       const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
+    try {
+      const request = await getInTouchDetails.findOne({ _id: mongoose.Types.ObjectId(_id) });
   
-//       if (request) {
-//         const updateResult = await getInTouchDetails.updateOne(
-//           { _id: mongoose.Types.ObjectId(_id) },
-//           {
-//             $set: {
-//               resolved: true
-//             }
-//           }
-//         );
+      if (request) {
+        const updateResult = await getInTouchDetails.updateOne(
+          { _id: mongoose.Types.ObjectId(_id) },
+          {
+            $set: 
+            {
+                subject: "",
+                description: "",
+                topic: ""
+
+            }
+          }
+        );
   
-//         res.status(200).json({ success: true, message: "Query resolved successfully." });
-//       } else {
-//         res.status(404).json({ message: "Query not found. Something is wrong." });
-//       }
-//     } catch (error) {
-//       res.status(500).json({ message: "Internal server error." });
-//     }
-//   };
+        res.status(200).json({ success: true, message: "Query resolved successfully." });
+      } else {
+        res.status(404).json({ message: "Query not found. Something is wrong." });
+      }
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error." });
+    }
+  };
   
 
 const getOwnedNFTs = (req,res) => {
@@ -1100,4 +1104,4 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest};
