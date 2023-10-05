@@ -805,13 +805,14 @@ const deleteRequest = async (req, res) => {
             {
                 subject: "",
                 description: "",
-                topic: ""
-
+                topic: "",
+                status: "",
+                priority: ""
             }
           }
         );
   
-        res.status(200).json({ success: true, message: "Query resolved successfully." });
+        res.status(200).json({ success: true, message: "Query deleted successfully." });
       } else {
         res.status(404).json({ message: "Query not found. Something is wrong." });
       }
