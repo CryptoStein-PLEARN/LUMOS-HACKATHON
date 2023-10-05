@@ -17,10 +17,12 @@ const General = ({ data }) => {
   const [l2, setL2] = useState(true);
   const [l3, setL3] = useState(true);
   const [l4, setL4] = useState(true);
-  const user = location.pathname?.split("/")[3];
-  const idArray = user?.split("_");
+  const user = location.pathname?.split("/")[3]?.replace(/-/g, " ");
+  const single = location.pathname?.split("/")[3];
+  const idArray = single?.split("_");
   const handleClick = (e) => {
-    history(`/admin/User/${e}`);
+    const name = e?.replace(/ /g, "-");
+    history(`/admin/User/${name}`);
   };
   const handleClose = () => {
     const val = isOpen;
@@ -65,12 +67,12 @@ const General = ({ data }) => {
       });
   };
   if (isSingleReq) {
-    const userInput = idArray[0]?.toLowerCase();
+    const userInput = idArray[0]?.toLowerCase()?.replace(/-/g, " ");
     const userData = data?.filter((item) =>
       item.name?.toLowerCase().includes(userInput)
     );
     const CurrentReq = userData.filter((user) => user?._id === idArray[1]);
-    console.log(CurrentReq);
+    console.log(CurrentReq, "current req");
     const components = (
       <>
         <Card extra={"w-full h-full py-5 px-5"}>
@@ -112,7 +114,14 @@ const General = ({ data }) => {
                         </span>
                         <span className="flex cursor-pointer items-center gap-x-3.5 rounded-md py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                           Request topic : {CurrentReq[0]?.topic}
-                        </span>{" "}
+                        </span>
+                        <span className="flex cursor-pointer items-center gap-x-3.5 whitespace-nowrap rounded-md py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                          Email : {CurrentReq[0]?.email}
+                        </span>
+                        <span className="flex cursor-pointer items-center gap-x-3.5 rounded-md py-2 px-3 text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
+                          Phone : {CurrentReq[0]?.countryCode}{" "}
+                          {CurrentReq[0]?.phoneNumber}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -397,11 +406,16 @@ const General = ({ data }) => {
     const components = userData?.map((item) => (
       <Card
         key={item._id}
-        extra={"w-full h-full py-5 px-5"}
+        extra={"w-full cursor-pointer  group h-full py-5 px-5"}
         onClick={() => {
-          history(`/admin/User/${item?.name}_${item?._id}`);
+          const name = item?.name?.replace(/ /g, "-");
+          history(`/admin/User/${name}_${item?._id}`);
         }}
       >
+        <div class=" bg-slate-700 absolute inset-0 z-20 flex h-full w-full items-center justify-center rounded-[20px] bg-none text-2xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100">
+          Reply to <span className="mx-2 capitalize">{item?.name}</span>
+        </div>
+        <div class="absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-[20px] opacity-0 duration-300 group-hover:opacity-100"></div>
         <div className="mt-2 w-full ">
           <div className="relative flex items-start justify-between   py-2 px-2 pt-4  ">
             <div className="absolute -top-0 left-0 mt-3 flex w-full items-center justify-between px-2 ">
@@ -436,14 +450,6 @@ const General = ({ data }) => {
               </div>
             </div>
           </div>
-          <div className="mb-4 flex flex-col items-start  justify-center rounded-2xl border-2    bg-white bg-clip-border px-3 py-4 shadow-md  shadow-teal-200   dark:!bg-navy-700 ">
-            <h3 className=" w-full border-b-2 px-2 pt-4 pb-2 text-2xl">
-              Message
-            </h3>
-            <p className="  px-2 pt-2 pb-8 text-base text-gray-700">
-              {item.description}
-            </p>
-          </div>
         </div>
       </Card>
     ));
@@ -473,7 +479,7 @@ const General = ({ data }) => {
     if (data !== undefined) {
       const uniqueNamesMap = new Map();
       const filteredData = data?.filter((item) => {
-        const name = item.name?.toLowerCase(); // Normalize to lowercase for case-insensitive comparison
+        const name = item.name?.toLowerCase();
         if (!uniqueNamesMap.has(name)) {
           uniqueNamesMap.set(name, true);
           return true;
@@ -491,17 +497,11 @@ const General = ({ data }) => {
             "shadow mt-6  hover:-translate-y-2 transition-all delay-150 hover:cursor-pointer  w-full h-full p-3"
           }
         >
+          {console.log("name", item.name)}
           <div className=" mt-2 w-full ">
             <h4 className="px-2 text-xl font-bold  text-navy-700   dark:text-white">
               User - {item.name}
             </h4>
-            <div className="mt-4 flex flex-col items-start justify-center rounded-2xl border-t-2   border-teal-200 bg-white   bg-clip-border px-3 py-4 shadow-md   shadow-shadow-500  dark:!bg-navy-700 dark:shadow-none">
-              <p className="text-sm text-gray-600">Request heading</p>
-              <p className="text-base font-medium text-navy-700 dark:text-white">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Corrupti impedit optio in
-              </p>
-            </div>
           </div>
         </Card>
       ));

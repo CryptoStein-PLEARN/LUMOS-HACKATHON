@@ -1,10 +1,41 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
+import emailjs from "@emailjs/browser";
 function Modal({ isOpen, handleClose, user }) {
   const [reply, setReply] = useState();
-
+  const form = useRef();
+  const sendEmail = (e) => {
+    e.preventDefault();
+    emailjs
+      .sendForm(
+        "service_bjmhs3a",
+        "template_9emachb",
+        form.current,
+        "UoV0VvRc7Blz8fzTE"
+      )
+      .then(
+        (result) => {
+          console.log("res", result);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
   return (
-    <>
+    <form className="form" autoComplete="off" ref={form} onSubmit={sendEmail}>
+      <textarea className="hidden" name="to_name">
+        {user?.name}
+      </textarea>
+      <textarea className="hidden" name="reply_to">
+        {user?.email}
+      </textarea>
+      <textarea className="hidden" name="from_name">
+        Cryptostien
+      </textarea>
+      <textarea className="hidden" name="subject">
+        {user?.subject}
+      </textarea>
       <div
         className={`
     text-black bg-neutral-800  
@@ -74,13 +105,13 @@ function Modal({ isOpen, handleClose, user }) {
           "
               >
                 <div className="text-lg font-semibold  text-white">
-                  Reply to <span className="capitalize"> {user.name}</span>
+                  Reply to <span className="capitalize"> {user?.name}</span>
                 </div>
                 <div className="text-lg font-semibold text-white">
                   Request-ID:{" "}
                   <span className="underline  underline-offset-4 ">
                     {" "}
-                    {user._id.slice(0, 6)}
+                    {user?._id.slice(0, 6)}
                   </span>
                 </div>
                 <button
@@ -100,6 +131,7 @@ function Modal({ isOpen, handleClose, user }) {
                 onChange={(e) => {
                   setReply(e.target.value);
                 }}
+                name="message"
                 className="bg-transparent h-64  w-full cursor-auto resize-none  border-none bg-gray-800    p-4  text-lg font-medium text-gray-400   outline-none focus-visible:text-white focus-visible:outline-none"
                 placeholder="Reply"
               ></textarea>
@@ -122,9 +154,12 @@ function Modal({ isOpen, handleClose, user }) {
                         ></path>
                       </svg>
                     </div>
-                    <span class="group-hover:text-transparent ml-1 text-white transition-all duration-300">
+                    <button
+                      type="submit"
+                      class="group-hover:text-transparent ml-1 text-white transition-all duration-300"
+                    >
                       Reply
-                    </span>
+                    </button>
                   </button>
                 </div>
               </div>
@@ -132,7 +167,7 @@ function Modal({ isOpen, handleClose, user }) {
           </div>
         </div>
       </div>
-    </>
+    </form>
   );
 }
 

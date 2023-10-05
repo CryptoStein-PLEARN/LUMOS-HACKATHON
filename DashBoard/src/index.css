@@ -13,6 +13,10 @@
 	}
 }
 
+.bg-slate-700 {
+	background-color: rgba(20, 21, 22, 0.449);
+}
+
 input.defaultCheckbox::before {
 	content: url(../src/assets/svg/checked.svg);
 	color: white;
