@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import General from "./components/General";
+import Modal from "./components/Modal";
 const ProfileOverview = () => {
   // Call for api
   const data = useSelector((state) => state.UserSlice.data);

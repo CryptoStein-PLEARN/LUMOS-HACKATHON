@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "./Modal";
+import DeleteComp from "./DeleteComp";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { IoInformation } from "react-icons/io5";
@@ -10,8 +11,11 @@ import { MdCallToAction } from "react-icons/md";
 import { PiArrowFatLineUpDuotone } from "react-icons/pi";
 import { getGetInTouchDetails } from "Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
+import useEventModal from "../useEventModal";
+// deleteRequest
 const General = ({ data }) => {
   const location = useLocation();
+  const { isOpen, toggle } = useEventModal();
   const history = useNavigate();
   const [l1, setL1] = useState(true);
   const [l2, setL2] = useState(true);
@@ -25,15 +29,19 @@ const General = ({ data }) => {
     history(`/admin/User/${name}`);
   };
   const handleClose = () => {
-    const val = isOpen;
+    const val = isMOpen;
     setOpen(!val);
   };
   const [modalData, SetModal] = useState();
-  const [isOpen, setOpen] = useState(false);
+  const [isMOpen, setOpen] = useState(false);
   const userInput = user?.toLowerCase();
   const userData = data?.filter((item) =>
     item.name?.toLowerCase().includes(userInput)
   );
+  const [loading, setLoading] = useState(false);
+  const handleDel = () => {
+    toggle();
+  };
   const dispatch = useDispatch();
   const handleStatus = (_id, status) => {
     const data = {
@@ -48,6 +56,23 @@ const General = ({ data }) => {
           duration: 1500,
         });
         console.log(response.data);
+      });
+  };
+  const handleDeltedReq = (_id) => {
+    setLoading(true);
+    const data = {
+      _id: _id,
+    };
+    axios
+      .post("https://plearn-backend.onrender.com/deleteRequest", data)
+      .then((response) => {
+        dispatch(getGetInTouchDetails());
+        toast.success(`Deleted sucessfully`, {
+          duration: 1500,
+        });
+        console.log(response.data);
+        handleDel();
+        setLoading(false);
       });
   };
   const isSingleReq = idArray?.length > 1;
@@ -73,7 +98,7 @@ const General = ({ data }) => {
     );
     const CurrentReq = userData.filter((user) => user?._id === idArray[1]);
     console.log(CurrentReq, "current req");
-    const components = (
+    const components = CurrentReq[0]?.description && CurrentReq[0]?.subject && (
       <>
         <Card extra={"w-full h-full py-5 px-5"}>
           <div className="mt-2 w-full ">
@@ -293,7 +318,7 @@ const General = ({ data }) => {
           <div className="mt-3 flex justify-end gap-4">
             <button
               onClick={() => {
-                if (!isOpen) {
+                if (!isMOpen) {
                   SetModal(CurrentReq[0]);
                   setOpen(true);
                 } else {
@@ -322,7 +347,12 @@ const General = ({ data }) => {
                 Reply
               </span>
             </button>
-            <button className="group relative flex cursor-pointer items-center justify-center gap-4 overflow-hidden rounded bg-red-600 px-4 py-2 text-white shadow shadow-red-300 focus:outline-none active:shadow-green-200">
+            <button
+              onClick={() => {
+                handleDel(CurrentReq[0]);
+              }}
+              className="group relative flex cursor-pointer items-center justify-center gap-4 overflow-hidden rounded bg-red-600 px-4 py-2 text-white shadow shadow-red-300 focus:outline-none active:shadow-green-200"
+            >
               <span className="transition-transform duration-200 group-hover:-translate-x-40">
                 Delete
               </span>
@@ -396,63 +426,85 @@ const General = ({ data }) => {
           </button>
         </BtnBack>
         <div className="grid grid-cols-2 gap-6">{components} </div>
+        {isMOpen && (
+          <Modal handleClose={handleClose} user={modalData} isMOpen={isMOpen} />
+        )}
         {isOpen && (
-          <Modal handleClose={handleClose} user={modalData} isOpen={isOpen} />
+          <DeleteComp
+            handleSubmit={() => {
+              handleDeltedReq(CurrentReq[0]._id);
+            }}
+            isDisabled={loading}
+            title={"Delte Request"}
+            actionLabel={`${loading ? "Deleting..." : "Confirm"}`}
+            subtitle={`of user ${
+              CurrentReq[0].name
+            } of Request -ID ${CurrentReq[0]._id.slice(0, 4)}`}
+          />
         )}
       </div>
     );
   }
   if (user) {
-    const components = userData?.map((item) => (
-      <Card
-        key={item._id}
-        extra={"w-full cursor-pointer  group h-full py-5 px-5"}
-        onClick={() => {
-          const name = item?.name?.replace(/ /g, "-");
-          history(`/admin/User/${name}_${item?._id}`);
-        }}
-      >
-        <div class=" bg-slate-700 absolute inset-0 z-20 flex h-full w-full items-center justify-center rounded-[20px] bg-none text-2xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100">
-          Reply to <span className="mx-2 capitalize">{item?.name}</span>
-        </div>
-        <div class="absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-[20px] opacity-0 duration-300 group-hover:opacity-100"></div>
-        <div className="mt-2 w-full ">
-          <div className="relative flex items-start justify-between   py-2 px-2 pt-4  ">
-            <div className="absolute -top-0 left-0 mt-3 flex w-full items-center justify-between px-2 ">
-              <h4 className="text-xl font-bold capitalize text-navy-700 dark:text-white">
-                User :{" "}
-                <span className="font-bold text-gray-700">{item?.name}</span>
-              </h4>
-              <p className="text-sm text-gray-700">
-                Date :
-                <span className="text-navy-800 underline underline-offset-2">
-                  {" "}
-                  {item?.datePosted.slice(0, 10)}
-                </span>{" "}
-              </p>
+    const components = userData?.map(
+      (item) =>
+        item?.description &&
+        item?.subject && (
+          <Card
+            key={item._id}
+            extra={"w-full cursor-pointer  group h-full py-5 px-5"}
+            onClick={() => {
+              const name = item?.name?.replace(/ /g, "-");
+              history(`/admin/User/${name}_${item?._id}`);
+            }}
+          >
+            <div class=" bg-slate-700 absolute inset-0 z-20 flex h-full w-full items-center justify-center rounded-[20px] bg-none text-2xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100">
+              Reply to <span className="mx-2 capitalize">{item?.name}</span>
             </div>
-          </div>
-          <div className="mb-4 flex-col  items-start justify-center   rounded-2xl  bg-white py-4  dark:!bg-navy-700  ">
-            <div className="flex flex-col rounded-md    p-2">
-              <div className="flex">
-                <div className="flex w-full items-center justify-between">
-                  <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
-                    <span className="font-bold text-navy-700"> Subject</span> :{" "}
-                    {item?.subject}
-                  </p>
-                </div>
-                <div className="flex w-full items-center justify-between">
-                  <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
-                    <span className="font-bold text-navy-700">Topic</span> :{" "}
-                    {item.topic}
+            <div class="absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-[20px] opacity-0 duration-300 group-hover:opacity-100"></div>
+            <div className="mt-2 w-full ">
+              <div className="relative flex items-start justify-between   py-2 px-2 pt-4  ">
+                <div className="absolute -top-0 left-0 mt-3 flex w-full items-center justify-between px-2 ">
+                  <h4 className="text-xl font-bold capitalize text-navy-700 dark:text-white">
+                    User :{" "}
+                    <span className="font-bold text-gray-700">
+                      {item?.name}
+                    </span>
+                  </h4>
+                  <p className="text-sm text-gray-700">
+                    Date :
+                    <span className="text-navy-800 underline underline-offset-2">
+                      {" "}
+                      {item?.datePosted.slice(0, 10)}
+                    </span>{" "}
                   </p>
                 </div>
               </div>
+              <div className="mb-4 flex-col  items-start justify-center   rounded-2xl  bg-white py-4  dark:!bg-navy-700  ">
+                <div className="flex flex-col rounded-md    p-2">
+                  <div className="flex">
+                    <div className="flex w-full items-center justify-between">
+                      <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
+                        <span className="font-bold text-navy-700">
+                          {" "}
+                          Subject
+                        </span>{" "}
+                        : {item?.subject}
+                      </p>
+                    </div>
+                    <div className="flex w-full items-center justify-between">
+                      <p className="mt-3 text-base font-medium text-gray-700 dark:text-white">
+                        <span className="font-bold text-navy-700">Topic</span> :{" "}
+                        {item.topic}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </Card>
-    ));
+          </Card>
+        )
+    );
     return (
       <div>
         <BtnBack>
