@@ -8,6 +8,7 @@ import {
   useTable,
 } from "react-table";
 import { useNavigate } from "react-router-dom";
+import { FcNext, FcPrevious } from "react-icons/fc";
 const DevelopmentTable = (props) => {
   const history = useNavigate();
   const { columnsData, dataSet } = props;
@@ -22,6 +23,7 @@ const DevelopmentTable = (props) => {
     {
       columns,
       data,
+      initialState: { pageIndex: 0, pageSize: 11 },
     },
     useGlobalFilter,
     useSortBy,
@@ -33,10 +35,18 @@ const DevelopmentTable = (props) => {
     getTableBodyProps,
     headerGroups,
     page,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    state: { pageIndex, pageSize },
+    canNextPage,
+    canPreviousPage,
     prepareRow,
     initialState,
   } = tableInstance;
-  initialState.pageSize = 11;
+
   const handleDate = (dateString) => {
     const date = new Date(dateString);
     const normalDate = date.toISOString().split("T")[0];
@@ -66,7 +76,6 @@ const DevelopmentTable = (props) => {
             className="mt-8 h-max w-full"
             variant="simple"
             color="gray-500"
-            mb="24px"
           >
             <thead>
               {headerGroups.map((headerGroup, index) => (
@@ -154,6 +163,28 @@ const DevelopmentTable = (props) => {
         ) : (
           <span className="mt-8">Data is loading... please wait</span>
         )}
+        <div className="flex w-full items-center justify-start gap-4 border-t-2">
+          <button
+            className="cursor-pointer rounded-full p-2 hover:bg-blue-100"
+            onClick={() => previousPage()}
+            disabled={!canPreviousPage}
+          >
+            <FcPrevious />
+          </button>{" "}
+          <button
+            className="cursor-pointer rounded-full p-2 hover:bg-blue-100"
+            onClick={() => nextPage()}
+            disabled={!canNextPage}
+          >
+            <FcNext />
+          </button>{" "}
+          <span>
+            Page{" "}
+            <strong>
+              {pageIndex + 1} of {pageOptions.length}
+            </strong>{" "}
+          </span>
+        </div>
       </div>
     </Card>
   );

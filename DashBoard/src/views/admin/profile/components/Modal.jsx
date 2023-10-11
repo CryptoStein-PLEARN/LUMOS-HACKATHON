@@ -1,9 +1,22 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import emailjs from "@emailjs/browser";
-function Modal({ isOpen, handleClose, user }) {
+function Modal({ isMOpen, handleClose, user }) {
   const [reply, setReply] = useState();
   const form = useRef();
+  const [showModal, setShow] = useState();
+  useEffect(() => {
+    setShow(isMOpen);
+  }, [isMOpen]);
+  const handleCut = () => {
+    setShow(false);
+    setTimeout(() => {
+      handleClose();
+    }, 300);
+  };
+  if (!isMOpen) {
+    return null;
+  }
   const sendEmail = (e) => {
     e.preventDefault();
     emailjs
@@ -38,13 +51,14 @@ function Modal({ isOpen, handleClose, user }) {
       </textarea>
       <div
         className={`
-    text-black bg-neutral-800  
-    fixed 
-    inset-0
-    z-50 
+         text-black
+    bg-neutral-800 fixed  
+    inset-0 
+    z-50
     flex 
     items-center 
     justify-center 
+    overflow-hidden 
     overflow-y-auto
     overflow-x-hidden 
     outline-none
@@ -70,8 +84,8 @@ function Modal({ isOpen, handleClose, user }) {
       translate
       h-full
       duration-300
-      ${isOpen ? "translate-y-0" : "translate-y-full"}
-      ${isOpen ? "opacity-100" : "opacity-0"}
+      ${showModal ? "translate-y-0" : "translate-y-full"}
+      ${showModal ? "opacity-100" : "opacity-0"}
     `}
           >
             <div
@@ -121,7 +135,7 @@ function Modal({ isOpen, handleClose, user }) {
               transition
               hover:opacity-70 
             "
-                  onClick={handleClose}
+                  onClick={handleCut}
                 >
                   <IoMdClose fill="red" size={25} />
                 </button>

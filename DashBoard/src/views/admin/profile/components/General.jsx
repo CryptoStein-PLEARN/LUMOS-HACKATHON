@@ -524,7 +524,13 @@ const General = ({ data }) => {
             <span>Back</span>
           </button>
         </BtnBack>
-        <div className="grid grid-cols-2 gap-6">{components} </div>
+        <div className="grid grid-cols-2 gap-6">
+          {components ? (
+            components
+          ) : (
+            <>Opps ! Looks like this user has no more Requests</>
+          )}{" "}
+        </div>
       </div>
     );
   } else {
