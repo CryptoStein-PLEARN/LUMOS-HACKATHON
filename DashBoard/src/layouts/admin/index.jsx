@@ -1,12 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import Navbar from "components/navbar";
 import Sidebar from "components/sidebar";
 import Footer from "components/footer/Footer";
 import routes from "routes.js";
 import { getGetInTouchDetails } from "Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
+import { onAuthStateChanged } from "firebase/auth";
+import { firbaseauth } from "utils/firebase";
 export default function Admin(props) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    onAuthStateChanged(firbaseauth, (user) => {
+      if (!user) {
+        navigate("/auth");
+      }
+    });
+  }, []);
+
   const { ...rest } = props;
   const location = useLocation();
   const [open, setOpen] = React.useState(true);

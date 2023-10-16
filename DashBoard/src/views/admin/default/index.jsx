@@ -14,8 +14,13 @@ import ComplexTable from "views/admin/default/components/ComplexTable";
 import DailyTraffic from "views/admin/default/components/DailyTraffic";
 import tableDataCheck from "./variables/tableDataCheck.json";
 import tableDataComplex from "./variables/tableDataComplex.json";
+import { onAuthStateChanged } from "firebase/auth";
+import { firbaseauth } from "utils/firebase";
 
 const Dashboard = () => {
+  onAuthStateChanged(firbaseauth, (currentUser) => {
+    if (currentUser) console.log(currentUser);
+  });
   return (
     <div>
       {/* Card widget */}
