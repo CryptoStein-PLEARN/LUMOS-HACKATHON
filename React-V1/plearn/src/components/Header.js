@@ -57,44 +57,9 @@ export default function Header() {
                 <span id="leftArrow" className="arrow"></span>
               </button>
             </div>
-
-            {/* <div className="hero__intro-stats">
-                <div className="hero__intro-stats-item animated-box mss">
-                  <div className="hero__intro-stats-spacer"></div>
-                  <div>
-                    <div className="hero__intro-stats-number">
-                      <span className="text-span">$</span>
-                      234{" "}
-                    </div>
-                    <div className="hero__intro-stats-text">
-                      Trading volume{" "}
-                    </div>
-                  </div>
-                </div>
-                <div className="hero__intro-stats-item animated-box mss">
-                  <div className="hero__intro-stats-spacer"></div>
-                  <div>
-                    <div className="hero__intro-stats-number">63k </div>
-                    <div className="hero__intro-stats-text">
-                      Virtual Properties{" "}
-                    </div>
-                  </div>
-                </div>
-                <div className="hero__intro-stats-item animated-box mss">
-                  <div className="hero__intro-stats-spacer"></div>
-                  <div>
-                    <div className="hero__intro-stats-number">1.2m </div>
-                    <div className="hero__intro-stats-text">
-                      Active Players{" "}
-                    </div>
-                  </div>
-                </div>
-              </div> */}
           </div>
-          <div className="hero__nft-placeholder">
-            <div className="hero__nft-placeholder-img">
-              <Lottie animationData={Kitty} />
-            </div>
+          <div className="hero__nft-placeholder-img">
+            <Lottie className="mb-24" animationData={Kitty} />
           </div>
         </div>
       </div>

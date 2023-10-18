@@ -146,10 +146,9 @@ body {
 .hero__blocks {
   display: flex;
   margin-top: 20px;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   height: 100%;
-
 }
 
 .hero__intro {
@@ -181,11 +180,13 @@ body {
 
 
 .hero__nft-placeholder-img {
-  position: absolute;
-  width: 634px;
-  height: 634px;
-  right: -120px;
-  bottom: -10px;
+  width: 45%;
+
+}
+
+.mb-24 {
+
+  margin-bottom: 25px;
 }
 
 .hero__nft-placeholder-img svg {
@@ -399,27 +400,7 @@ h1 {
 }
 
 
-@media only screen and (max-width: 1280px) {
-  .hero__nft-placeholder-img {
-    width: 415px;
-    height: 634px;
-    left: 15px !important;
-    bottom: -10px;
-  }
-}
 
-@media only screen and (max-width: 1279px) {
-  .hero__nft-placeholder-img {
-    width: 523px;
-    height: 634px;
-    bottom: -107px;
-    left: 615px !important;
-  }
-
-  .ims {
-    border-bottom: none !important;
-  }
-}
 
 @media only screen and (max-width: 1000px) {
   .hero__nft-placeholder-img {
