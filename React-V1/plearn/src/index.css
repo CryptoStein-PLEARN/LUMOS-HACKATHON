@@ -42,8 +42,6 @@ body {
   box-sizing: content-box;
 }
 
-.hero:before {}
-
 .hero2::before {
   position: absolute;
   z-index: 0;
@@ -165,6 +163,15 @@ body {
   justify-content: space-evenly;
 }
 
+.hero_title {
+
+
+  margin-right: 5%;
+  display: flex;
+  flex-direction: column;
+  max-width: 40%;
+  justify-content: space-evenly;
+}
 
 
 @media only screen and (max-width: 1380px) {
@@ -184,8 +191,13 @@ body {
 
 }
 
-.mb-24 {
+.container-flex {
+  display: flex;
+  padding: 5%;
+  justify-content: space-between;
+}
 
+.mb-24 {
   margin-bottom: 25px;
 }
 
@@ -324,7 +336,6 @@ h1 {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  margin-top: 100px;
   grid-column-gap: 56px;
   grid-row-gap: 56px;
 }
@@ -405,6 +416,20 @@ h1 {
 @media only screen and (max-width: 1000px) {
   .hero__nft-placeholder-img {
     display: none;
+  }
+
+  .hero__blocks svg {
+    display: none;
+  }
+
+  .hero_title {
+    max-width: 70%;
+  }
+
+  .container-flex {
+    display: flex;
+    padding: 5%;
+    justify-content: flex-start;
   }
 }
 
@@ -685,7 +710,7 @@ p {
 }
 
 .pt {
-  padding-top: 75px;
+  padding-top: 155px;
   padding-bottom: 78px;
 }
 
@@ -766,6 +791,13 @@ p {
   grid-column-gap: 13px;
   grid-row-gap: 13px;
   justify-content: space-around;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
 
 }
 
@@ -1653,6 +1685,7 @@ transform: perspective (600px) translate3d(0px, 2.4988px, 0px);
 .vidbg {
   background: url('https://shop.astro.build/noise.webp') top center/150px repeat, #17191e;
   background-blend-mode: overlay, normal;
+  overflow-x: hidden;
 }
 
 .vidbg:before {
@@ -1662,9 +1695,6 @@ transform: perspective (600px) translate3d(0px, 2.4988px, 0px);
   -webkit-mask-image: radial-gradient(100% 60% at center, rgba(0, 0, 0, .6), transparent 83%);
 }
 
-/*bg*/
-/*txt*/
-/*success*/
 .bstn {
   display: flex;
   justify-content: space-around;

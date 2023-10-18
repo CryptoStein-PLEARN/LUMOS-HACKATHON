@@ -36,7 +36,7 @@ export default function ShowCase() {
 
   return (
     <div>
-      <section className="section-item   pb-20">
+      <section className="section-item  pb-20">
         <div className="container">
           <div className="section__head mts">
             <h2 className="section__header-title">
