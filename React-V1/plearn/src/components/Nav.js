@@ -37,7 +37,6 @@ export default function Nav() {
     { name: "Home" },
     { name: "About" },
     { name: "MarketPlace" },
-
     { name: "Tokenomics" },
     { name: "Get in Touch" },
 
@@ -81,11 +80,6 @@ export default function Nav() {
         // .post("http://localhost:8080/", {userAccount})
         .then((res) => {
           setConnButtonText("Wallet Connected");
-          localStorage.setItem("1", userAccount);
-          const resp = res.data.message;
-          // setPlayerLevel(res.data.level)
-          // setGameCoins(res.data.gameCoins)
-          alert(localStorage.length !== 0 ? "You're Logged in!" : resp);
           setIsLoading(false);
         })
         .catch((error) => {
@@ -97,13 +91,10 @@ export default function Nav() {
       setConnButtonText("Connect Wallet");
     }
   }, [userAccount]);
-
   const chainChangedHandler = () => {
-    // reload the page to avoid any errors with chain change mid use of application
     window.location.reload();
   };
 
-  // listen for account changes
   if (typeof window.ethereum !== "undefined") {
     window.ethereum.on("accountsChanged", accountChangedHandler);
     window.ethereum.on("chainChanged", chainChangedHandler);
