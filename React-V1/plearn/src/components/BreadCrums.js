@@ -82,11 +82,7 @@ export default React.memo(function BreadCrums() {
   );
 });
 export const MyComponent = React.memo(() => {
-  return (
-    <>
-      <Plyr source={videoSrc} frameborder="0" options={options} />
-    </>
-  );
+  return <Plyr source={videoSrc} frameborder="0" options={options} />;
 });
 const Container = styled.div`
   .txtcls {
@@ -97,6 +93,7 @@ const Container = styled.div`
     strong {
       text-decoration: underline;
       cursor: pointer;
+      color: white;
       font-size: 46px !important;
     }
   }

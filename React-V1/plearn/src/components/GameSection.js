@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import a1 from "../assets/NFTs3/nfts (4).avif";
-import a2 from "../assets/NFTs3/nfts (2).avif";
-import a3 from "../assets/NFTs3/nfts (1).avif";
-import a4 from "../assets/Images/NFTS/nsf (4).jpg";
-import a5 from "../assets/NFTs3/nfts (3).avif";
-import a7 from "../assets/NFTs V04/boots.jpeg";
-import a9 from "../assets/NFTs V04/Crown.avif";
+import Kitty from "../assets/Gamer.json";
+
+import Lottie from "lottie-react";
 export default function GameSection() {
-  const text =
-    "This brightly colored dice is a perfect choice, with its vibrant design and smooth edges, it will bring an added level of fun and excitement for you";
   return (
     <div className="pt">
       <section className="hero wf-section ">
@@ -17,7 +11,9 @@ export default function GameSection() {
             <div className="hero__nft-placeholder">
               <div className="hero__nft-placeholder-img lft">
                 <div className="section__content">
-                  <div className="nft-showcase">
+                  <Lottie animationData={Kitty} />
+
+                  {/* <div className="nft-showcase">
                     <div className="nft-showcase__col nft-showcase__col--sm nft-showcase__col--sm-first">
                       <div
                         className="nft-showcase__item nft-showcase__item--338 animated-box"
@@ -128,7 +124,7 @@ export default function GameSection() {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

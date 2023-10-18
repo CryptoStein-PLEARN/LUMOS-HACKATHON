@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import Lottie from "lottie-react";
-import animationData from "../../assets/animation_lkwl10co.json";
+import animationData from "../../assets/market.json";
 export default React.memo(function Header() {
   return (
-    <Container className="p-5 ">
+    <Container className="p-5 vh-100">
       <div className="w-full  rounded-md bg-center bg-cover flex flex-col justify-center px-4">
         <h1 className="mb-4 display-5">
           Welcome to <br /> Plearns' Marketplace - <br /> ready to help you find

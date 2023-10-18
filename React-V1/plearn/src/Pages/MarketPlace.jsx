@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CardLoader from "../components/MarketPlace/CardsSlider";
 import Header from "../components/MarketPlace/Header";
 import SortingTab from "../components/SortingTab";
 import Cards from "../components/MarketPlace/Cards";
@@ -30,8 +29,8 @@ export default React.memo(function MarketPlace() {
       ) : (
         <div className="MainFs">
           <Header />
-          <SortingTab />
-          <div className="Markt">
+          <div className="Markt vidbg">
+            <SortingTab />
             <div className="left">
               {!card ? (
                 <>

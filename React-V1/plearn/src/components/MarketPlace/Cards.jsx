@@ -23,6 +23,7 @@ export default React.memo(function Cards(props) {
         className="parallax-effect"
         perspective={900}
         glareEnable={false}
+        tiltAxis="y"
         scale={1.01}
         glareMaxOpacity={0}
       >
@@ -82,10 +83,6 @@ const Container = styled.div`
       color: white;
       transtion: 0.5s all;
       transform: translateZ(90px);
-    }
-    .inner-element:hover {
-      transform: scale(0.9) translateZ(90px);
-      transition: 0.5s all ease-in;
     }
   }
   .desp {
@@ -223,8 +220,7 @@ const Container = styled.div`
       color: black;
       font-family: bold;
       text-transform: uppercase;
-      transform-style: preserve-3d;
-      transform: translateZ(60px);
+      margin: 0px;
     }
     &::before {
       position: fixed;
@@ -265,7 +261,7 @@ const Container = styled.div`
   }
   .card p {
     color: white;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
     color: black;
     font-family: "Bai Jamjuree", Sans-serif;
     font-weight: 500;
@@ -327,7 +323,7 @@ const Container = styled.div`
   .card:hover {
     .type {
       opacity: 1;
-      transform: translate(0px, -20px);
+      transform: translate(0px, -30px);
     }
   }
   .type .icon {

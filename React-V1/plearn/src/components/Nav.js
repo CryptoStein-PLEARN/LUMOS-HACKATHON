@@ -110,86 +110,78 @@ export default function Nav() {
   }
 
   return (
-    <div>
-      <nav className="navbar navbar2 navbar-expand-lg p-0  fixed-top navbar-dark shadow-5-strong ">
-        <div className="container-fluid">
-          <div className="logo-thumbnail navbar-brand logo-custom-css">
-            {" "}
-            <img
-              src={logo_plearn}
-              onClick={() => {
-                nav("/");
+    <nav className="navbar navbar2 navbar-expand-lg p-0  fixed-top navbar-dark shadow-5-strong ">
+      <div className="container-fluid">
+        <div className="logo-thumbnail navbar-brand logo-custom-css">
+          {" "}
+          <img
+            src={logo_plearn}
+            onClick={() => {
+              nav("/");
+            }}
+            alt="Bootstrap"
+          />
+        </div>
+        <button
+          type="button"
+          className="navbar-toggler wltBtn"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarCollapse"
+        >
+          <i className="fas fa-bars"></i>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarCollapse">
+          <ul className="navbar-nav mb-2 mb-lg-0 me-auto">
+            <Navcomp />
+            <li
+              style={{
+                display: `${
+                  connButtonText === "Wallet Connected" ? "block" : "none"
+                }`,
               }}
-              alt="Bootstrap"
-            />
-          </div>
-          <button
-            type="button"
-            className="navbar-toggler wltBtn"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarCollapse"
-          >
-            <i className="fas fa-bars"></i>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarCollapse">
-            <ul className="navbar-nav mb-2 mb-lg-0 me-auto">
-              <Navcomp />
-              <li
-                style={{
-                  display: `${
-                    connButtonText === "Wallet Connected" ? "block" : "none"
-                  }`,
+              className="nav-item"
+            >
+              <div
+                className="nav-link"
+                onClick={() => {
+                  nav(`/owned`);
                 }}
-                className="nav-item"
               >
-                <div
-                  className="nav-link"
-                  onClick={() => {
-                    nav(`/owned`);
-                  }}
-                >
-                  Owned
-                </div>
-              </li>
-              <li className="nav-item "></li>
-            </ul>
-            <div className="flx ">
-              <Navbtn />
-              {/* <div>
+                Owned
+              </div>
+            </li>
+            <li className="nav-item "></li>
+          </ul>
+          <div className="flx ">
+            <Navbtn />
+            {/* <div>
                 Player level: {playerLevel}
               </div>
               <div>
                 Game Coins: {gameCoins}
               </div> */}
-              <div
-                className="nav-link btn  px-3 py-2  wltBtn"
-                onClick={connectWalletHandler}
-              >
-                {connButtonText}
-                {isLoading ? (
-                  <span>
-                    <ColorRing
-                      visible={true}
-                      height="40"
-                      width="40"
-                      ariaLabel="blocks-loading"
-                      wrapperStyle={{}}
-                      wrapperclassName="blocks-wrapper"
-                      colors={[
-                        "purple",
-                        "purple",
-                        "purple",
-                        "purple",
-                        "purple",
-                      ]}
-                    />
-                  </span>
-                ) : null}
-              </div>
+            <div
+              className="nav-link btn  px-3 py-2  wltBtn"
+              onClick={connectWalletHandler}
+            >
+              {connButtonText}
+              {isLoading ? (
+                <span>
+                  <ColorRing
+                    visible={true}
+                    height="40"
+                    width="40"
+                    ariaLabel="blocks-loading"
+                    wrapperStyle={{}}
+                    wrapperclassName="blocks-wrapper"
+                    colors={["purple", "purple", "purple", "purple", "purple"]}
+                  />
+                </span>
+              ) : null}
             </div>
           </div>
         </div>
-      </nav>
-    </div>
+      </div>
+    </nav>
   );
 }
