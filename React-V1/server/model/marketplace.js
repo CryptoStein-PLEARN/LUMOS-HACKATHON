@@ -144,6 +144,6 @@ const insertOrUpdateCategory = async (category, details) => {
 //     }
 //   };
   
-  insertRecords();
+//   insertRecords();
   
   module.exports = marketplaceDetail;
