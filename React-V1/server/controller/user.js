@@ -856,7 +856,7 @@ const insertHouses = async () => {
     await houseDetail.upsert({ houseID: 1, houseName: "House2", cost: 700, insurancePrice: 200, taxPrice: 200, energyGain: 40});
     await houseDetail.upsert({ houseID: 2, houseName: "House3", cost: 800, insurancePrice: 300, taxPrice: 300, energyGain: 60});
 }
-insertHouses();
+// insertHouses();
 
 const getHouseList = (req, res) => {
     houseDetail.find({}, (err, houseList) => {
@@ -905,7 +905,7 @@ const insertEnergy = async () => {
     await energyDetail.upsert({ energyID: 1, cost: 200, energyGain: 40});
     await energyDetail.upsert({ energyID: 2, cost: 300, energyGain: 60});
 }
-insertEnergy();
+// insertEnergy();
 
 const getEnergyList = (req, res) => {
     energyDetail.find({}, (err, energyList) => {
@@ -946,7 +946,7 @@ const insertLF = async () => {
     await lfDetail.upsert({lfID: 1, cost: 200, loanAgainstLF: 60})
     await lfDetail.upsert({lfID: 2, cost: 300, loanAgainstLF: 70})
 }
-insertLF();
+// insertLF();
 
 // To fetch all Life Insurances available.
 const getLFList = (req,res) => {
