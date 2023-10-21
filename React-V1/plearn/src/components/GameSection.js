@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Kitty from "../assets/Gamer.json";
+import Kitty from "../assets/Header.json";
 
 import Lottie from "lottie-react";
 export default function GameSection() {
   return (
     <div className="pt">
-      <div className="container-flex">
+      <div className="container-flex" >
         <div className="hero__blocks">
           <Lottie animationData={Kitty} />
         </div>

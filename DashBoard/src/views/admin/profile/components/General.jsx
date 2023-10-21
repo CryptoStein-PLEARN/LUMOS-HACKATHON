@@ -12,11 +12,12 @@ import { PiArrowFatLineUpDuotone } from "react-icons/pi";
 import { getGetInTouchDetails } from "Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
 import useEventModal from "../useEventModal";
+import UsersReq from "./UsersReq";
 // deleteRequest
 const General = ({ data }) => {
   const location = useLocation();
   const { isOpen, toggle } = useEventModal();
-  const history = useNavigate();
+  const history = useNavigate();  
   const [l1, setL1] = useState(true);
   const [l2, setL2] = useState(true);
   const [l3, setL3] = useState(true);
@@ -32,12 +33,15 @@ const General = ({ data }) => {
     const val = isMOpen;
     setOpen(!val);
   };
+  const [filteredData,setFilter]=useState([]);
+  const [searchData,setSearchData]=useState('');
+  
   const [modalData, SetModal] = useState();
   const [isMOpen, setOpen] = useState(false);
-  const userInput = user?.toLowerCase();
-  const userData = data?.filter((item) =>
-    item.name?.toLowerCase().includes(userInput)
-  );
+  const userInput = user;
+  const currentUser = data.find((item) => item?.name === userInput); 
+  const emailToFilter = currentUser?.email;
+  const userData = data.filter((item) => item?.email === emailToFilter);
   const [loading, setLoading] = useState(false);
   const handleDel = () => {
     toggle();
@@ -92,19 +96,18 @@ const General = ({ data }) => {
       });
   };
   if (isSingleReq) {
-    const userInput = idArray[0]?.toLowerCase()?.replace(/-/g, " ");
+    const userInput = idArray[0]?.replace(/-/g, " ");
     const userData = data?.filter((item) =>
-      item.name?.toLowerCase().includes(userInput)
+      item.name.includes(userInput)
     );
-    const CurrentReq = userData.filter((user) => user?._id === idArray[1]);
-    console.log(CurrentReq, "current req");
+    const CurrentReq = userData.filter((user) => user?._id === idArray[1]); 
     const components = CurrentReq[0]?.description && CurrentReq[0]?.subject && (
       <>
         <Card extra={"w-full h-full py-5 px-5"}>
           <div className="mt-2 w-full ">
             <div className="relative flex items-start justify-between   py-2 px-2 pt-4  ">
               <div className="absolute -top-0 left-0 mt-3 flex w-full items-center justify-between px-2 ">
-                <h4 className="text-xl  font-bold capitalize text-navy-700 dark:text-white">
+                <h4 className="text-xl  font-bold  text-navy-700 dark:text-white">
                   User :{" "}
                   <span className="font-bold text-gray-700">
                     {CurrentReq[0]?.name}
@@ -445,7 +448,7 @@ const General = ({ data }) => {
       </div>
     );
   }
-  if (user) {
+  if (user) { 
     const components = userData?.map(
       (item) =>
         item?.description &&
@@ -459,13 +462,13 @@ const General = ({ data }) => {
             }}
           >
             <div class=" bg-slate-700 absolute inset-0 z-20 flex h-full w-full items-center justify-center rounded-[20px] bg-none text-2xl font-semibold text-white opacity-0 duration-300 group-hover:opacity-100">
-              Reply to <span className="mx-2 capitalize">{item?.name}</span>
+              Reply to <span className="mx-2 ">{item?.name}</span>
             </div>
             <div class="absolute inset-0 z-10 flex h-full w-full items-center justify-center rounded-[20px] opacity-0 duration-300 group-hover:opacity-100"></div>
             <div className="mt-2 w-full ">
               <div className="relative flex items-start justify-between   py-2 px-2 pt-4  ">
                 <div className="absolute -top-0 left-0 mt-3 flex w-full items-center justify-between px-2 ">
-                  <h4 className="text-xl font-bold capitalize text-navy-700 dark:text-white">
+                  <h4 className="text-xl font-bold  text-navy-700 dark:text-white">
                     User :{" "}
                     <span className="font-bold text-gray-700">
                       {item?.name}
@@ -534,36 +537,18 @@ const General = ({ data }) => {
       </div>
     );
   } else {
-    if (data !== undefined) {
-      const uniqueNamesMap = new Map();
-      const filteredData = data?.filter((item) => {
-        const name = item.name?.toLowerCase();
-        if (!uniqueNamesMap.has(name)) {
-          uniqueNamesMap.set(name, true);
-          return true;
-        }
-        return false;
-      });
-
-      const components = filteredData?.map((item) => (
-        <Card
-          key={item.id}
-          onClick={() => {
-            handleClick(item.name);
-          }}
-          extra={
-            "shadow mt-6  hover:-translate-y-2 transition-all delay-150 hover:cursor-pointer  w-full h-full p-3"
-          }
-        >
-          {console.log("name", item.name)}
-          <div className=" mt-2 w-full ">
-            <h4 className="px-2 text-xl font-bold  text-navy-700   dark:text-white">
-              User - {item.name}
-            </h4>
-          </div>
-        </Card>
-      ));
-      return <div className="grid grid-cols-2 gap-5">{components} </div>;
+    const uniqueEmailsMap=new Map();
+    if (data !== undefined) { 
+      const filteredData=[];
+        data.forEach((item) => {
+      const email = item.email;
+  
+      if (!uniqueEmailsMap.has(email)) {
+        uniqueEmailsMap.set(email, true);
+        filteredData?.push(item); 
+      }
+    });  
+   return <UsersReq filteredData={filteredData} handleClick={handleClick}/>
     } else {
       return (
         <div className="mt-10 grid grid-cols-2 gap-5">
