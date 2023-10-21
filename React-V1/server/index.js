@@ -40,10 +40,15 @@ mongoose.connect(mongoURI,
 )
 
 
-// mongoose.connect(mongoURI).then(
+// mongoose.connect(mongoURI)
+// .then(
 //     () => {console.log("Your DB is connected")},
 //     err => {console.log(err)}
-// );
+// )
+// .catch(err)
+// {
+//     console.log(err);
+// }
 
 app.get('/test', (req,res) => {
     res.send("Hello User");
