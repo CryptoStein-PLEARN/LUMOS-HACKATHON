@@ -31,21 +31,20 @@ const router = require("./routes/routes");
 app.use("/", router);
 
 // Database Connection
-// mongoose.connect(mongoURI,
-//     {
-//         // useNewUrlParser: true, useUnifiedTopology: true
-//     }, () => {
-//         console.log("Your DB is connected.");
-//     }
-// )
+mongoose.connect(mongoURI,
+    {
+        useNewUrlParser: true, useUnifiedTopology: true
+    }, () => {
+        console.log("Your DB is connected.");
+    }
+)
 
-async function connectDB(){
-await mongoose.connect(mongoURI).then(
-    () => {console.log("Your DB is connected")},
-    err => {console.log(err)}
-);
-}
-connectDB();
+
+// mongoose.connect(mongoURI).then(
+//     () => {console.log("Your DB is connected")},
+//     err => {console.log(err)}
+// );
+
 app.get('/test', (req,res) => {
     res.send("Hello User");
 })
