@@ -3,7 +3,7 @@ import boxicon from "../assets/Images/icon-box.svg";
 import WalletContext from "../contexts/WalletContext";
 import { useContext } from "react";
 import Lottie from "lottie-react";
-import Kitty from "../assets/Header.json";
+import Kitty from "../assets/Gamer.json";
 export default function Header() {
   const { userAccount } = useContext(WalletContext);
   const startGame = async () => {

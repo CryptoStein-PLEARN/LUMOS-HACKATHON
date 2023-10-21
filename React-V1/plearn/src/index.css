@@ -42,19 +42,7 @@ body {
   box-sizing: content-box;
 }
 
-.hero2::before {
-  position: absolute;
-  z-index: 0;
-  content: "";
-  top: 0%;
-  bottom: -53%;
-  width: 150%;
-  height: 118%;
-  left: -25%;
-  background-image: linear-gradient(315deg, #6e72fc 20%, #ad1deb 74%);
-
-  -webkit-mask-image: radial-gradient(rgba(0, 0, 0, .85), transparent 75%) !important;
-}
+ 
 
 
 .container {
@@ -147,6 +135,7 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  background-blend-mode: overlay, normal;
 }
 
 .hero__intro {
@@ -192,8 +181,7 @@ body {
 }
 
 .container-flex {
-  display: flex;
-  padding: 5%;
+  display: flex; 
   justify-content: space-between;
 }
 
@@ -710,7 +698,7 @@ p {
 }
 
 .pt {
-  padding-top: 155px;
+  padding-top: 76px;
   padding-bottom: 78px;
 }
 
@@ -1683,17 +1671,15 @@ transform: perspective (600px) translate3d(0px, 2.4988px, 0px);
 }
 
 .vidbg {
-  background: url('https://shop.astro.build/noise.webp') top center/150px repeat, #17191e;
-  background-blend-mode: overlay, normal;
   overflow-x: hidden;
+  background-image:url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg);
+  background-attachment: fixed !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover !important;
 }
 
-.vidbg:before {
-  height: 100vh;
-  top: -60vh;
-  background: linear-gradient(90deg, #3245ff 0%, #bc52ee 100%);
-  -webkit-mask-image: radial-gradient(100% 60% at center, rgba(0, 0, 0, .6), transparent 83%);
-}
+ 
 
 .bstn {
   display: flex;
