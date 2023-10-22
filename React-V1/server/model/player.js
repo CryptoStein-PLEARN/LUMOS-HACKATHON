@@ -36,7 +36,7 @@ const playerDetailSchema = new mongoose.Schema({
     payLoanByLevel: {type: Number, default: -1},    //determined by 'timeToPay' in bank loan schema
     bankDeposit: {type: Number, default: 0},
     timeRemainingBeforeWithdrawal: {type: Number, default: 0},
-    lastWheelSpinTime: { type: Date, default: null },
+    lastWheelSpinTime: { type: Date },
     // energyHouseID: {type: Number, default: -1},   //energy house ID
     // lfID: {type: Number, default: -1},  //currently selected LifeInsurance
     // lfBoughtAt: {type: Number, default: 1},  //LifeInsurance bought at which LEVEL; will be used to calculate 'sell insurance amt(2x)'
