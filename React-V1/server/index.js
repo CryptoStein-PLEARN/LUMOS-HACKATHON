@@ -11,9 +11,13 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded());
 app.use(cors());
-
+//Giving access to itch.io
 app.use(helmet.frameguard({ action: 'SAMEORIGIN' }));
-
+// app.use(cors({
+//     origin: ['cryptostein.itch.io/','cryptostein.itch.io/plearn', 'itch.io/'],
+//     optionsSuccessStatus: 200 
+// }));
+// app.options("*", cors());
 var allowedOrigins = ['*', 'https://singular-granita-0e1259.netlify.app'];
 app.use(function (req, res, next) {
     var origin = req.headers.origin;
@@ -26,26 +30,30 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Credentials", "true");
     next();
     });
+// const allowedOrigins = ['https://singular-granita-0e1259.netlify.app', '*'];
+// app.use(cors({
+//   origin: function(origin, callback){
+//     if(!origin) return callback(null, true);
+//     if(allowedOrigins.indexOf(origin) === -1){
+//       var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+//       return callback(new Error(msg), false);
+//     }
+//     return callback(null, true);
+//   }
+// }));
 
 const router = require("./routes/routes");
 app.use("/", router);
 
 // Database Connection
-// mongoose.connect(mongoURI,
-//     {
-//         // useNewUrlParser: true, useUnifiedTopology: true
-//     }, () => {
-//         console.log("Your DB is connected.");
-//     }
-// )
+mongoose.connect(mongoURI,
+    {
+        useNewUrlParser: true, useUnifiedTopology: true
+    }, () => {
+        console.log("Your DB is connected.");
+    }
+)
 
-async function connectDB(){
-await mongoose.connect(mongoURI).then(
-    () => {console.log("Your DB is connected")},
-    err => {console.log(err)}
-);
-}
-connectDB();
 app.get('/test', (req,res) => {
     res.send("Hello User");
 })

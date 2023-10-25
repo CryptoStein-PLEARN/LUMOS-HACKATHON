@@ -8,7 +8,7 @@ const bankLoanSchema = new mongoose.Schema({
 });
 
 bankLoanSchema.statics.upsert = async function (record){
-    await this.find({ loanID: record.loanID }, record, {
+    await this.findOneAndUpdate({ loanID: record.loanID }, record, {
         upsert: true,
         new: true,
     });
@@ -24,7 +24,7 @@ const bankDepositSchema = new mongoose.Schema({
 });
 
 bankDepositSchema.statics.upsert = async function (record){
-    await this.find({ depositID: record.depositID }, record, {
+    await this.findOneAndUpdate({ depositID: record.depositID }, record, {
         upsert: true,
         new: true,
     });
