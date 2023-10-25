@@ -230,14 +230,14 @@ const records = [
 ]
 
 LevelMapDetail.create(records, (err, createdRecords) => {
-    if (err) 
-    {
+    if (err) {
         console.error("Error while inserting records:", err);
-    } 
-    else 
-    {
+    } else {
         console.log("Records inserted successfully:", createdRecords);
     }
+
+    // Close the database connection (if needed)
+    mongoose.connection.close();
 });
 
 
