@@ -121,7 +121,7 @@ const insertOrUpdateCategory = async (category, details) => {
     const existingRecord = await marketplaceDetail.find({ category });
   
     if (existingRecord) {
-      const existingDetailsIds = existingRecord.details?.map((detail) => detail.id);
+      const existingDetailsIds = existingRecord.details.map((detail) => detail.id);
   
       for (const detail of details) {
         if (!existingDetailsIds.includes(detail.id)) {
