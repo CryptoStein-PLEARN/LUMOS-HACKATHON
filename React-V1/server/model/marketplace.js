@@ -138,11 +138,11 @@ const insertOrUpdateCategory = async (category, details) => {
     }
   };
   
-//   const insertRecords = async () => {
-//     for (const record of records) {
-//       await insertOrUpdateCategory(record.category, record.details);
-//     }
-//   };
+  const insertRecords = async () => {
+    for (const record of records) {
+      await insertOrUpdateCategory(record.category, record.details);
+    }
+  };
   
   insertRecords();
   
