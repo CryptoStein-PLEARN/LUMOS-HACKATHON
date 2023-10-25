@@ -7,5 +7,4 @@ const store = configureStore({
     isOpen: isOpenReducer,
   },
 });
-
 export default store;

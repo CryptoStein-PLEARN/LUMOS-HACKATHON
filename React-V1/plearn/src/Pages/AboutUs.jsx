@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cardBg from "../assets/cardPng.jpg";
+import Footer from "../components/Footer";
 function AboutUs() {
   return (
     <Container>
@@ -185,7 +186,7 @@ function AboutUs() {
             <div class="col-lg-8 col-12 mt_md--50">
               <div class="row service-one-wrapper">
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                  <a href="/service-details">
+                  <a >
                     <div class="service service__style--2">
                       <div class="icon">
                         <svg
@@ -214,7 +215,7 @@ function AboutUs() {
                   </a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                  <a href="/service-details">
+                  <a >
                     <div class="service service__style--2">
                       <div class="icon">
                         <svg
@@ -244,7 +245,7 @@ function AboutUs() {
                   </a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                  <a href="/service-details">
+                  <a >
                     <div class="service service__style--2">
                       <div class="icon">
                         <svg
@@ -275,7 +276,7 @@ function AboutUs() {
                   </a>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-12">
-                  <a href="/service-details">
+                  <a >
                     <div class="service service__style--2">
                       <div class="icon">
                         <svg
@@ -317,8 +318,73 @@ function AboutUs() {
         </div>
       </div>
       <div className="teams">
-        <img src="https://cosmos.network/_nuxt/img/4e36fa5.png" alt="" />
+        <h1>  Our Projects</h1>
+       <div className="flex container mt-5">
+       <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                  <a >
+                    <div class="service service__style--2">
+                      <div class="icon">
+                        <svg
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="9" cy="7" r="4"></circle>
+                          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                      </div>
+                      <div class="content">
+                        <h3 class="title">PLEARN GAME</h3>
+                        <p>
+                          I throw myself down among the tall grass by the stream
+                          as I lie close to the earth.
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                  <a >
+                    <div class="service service__style--2">
+                      <div class="icon">
+                        <svg
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="9" cy="7" r="4"></circle>
+                          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                      </div>
+                      <div class="content">
+                        <h3 class="title">Marketing &amp; Reporting</h3>
+                        <p>
+                          I throw myself down among the tall grass by the stream
+                          as I lie close to the earth.
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+       </div>
       </div>
+      <Footer/>
     </Container>
   );
 }
@@ -338,10 +404,24 @@ const Container = styled.div`
   .bg-d {
     padding-bottom: 20vh;
   }
-  .teams img {
-    width: 150%;
-    max-width: none;
-    filter: blur(7px);
+  .teams .flex{
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: row;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center; 
+    align-items: flex-start;
+    gap: 10px;
+    min-height: 35vh;
+  }
+  .teams {    
+    background: url(https://cosmos.network/_nuxt/img/4e36fa5.png); 
+    background-size: cover;
+    height: 80vh;
+    background-repeat: no-repeat;
   }
   .p-3 {
     padding: 10vh !important;
@@ -498,6 +578,11 @@ const Container = styled.div`
     display: inline-block;
     background: linear-gradient(145deg, rgb(61, 106, 255), #ee076e);
   }
+  @media only screen and (max-width: 580px) {
+    h1{
+      font-size:70px;
+    }
+  }
   .uiverse {
     --duration: 7s;
     --easing: linear;
@@ -561,6 +646,8 @@ const Container = styled.div`
     display: inline-block;
     position: relative;
     z-index: 1;
+    color:black;
+    font-weight:500;
   }
 
   .uiverse .wrapper .circle {
