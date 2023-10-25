@@ -159,7 +159,7 @@ function AboutUs() {
           <div class="row align-items-center ">
             <div class="col-lg-4 col-12">
               <div class="section-title mt--30 mt_md--5 mt_mobile--5 mb_mobile--10">
-                <h2 class="title">Products</h2>
+                <h2 class="title">Services</h2>
                 <p>
                   There are many variations of passages of Lorem Ipsum
                   available, but the majority have suffered alteration.
@@ -317,8 +317,11 @@ function AboutUs() {
           </div>
         </div>
       </div>
-      <div className="teams">
+      <div className="teams ">
+        <div className="container">
+
         <h1>  Our Projects</h1>
+        </div>
        <div className="flex container mt-5">
        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                   <a >

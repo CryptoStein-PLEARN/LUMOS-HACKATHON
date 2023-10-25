@@ -105,6 +105,11 @@ export default React.memo(function CTAsection() {
         .post("https://plearn-backend.onrender.com/postGetInTouchDetails", data)
         .then((response) => {
           console.log(response.data);
+          setTimeout(() => {
+            toast.success(`Thanks for reaching out!`, {
+              duration: 1500,
+            });
+          }, 1000);
           setLoading(false);
           clearAll();
         });
@@ -118,8 +123,7 @@ export default React.memo(function CTAsection() {
       }
       if (errorMs.name) {
         toast(`Opps! ${errorMs.name}`, { duration: 2000 });
-      }
-
+      } 
       setLoading(false);
     }
   };
@@ -185,6 +189,15 @@ export default React.memo(function CTAsection() {
 
   return (
     <Container>
+       <Toaster
+          toastOptions={{ 
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },
+          }}
+        />
       <div id="container">
         <h1>Interest form </h1>
         <form
@@ -339,6 +352,13 @@ padding: 10vw;
  }
  form{
   gap:5vh;
+  width: 100%;
+ }
+ .email{
+  width: 100%;
+ }
+ .name{
+  width:70%;
  }
  ul,li{
   list-style:none;
@@ -355,7 +375,7 @@ padding: 10vw;
   display: flex; 
   justify-content: space-evenly;
   align-items: center;
-  gap:2vw; 
+  gap:2vw;  
  }
  .start{
   align-items: center;
