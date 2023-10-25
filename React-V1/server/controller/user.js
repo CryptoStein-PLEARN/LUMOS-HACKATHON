@@ -975,7 +975,7 @@ const updateLFDetails = (req,res) => {
     playerDetail.updateOne(
         { userAccount: userAccount },
         { 
-            $set: { lfID: selectedLFID, lfBoughtAt: lfBoughtAt, gameCoins: gameCoins, loanAgainstLF: loanAgainstLF, lastWheelSpinTime: lastWheelSpinTime },
+            $set: { lfID: selectedLFID, lfBoughtAt: lfBoughtAt, gameCoins: gameCoins, loanAgainstLF: loanAgainstLF },
         },
         (err) => {
             if(err) {
