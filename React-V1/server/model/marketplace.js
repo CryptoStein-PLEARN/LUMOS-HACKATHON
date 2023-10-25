@@ -118,7 +118,7 @@ const records = [
 ]
 
 const insertOrUpdateCategory = async (category, details) => {
-    const existingRecord = await marketplaceDetail.findOne({ category });
+    const existingRecord = await marketplaceDetail.find({ category });
   
     if (existingRecord) {
       const existingDetailsIds = existingRecord.details?.map((detail) => detail.id);
@@ -138,12 +138,12 @@ const insertOrUpdateCategory = async (category, details) => {
     }
   };
   
-  const insertRecords = async () => {
-    for (const record of records) {
-      await insertOrUpdateCategory(record.category, record.details);
-    }
-  };
+//   const insertRecords = async () => {
+//     for (const record of records) {
+//       await insertOrUpdateCategory(record.category, record.details);
+//     }
+//   };
   
-  insertRecords();
+//   insertRecords();
   
   module.exports = marketplaceDetail;
