@@ -970,11 +970,12 @@ const updateLFDetails = (req,res) => {
     const lfBoughtAt = req.body.lfBoughtAt;
     const gameCoins = req.body.gameCoins;
     const loanAgainstLF = req.body.loanAgainstLF;
+    const lastWheelSpinTime = req.body.lastWheelSpinTime;
 
     playerDetail.updateOne(
         { userAccount: userAccount },
         { 
-            $set: { lfID: selectedLFID, lfBoughtAt: lfBoughtAt, gameCoins: gameCoins, loanAgainstLF: loanAgainstLF },
+            $set: { lfID: selectedLFID, lfBoughtAt: lfBoughtAt, gameCoins: gameCoins, loanAgainstLF: loanAgainstLF, lastWheelSpinTime: lastWheelSpinTime },
         },
         (err) => {
             if(err) {
