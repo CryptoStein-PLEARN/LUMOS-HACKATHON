@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express();
-const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction} = require("../controller/user");
+const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, getRealEstateMissionDetails, acceptRealEstateSellOfferDetails} = require("../controller/user");
 const {getPlayer} = require("../controller/user");
 const {saveDetails} = require("../controller/user");
 const {getMarketplaceDetails} = require("../controller/user");
@@ -20,6 +20,7 @@ const {placeBid} = require("../controller/user");
 const {startSale, cancelSale} = require("../controller/user")
 const {postGetInTouchDetails, getGetInTouchDetails} = require("../controller/user")
 const {handleStatus, handlePriority, deleteRequest} = require("../controller/user");
+const {acceptRealEstateBuyOfferDetails} = require("../controller/user");
 
 router.post("/preregistration", preRegisterUser);
 
@@ -80,5 +81,11 @@ router.post('/changeStatus', handleStatus);
 router.post('/changePriority', handlePriority);
 
 router.post('/deleteRequest', deleteRequest);
+
+router.get('/getRealEstateMissionDetails/:userAccount/:countryID/:cityID/:pillarID/:randomMissionNumber', getRealEstateMissionDetails);
+
+router.post('/acceptBuyOfferDetails', acceptRealEstateBuyOfferDetails);
+
+router.post('/acceptSellOfferDetails', acceptRealEstateSellOfferDetails);
 
 module.exports = router;

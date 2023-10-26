@@ -13,6 +13,7 @@ const entrepreneurshipDetail = require("../model/entrepreneurship");
 const marketplaceDetail = require("../model/marketplace");
 const auctionDetail = require("../model/Auction")
 const getInTouchDetails = require("../model/GetInTouch");
+const LevelMapDetail = require("../model/LevelMap");
 
 const app = express();
 
@@ -1106,4 +1107,106 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest};
+const getRealEstateMissionDetails = (req,res) => {
+    const {userAccount, countryID, cityID, pillarID, randomMissionNumber} = req.params;
+
+    playerDetail.findOne({userAccount: userAccount}, (err,userAccount) => {
+        if(userAccount)
+        {
+            if(userAccount.level[countryID].cities[cityID].pillars[pillarID].pillarStatus == "Pending") //mission pending
+            {
+                if(userAccount.realEstatePillar.assetBought == false)   //buy mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.amount;
+                    var missionType = "buy";
+                    
+                    res.send({missionTitle, amount, missionType});
+                }
+                else    //sell mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.amount;
+                    var missionType = "sell";
+
+                    res.send({missionTitle, amount, missionType});
+                }
+            }
+            else    //mission completed
+            {
+                res.send({missionTitle: "You have already completed the Real Estate mission."});
+            }
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
+const acceptRealEstateBuyOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`realEstatePillar.assetBought`]: true,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+const acceptRealEstateSellOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`realEstatePillar.assetBought`]: false,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.pillarStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails};

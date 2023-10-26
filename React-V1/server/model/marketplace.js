@@ -115,19 +115,7 @@ const records = [
         },
     ]
     },
-    {
-        category: "Dice",
-        details: [
-            {
-                id: 2,
-                name: "Dice 1",
-                description: "Lorem Ipsum",
-                cost: 120,
-                imgUri: "https://ik.imagekit.io/temporary/RnB.avif?updatedAt=1685704813304",
-                unlockLevel: 1
-            }
-        ]
-    }
+
 ]
 
 const insertOrUpdateCategory = async (category, details) => {
