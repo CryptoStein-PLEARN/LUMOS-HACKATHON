@@ -122,7 +122,7 @@ const records = [
                 id: 2,
                 name: "Dice 1",
                 description: "Lorem Ipsum",
-                cost: 10,
+                cost: 120,
                 imgUri: "https://ik.imagekit.io/temporary/RnB.avif?updatedAt=1685704813304",
                 unlockLevel: 1
             }
