@@ -203,7 +203,35 @@ Land is owned by a landowner if it has been bought. The landowner may choose to 
   <ul> 
 </details>
 
-  
+  ---
+
+### :octopus: Polkadot ink bounties!
+1- Polkadot Bounty
+
+Most Innovative ink! dApp
+All dApp categories are eligible. Porting EVM apps and deploying with ink! is allowed as well. Be creative!
+
+We expect to see well written Readme explaining what the projects are about and how their implementations were made.
+
+Decentralized Identity: Polkadot's identity management can be integrated to offer players secure and user-friendly login credentials. This will provide enhanced security and privacy, allowing players to maintain control over their in-game achievements and assets.
+Decentralized Identity for Characters: Using Polkadot's decentralized identity solutions, players can have secure and user-friendly login credentials for their in-game characters. This provides additional security and a more personal connection to their avatars.
+Community Governance for Character Development: Implementing Polkadot's governance features can enable players to propose and vote on character changes or additions. This creates a sense of ownership and collaboration within the gaming community, allowing players to shape the future of in-game characters.
+Cross-Chain Character Adoption: PLEARN can use Polkadot's cross-chain capabilities to introduce characters from other blockchains. For instance, characters or avatars from other Polkadot-based games could become accessible in PLEARN, enhancing the diversity and appeal of in-game characters.
+
+
+2-AZERO.ID
+
+Best project using ink!athon or AZERO.ID bounty
+
+In PLEARN, we'll use the ink!athon framework to streamline our dApp development. This integration will greatly expedite our game's feature development and enhance its modularity. For example:
+
+Using AZERO.ID will enable us to tie an identity to each player persona, so the player will be able to change or add other blockchain addresses in the future.
+Game Assets and NFTs: Using ink!athon, we can quickly create, manage, and trade in-game assets as NFTs. These assets will be securely recorded on the Polkadot network, ensuring true ownership and provable scarcity. This integration not only simplifies our asset management but also gives players more confidence in the value of their in-game holdings.
+AZERO.ID Integration: We'll incorporate AZERO.ID to create a secure and user-friendly environment for player identity management. Players will have their unique domains, strengthening the connection between their in-game personas and their real-world identities.
+Team Collaboration: We'll use the ink!athon framework to foster team collaboration within the development process. This will expedite our feature development and create a more engaging and dynamic game environment for players.
+
+
+
 
 ---
 #### Stages of a proposal
