@@ -56,9 +56,7 @@
 ## :star2: About the Project
 
 
-After conducting a thorough research, we found that youth lack the basic skills and knowledge to make financial decisions which means that there is a great need to promote financial capability among the young. Introducing financial literacy in a fun and a more engaging way through PLEARN could help youth minimise the costs incurred in managing their financial products, improve their financial safety net in the event of emergencies, and strengthen their financial security. The gap that exists between the amount of financial responsibility given to the young and their demonstrated ability to manage financial decisions and take advantage of financial opportunities, is rapidly widening. Unless significant action is taken to alter this and enable youth to make savvy financial decisions, financial illiteracy will remain an obstacle to youth’ financial security.
-We know that most people think trying to earn more money is the trick to attaining financial freedom, while the real trick is to know how to make your money work for you. The rich know it is not how much you make but what you do with what you make.
-PLEARN It is the only virtual board game for teaching financial literacy that is blockchain-based and allows players to play in order to learn how to manage their finances through investing, trading in the stock & crypto markets and buying real estate.
+Extensive research highlights a pressing need to enhance financial literacy among young individuals. PLEARN, our blockchain-based virtual board game, addresses this gap by delivering financial education in an engaging manner. Our aim is to equip the youth with essential financial skills, reducing costs related to financial management, enhancing financial safety nets, and ensuring financial security. A growing divide exists between the financial responsibilities placed on young individuals and their ability to make informed financial decisions. PLEARN acts as a bridge to close this gap and empower the youth to make wise financial choices, understanding that the key to financial freedom lies in making your money work for you, not just earning more. Through PLEARN, players gain hands-on experience in managing finances by investing, trading, and real estate transactions.
 
 
 
@@ -73,14 +71,16 @@ PLEARN It is the only virtual board game for teaching financial literacy that is
 
 - Lack of sustainable finance literacy in school
 
-- Millennials lack the basic skills needed to make savvy financial decisions suggest that there is a great need to promote financial capability among the young
-
 - The gap between the amount of financial responsibility given to the young and their demonstrated ability to manage financial decisions and take advantage of financial opportunities, is rapidly widening. Unless significant action is taken to alter this, financial illiteracy will remain an obstacle to Millennials’ financial security and that is what we are trying to solve through PLEARN. 
 
 <!-- Solution -->
 ## :woman_technologist: Solution
 
-We intend to empower youth with strong financial literacy to be able to make savvy financial decisions through allowing participants to play PLEARN in order to learn how to manage their finances via its four pillars: real estate deals, trading deals, auction market deals, and ESG-relating project deals. The game has two phases; players vs environment and players vs players. Through the players' journey, they will be using three different tokens ; Ambition (AMBI), Stablecoin(USDC/USDT)and manifestation (MANI). 
+The Edutainmetn solution we are providing to the market through our game, PLEARN, is a unique and engaging approach to financial education. PLEARN leverages blockchain technology to create a virtual board game that offers players a hands-on experience in managing their finances. It addresses the pressing need for improved financial literacy, especially among the youth.
+
+Through PLEARN, players learn essential financial skills by participating in activities such as investing, trading in both stock and cryptocurrency markets, and purchasing real estate. This immersive experience is designed to make financial education fun and relatable, encouraging players to make informed financial decisions.
+
+By combining entertainment with learning, PLEARN helps users minimize costs associated with financial products, strengthen their financial safety net for emergencies, and ultimately enhance their financial security. Our solution aims to empower individuals to take charge of their financial futures by making their money work for them, a key aspect often overlooked in traditional financial education. PLEARN is a pioneering and interactive tool for building financial literacy and helping individuals achieve financial freedom. 
 
 **A Blockchain based-platform**
 
@@ -102,7 +102,7 @@ Contains deals relating to buying (minted) and renting (unminted) of virtual lan
 
  **- Commission to Land/property owner**
 
-    Land is owned by a landowner if it has been bought. The landowner may choose to hold the property or rent it out, for doing so, they may extract a         commission, in which case this is deducted automatically. By default, the commission is set to 10% on all Land NFTs and this is configurable by the landowner.
+    Land is owned by a landowner if it has been bought. The landowner may choose to hold the property or rent it out, for doing so, they may extract a commission, in which case this is deducted automatically. By default, the commission is set to 10% on all Land NFTs and this is configurable by the landowner.
 
 **- Modifications to Land NFTs**
    - Ability to ‘name’ land
@@ -209,21 +209,60 @@ Land is owned by a landowner if it has been bought. The landowner may choose to 
 #### Stages of a proposal
 
 #### Game’s style
-The idea of the game is a type of set collecting, where users collect assets (real estate, stocks, auction deals) to gain end-game goals.
+The idea of the game is a type of set collecting, where users collect assets (real estate, stocks, auction deals) to complete, tasks, missions and levels.
 
 #### Game’s setting:
- Multiplayers setting on one board
+ Soloplayer setting on one board
    
 
 #### End-game goals Knowledge:
-Users need to pass an amount of challenges to prove their knowledge and skills. Networking: users are required to get connected with an amount of other users in their network and build the knowledge hubs throughout the cities. Educational level Player is required to move till the end of the board to unlock the PvP mode. The game’s theme 26 boards are designed under 26 European Schengen country themes. Each board includes 14 tiles designed as cities/towns belonging to relevant countries.
+The end-game goals of PLEARN, in terms of knowledge, are to equip players with comprehensive financial literacy and empower them with practical skills for managing their finances effectively. These goals include:
+
+- Investment Literacy: Players should gain a deep understanding of various investment opportunities, including stocks, cryptocurrencies, and real estate. They should be able to evaluate investment options, assess risks, and make informed decisions to grow their wealth.
+
+- Financial Decision-Making: PLEARN aims to enhance players' abilities to make sound financial decisions. This includes budgeting, saving, and making choices about spending, all based on a solid financial understanding.
+
+- Risk Management: Understanding financial risk is essential. Players should be able to assess and mitigate financial risks associated with investments and be prepared for unexpected financial challenges.
+
+- Asset Management: By the end of the game, players should be proficient in managing their assets, which may include optimizing investment portfolios, property management, and wealth diversification.
+
+- Long-Term Financial Planning: PLEARN encourages players to consider their long-term financial goals, such as retirement planning, and how to create a sustainable financial future.
+
+- Blockchain and Cryptocurrency Knowledge: For players to fully grasp the potential of blockchain technology and cryptocurrencies in today's financial landscape.
+  
 
 #### Game Components
-Game Components Digital board 1 dice Trading access cards Auction access cards
+The game components of PLEARN include various elements that contribute to the gaming experience and the learning of financial literacy. These components are designed to engage players and provide opportunities to gain practical knowledge about finance, investments, and asset management. Here are the key game components:
+
+- Game Board: A virtual game board that serves as the central gameplay area, where players navigate through financial scenarios and investment opportunities.
+
+- Game Tokens: Virtual tokens representing players on the game board. These tokens are moved to different spaces as players progress through the game.
+
+- Assets: These represent the financial resources available to players. Assets can include virtual currency, stocks, cryptocurrencies, and real estate properties.
+
+- Market Spaces: Spaces on the game board that simulate real-life financial markets, such as stock exchanges and cryptocurrency markets. Players can buy and trade assets here.
+
+- Event Cards: These cards introduce random financial events and challenges that players must navigate. Events can include market fluctuations, investment opportunities, and unexpected expenses.
+
+- Mission Cards: Missions are financial challenges and tasks that players must complete to gain rewards and advance in the game. These missions relate to different aspects of financial literacy.
+
+- Player Profiles: Each player has a virtual profile that tracks their progress, investments, and financial decisions throughout the game.
+
+- Blockchain Integration: This unique component allows players to experience real ownership of in-game assets by leveraging blockchain technology. It provides transparency and security to in-game transactions.
+
+- Educational Content: Alongside the game, educational content is provided to players. This can include explanations, tutorials, and real-world financial tips to enhance financial literacy.
+
+- Leaderboards: A feature to track player performance and achievements. It encourages competition and motivation to improve financial knowledge.
     
 
 #### Game Setup:
- Connect Wallet:Sign-up option required by email, then the users can connect their MetaMask Wallet. Currency in game: users will need to convert their fiat into USDT in case they do not own USDT, otherwise, they can deposit their USDT into the platform and then buy AMBI token to start playing the game. Avatar: is the profile of users, which is NFT, users can add their own NFT into the game, or mint a new one directly on the platform. Fees: players will be paying fees for each transaction they make( the percentage is to be identified)
+1. Wallet Connection: Users can integrate their MetaMask Wallet seamlessly into the platform. This wallet connection will be essential for managing in-game assets and transactions.
+
+3. In-Game Currency: PLEARN primarily operates with USDT (Tether) as the in-game currency. If users do not possess USDT, they can convert their fiat currency into USDT within the platform. Alternatively, users can deposit their existing USDT to initiate their financial adventures.
+
+4. Avatars as NFTs: User profiles, represented as avatars, are unique NFTs (Non-Fungible Tokens). Players have the flexibility to incorporate their pre-owned NFTs into the game. Additionally, they can mint brand-new avatars directly within the platform. This NFT integration adds a personalized touch to the gaming experience.
+
+5. Transaction Fees: For every financial move within the game, players will encounter transaction fees. The specific percentage for these fees is under consideration, ensuring a balance between fair gaming and platform sustainability.
 
 #### Game Phases:
 Phase 1 PvE (Players vs Environment): in this phase players will be playing against the environment, so, there will be no interaction with other players. Phase 2: PvP (Player vs Player): players will interact with each other. This mode will be unlocked after the player finishes PvE mode. Once players arrive in this phase, they will be able to buy & sell between each other.
@@ -231,39 +270,76 @@ Phase 1 PvE (Players vs Environment): in this phase players will be playing agai
 ---
   
 #### Challenges we ran into
-We are facing the challenges of transferring the technology from Web 2 to Web 3. Our biggest challenge was the FNFT smart contrats, as this subbject is new to the team, we were facing some difficulties in building smart contracts, however, witht the support and the collaboration between team members, we were able to overcome this issue.
+- Technical Hurdles: Developing a blockchain-based game can be technically complex. Integrating smart contracts, ensuring security, and handling transactions require a deep understanding of blockchain technology.
+
+- User Experience: Balancing educational content with engaging gameplay is challenging. Ensuring that users both learn and enjoy the game can be tricky.
+
+- Funding: Game development can be expensive. Securing funding and managing the budget effectively is a common challenge.
+
+- Testing and Bugs: Thorough testing is crucial. Identifying and fixing bugs, especially in blockchain interactions, can be time-consuming.
+
+- User Adoption: Getting users to adopt a new game, especially in the educational sector, can be a challenge. Effective marketing and user onboarding are key.
+
+- Content Development: Creating engaging and informative content for financial education is a challenge in itself.
+
+- Scalability: As your user base grows, ensuring the game can scale effectively is vital.
+  
 
 #### Accomplishments that we're proud of
-The collaboration of the team made achieving the milestones of the project in a short period of time and within the deadline feasible. 
+- Innovative Concept: Creating a unique blockchain-based game that combines financial education and entertainment, which is a novel concept.
+
+- Educational Impact: Receiving positive feedback from users or educational institutions about the game's effectiveness in teaching financial literacy.
+
+- Growing User Base: Achieving significant user adoption and a growing player community.
+
+- Blockchain Integration: Successfully integrating blockchain technology, enabling true ownership of in-game assets, and fostering a sense of ownership.
+
+- NFT Integration: Allowing users to incorporate their NFT avatars into the game and potentially mint new ones on the platform.
+
+- Community Engagement: Building an engaged and supportive user community around the game.
+
+- Milestones Reached: Meeting development milestones and staying on track with the project timeline.
 
 #### What we learned
-We have learned about the GameFi market, the Web 3 ecosystem, and how to integrate blockchain in the educational model in a fun and interactive way to create a useful product. 
+- User Engagement: Understanding the importance of user engagement in educational gaming and how to design game mechanics that keep players motivated and eager to learn.
+
+- Blockchain Integration: Gaining insights into the challenges and benefits of integrating blockchain technology into a game, especially related to asset ownership and security.
+
+- Financial Literacy: Recognizing the significance of financial literacy and the need for innovative solutions to address this gap, particularly among the youth.
+
+- Community Building: Learning how to build and maintain an active and engaged user community around your game, fostering a supportive environment.
+
+- Educational Impact: Evaluating the effectiveness of your game as an educational tool and understanding how players respond to different teaching methods.
+
+- NFTs and Avatars: Exploring the possibilities of incorporating NFT avatars into the game, minting new NFTs, and the potential for player customization.
+
+- Regulatory Challenges: Navigating the regulatory landscape surrounding blockchain-based games and financial education applications.
+
+- Funding and Partnerships: Identifying the importance of securing funding and establishing partnerships to support the game's growth and development.
+
 
 #### What's next for PLEARN?
-**PLEARN**,as it has four pillars, and now, we are building the first pillar, the real estate, we are in the process of builiding the other three pillars, Tradinf, Auction, and ESG, so that the game can be complete.
+**PLEARN**
 
----
-### Token Model 
+- User Growth: Concentrate on expanding your user base by marketing your game to educational institutions, youth organizations, and individuals interested in financial literacy.
 
-**Phase1:**
+- Content Expansion: Develop additional in-game content and missions to cover more financial concepts and offer a more comprehensive learning experience.
 
-- AMBI(utility token): for playing and paying transaction fees
-- Players will choose the deal which according to their analysis will help them generate passive income, accumulate wealth, and maximize their portfolio to be able to upgrade to PHASE 2.
-- In PHASE 1, we use an already existed stable coin, for example (USDT, USDC…etc).
+- Blockchain Integration: Explore more features related to blockchain technology, like NFTs and DeFi, to keep your game up-to-date with the latest financial trends.
 
-**Phase2:** 
-- 2 other tokens will be added in the next stage: 1- Stable coin(USDC/USDT): paying interest for staking (locking a certain amount of money for a certain period of time and gaining interest)
-- In later stages will be used as a borrowing token, in case players would like to leverage and buy more assets. Meaning that, they can borrow this token in order to be able to buy more assets or make big deals in the games.
+- Monetization Strategies: Refine your monetization strategy by evaluating different pricing models, in-game purchases, or even subscription options for players.
 
-- MANIFESTATION (MANI)- governance token:
-    - Obtained(gained) through voting and submitting proposals!
-    - Proposals: Players will be asked to submit suggestions in order to improve the game. 
-    - Players will be given a certain period of time to submit their suggestions. After that, players will be voting for those suggestions.
-    - The winning player whose suggestion got the highest number of votes will be rewarded for his winning suggestion (as a way to encourage them to    submit suggestions and participate in the voting process for them). 
-    - This way the game will be improved by its users' suggestions, and they will be rewarded for their own suggestions (win-win situation). 
-    - Control of MANI will enable the gaming community to influence decision making of the PLEAERN development team. Holders will be able to influence game economics (i.e. inflation rates), asset release schedules, game direction, and will otherwise provide some degree of ownership in development decision making.
+- Community Building: Foster a strong user community around your game, encouraging users to share experiences, provide feedback, and support each other in their financial literacy journeys.
+
+- Partnerships: Seek partnerships with financial institutions, educational organizations, and blockchain projects to enhance the reach and impact of your game.
+
+- Feedback and Iteration: Continually gather user feedback to make improvements and updates, refining the game's mechanics and educational content.
+
+- Research and Analytics: Invest in data analytics and user research to understand how players engage with your game and what areas of financial literacy need more focus.
+
+- Scaling: As your user base grows, consider scalability options for your platform to accommodate increased traffic and maintain a smooth user experience.
+
      
- 
 
 ---
 <!-- Color Reference -->
