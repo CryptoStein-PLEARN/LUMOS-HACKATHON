@@ -125,7 +125,13 @@ Land is owned by a landowner if it has been bought. The landowner may choose to 
 ## :link: Deployed Dapp URL 
   [(https://incredible-liger-fb1306.netlify.app/)](https://plearngame.netlify.app/)
 
-<img width="1440" alt="Screenshot 2023-04-25 at 18 22 18" src="https://user-images.githubusercontent.com/107268440/234283446-d4277760-ab4f-446e-9e37-f2b0c729b548.png">
+<img width="735" alt="Screenshot 2023-10-29 at 22 53 09" src="https://github.com/CryptoStein-PLEARN/PLEARN/assets/107268440/dac5f6f1-7ea8-4277-b89b-fbcb720ac362">
+<img width="735" alt="Screenshot 2023-10-29 at 22 53 30" src="https://github.com/CryptoStein-PLEARN/PLEARN/assets/107268440/61a71cb1-2ddb-40a3-b48c-ef02acf736dd">
+<img width="735" alt="Screenshot 2023-10-29 at 22 54 27" src="https://github.com/CryptoStein-PLEARN/PLEARN/assets/107268440/d6872f41-1b77-4eb0-983a-8f434ff9af8b">
+
+
+
+
 
 
 <!-- Screenshots -->
@@ -522,7 +528,7 @@ To deploy this project run
    
    <!-- Demo -->
   - ## :cinema: Demo
-  https://youtu.be/DOPCZDODpaU
+  https://www.loom.com/share/244e002e8c5641f88377982e65d079ee?sid=d2cc4f25-5524-4174-9971-def84109f100
   
 <!-- Acknowledgments -->
 ## :gem: Acknowledgements
