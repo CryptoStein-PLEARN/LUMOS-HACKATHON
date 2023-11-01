@@ -853,9 +853,9 @@ const getOwnedNFTs = (req,res) => {
 
 //For adding houses in the DB.
 const insertHouses = async () => {
-    await houseDetail.upsert({ houseID: 0, houseName: "House1", cost: 600, insurancePrice: 100, taxPrice: 100, energyGain: 20});
-    await houseDetail.upsert({ houseID: 1, houseName: "House2", cost: 700, insurancePrice: 200, taxPrice: 200, energyGain: 40});
-    await houseDetail.upsert({ houseID: 2, houseName: "House3", cost: 800, insurancePrice: 300, taxPrice: 300, energyGain: 60});
+    await houseDetail.upsert({ houseID: 0, houseName: "House1", cost: 50, insurancePrice: 10, taxPrice: 5});
+    await houseDetail.upsert({ houseID: 1, houseName: "House2", cost: 75, insurancePrice: 15, taxPrice: 10});
+    await houseDetail.upsert({ houseID: 2, houseName: "House3", cost: 100, insurancePrice: 20, taxPrice: 15});
 }
 insertHouses();
 
@@ -888,7 +888,7 @@ const updateHouseDetails = (req,res) => {
         { userAccount: userAccount },
         { 
             $set: { houseID: selectedHouseID, gameCoins: gameCoins },
-            $push: { ownedHouseID: selectedHouseID }
+            // $push: { ownedHouseID: selectedHouseID }
         },
         (err) => {
             if(err) {

@@ -64,6 +64,7 @@ const playerDetailSchema = new mongoose.Schema({
     payLoanByLevel: {type: Number, default: -1},    //determined by 'timeToPay' in bank loan schema
     bankDeposit: {type: Number, default: 0},
     timeRemainingBeforeWithdrawal: {type: Number, default: 0},
+    houseID: {type: Number, default: -1},   //currently selected house
 
     level: 
     {
@@ -350,7 +351,6 @@ const playerDetailSchema = new mongoose.Schema({
     // tileNumber: {type: Number, default: 0},
     // ownedHouseID: {type: [Number]},
     // energy: {type: Number, default: 100},
-    // houseID: {type: Number, default: -1},   //currently selected house
     // lfID: {type: Number, default: -1},  //currently selected LifeInsurance
     // lfBoughtAt: {type: Number, default: 1},  //LifeInsurance bought at which LEVEL; will be used to calculate 'sell insurance amt(2x)'
     // loanAgainstLF: {type: Number, default: 0},
