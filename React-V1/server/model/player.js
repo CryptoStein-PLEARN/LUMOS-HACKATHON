@@ -284,6 +284,62 @@ const playerDetailSchema = new mongoose.Schema({
                                         },
                                     ]
                                 }
+                            },
+                            {
+                                pillarID: 2,
+                                pillarName: "Entrepreneurship",
+                                pillarStatus: 'Pending',
+                                missions:
+                                {
+                                    buy:
+                                    [
+                                        {
+                                            missionID: 0,
+                                            missionStatus: 'Pending',
+                                            details:
+                                            {
+                                                title: 'Upgrade your house by buying a mirror for 10 gamecoins.',
+                                                amount: 10,
+                                            }
+                                        },
+                                        {
+                                            missionID: 1,
+                                            missionStatus: 'Pending',
+                                            details:
+                                            {
+                                                title: 'Upgrade your house by buying a carpet for 20 gamecoins.',
+                                                amount: 20,
+                                            }
+                                        },
+                                        {
+                                            missionID: 2,
+                                            missionStatus: 'Pending',
+                                            details:
+                                            {
+                                                title: 'Upgrade your house by buying a table for 15 gamecoins.',
+                                                amount: 15,
+                                            }
+                                        },
+                                        {
+                                            missionID: 3,
+                                            missionStatus: 'Pending',
+                                            details:
+                                            {
+                                                title: 'Upgrade your house by buying a chair for 10 gamecoins.',
+                                                amount: 10,
+                                            }
+                                        },
+                                        {
+                                            missionID: 4,
+                                            missionStatus: 'Pending',
+                                            details:
+                                            {
+                                                title: 'Upgrade your house by buying an air conditioner for 30 gamecoins.',
+                                                amount: 30,
+                                            }
+                                        },
+                                    ],
+                                }
                             }
                         ]
                     }

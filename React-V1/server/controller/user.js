@@ -1209,4 +1209,106 @@ const acceptRealEstateSellOfferDetails = (req,res) => {
     )
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails};
+const getTradingMissionDetails = (req,res) => {
+    const {userAccount, countryID, cityID, pillarID, randomMissionNumber} = req.params;
+
+    playerDetail.findOne({userAccount: userAccount}, (err,userAccount) => {
+        if(userAccount)
+        {
+            if(userAccount.level[countryID].cities[cityID].pillars[pillarID].pillarStatus == "Pending") //mission pending
+            {
+                if(userAccount.tradingPillar.stocksBought == false)   //buy mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.amount;
+                    var missionType = "buy";
+                    
+                    res.send({missionTitle, amount, missionType});
+                }
+                else    //sell mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.amount;
+                    var missionType = "sell";
+
+                    res.send({missionTitle, amount, missionType});
+                }
+            }
+            else    //mission completed
+            {
+                res.send({missionTitle: "You have already completed the Trading mission."});
+            }
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
+const acceptTradingBuyOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`tradingPillar.stocksBought`]: true,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+const acceptTradingSellOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`tradingPillar.stocksBought`]: false,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.pillarStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails, getTradingMissionDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails};

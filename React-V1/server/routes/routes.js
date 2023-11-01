@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express();
-const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, getRealEstateMissionDetails, acceptRealEstateSellOfferDetails} = require("../controller/user");
+const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, getRealEstateMissionDetails, acceptRealEstateSellOfferDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails} = require("../controller/user");
 const {getPlayer} = require("../controller/user");
 const {saveDetails} = require("../controller/user");
 const {getMarketplaceDetails} = require("../controller/user");
@@ -21,6 +21,8 @@ const {startSale, cancelSale} = require("../controller/user")
 const {postGetInTouchDetails, getGetInTouchDetails} = require("../controller/user")
 const {handleStatus, handlePriority, deleteRequest} = require("../controller/user");
 const {acceptRealEstateBuyOfferDetails} = require("../controller/user");
+const {getTradingMissionDetails} = require("../controller/user");
+
 
 router.post("/preregistration", preRegisterUser);
 
@@ -84,8 +86,14 @@ router.post('/deleteRequest', deleteRequest);
 
 router.get('/getRealEstateMissionDetails/:userAccount/:countryID/:cityID/:pillarID/:randomMissionNumber', getRealEstateMissionDetails);
 
-router.post('/acceptBuyOfferDetails', acceptRealEstateBuyOfferDetails);
+router.post('/acceptRealEstateBuyOfferDetails', acceptRealEstateBuyOfferDetails);
 
-router.post('/acceptSellOfferDetails', acceptRealEstateSellOfferDetails);
+router.post('/acceptRealEstateSellOfferDetails', acceptRealEstateSellOfferDetails);
+
+router.get('/getTradingMissionDetails/:userAccount/:countryID/:cityID/:pillarID/:randomMissionNumber', getTradingMissionDetails);
+
+router.post('/acceptTradingBuyOfferDetails', acceptTradingBuyOfferDetails);
+
+router.post('/acceptTradingSellOfferDetails', acceptTradingSellOfferDetails);
 
 module.exports = router;
