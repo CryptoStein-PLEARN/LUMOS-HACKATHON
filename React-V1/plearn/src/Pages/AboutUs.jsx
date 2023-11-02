@@ -497,9 +497,75 @@ At PLEARN, our business strategy is to seamlessly infuse financial education int
         <div className="Strats">
 
         </div>
-        <div className="projects">
+        <div className="bg-black">
 
-        </div>
+        <div className="container">
+
+<h1>  Our Projects</h1>
+<div className="flex container mt-5">
+       <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                  <a >
+                    <div class="service service__style--2">
+                      <div class="icon">
+                        <svg
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                          >
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="9" cy="7" r="4"></circle>
+                          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                      </div>
+                      <div class="content "  >
+                        <h3 class="title">Cryprostein Trading </h3>
+                        <p>
+                        Cryptostein Trading is a user-friendly platform designed to simulate real-world trading experiences. Users can engage in activities such as buying, selling, and trading a wide variety of digital assets, including a diverse range of cryptocurrencies. The platform also offers additional services, such as staking, lending, and even features its own native cryptocurrency.
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                  <a >
+                    <div class="service service__style--2">
+                      <div class="icon">
+                        <svg
+                          stroke="currentColor"
+                          fill="none"
+                          stroke-width="2"
+                          viewBox="0 0 24 24"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          height="1em"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                          >
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                          <circle cx="9" cy="7" r="4"></circle>
+                          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                      </div>
+                      <div class="content">
+                        <h3 class="title">PLEARN ESGROW</h3>
+                        <p>
+                        PLEARN ESGROW is an initiative platform which is focusing on addressing critical environmental, social, and governance (ESG) issues through innovative solutions and sustainable practices. And it’s dedicated to create a positive impact by promoting responsible business practices, sustainability, and social well-being.
+                        </p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+       </div>
+                          </div>
+</div>
       </div>
       <Footer/>
     </Container>
