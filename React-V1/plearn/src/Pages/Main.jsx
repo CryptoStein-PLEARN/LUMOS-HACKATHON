@@ -22,7 +22,11 @@ export default React.memo(function Main() {
             <div>
               <TawkMessengerReact propertyId="property_id" widgetId="default" />
             </div>
-            <GameSection />
+           
+          <GameSection />
+          </div>
+          <div className="bgV">
+
             <BreadCrums />
             <ShowCase style={{ marginTop: "10vw" }} />
             <Toke />

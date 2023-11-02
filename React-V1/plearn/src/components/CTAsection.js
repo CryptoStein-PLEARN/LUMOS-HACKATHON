@@ -106,12 +106,12 @@ export default React.memo(function CTAsection() {
         .then((response) => {
           console.log(response.data);
           setTimeout(() => {
-            toast.success(`Thanks for reaching out!`, {
-              duration: 1500,
-            });
+            setLoading(false);
+            clearAll();
           }, 1000);
-          setLoading(false);
-          clearAll();
+          toast.success(`Thanks for reaching out!`, {
+            duration: 1500,
+          });
         });
     } else {
       const errorMs = check.errorMessage;

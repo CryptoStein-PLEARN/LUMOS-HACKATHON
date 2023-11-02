@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import emailjs from "@emailjs/browser";
-function Modal({ isMOpen, handleClose, user }) {
-  const [reply, setReply] = useState();
+import toast, { Toaster } from "react-hot-toast";
+function Modal({ isMOpen, handleClose, user }) { 
   const form = useRef();
   const [showModal, setShow] = useState();
   useEffect(() => {
@@ -28,7 +28,9 @@ function Modal({ isMOpen, handleClose, user }) {
       )
       .then(
         (result) => {
+         toast.success('Email send sucessfully!',1500);
           console.log("res", result);
+          handleCut();
         },
         (error) => {
           console.log(error.text);
@@ -37,6 +39,15 @@ function Modal({ isMOpen, handleClose, user }) {
   };
   return (
     <form className="form" autoComplete="off" ref={form} onSubmit={sendEmail}>
+  <Toaster  
+          toastOptions={{ 
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },
+          }}
+        />
       <textarea className="hidden" name="to_name">
         {user?.name}
       </textarea>
@@ -142,9 +153,7 @@ function Modal({ isMOpen, handleClose, user }) {
               </div>
 
               <textarea
-                onChange={(e) => {
-                  setReply(e.target.value);
-                }}
+                
                 name="message"
                 className="bg-transparent h-64  w-full cursor-auto resize-none  border-none bg-gray-800    p-4  text-lg font-medium text-gray-400   outline-none focus-visible:text-white focus-visible:outline-none"
                 placeholder="Reply"

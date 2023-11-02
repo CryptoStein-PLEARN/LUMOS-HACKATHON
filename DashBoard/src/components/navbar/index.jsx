@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Dropdown from "components/dropdown";
 import { FiAlignJustify } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import navbarimage from "assets/img/layout/Navbar.png";
-import { BsArrowBarUp } from "react-icons/bs";
-import { FiSearch } from "react-icons/fi";
+import { Link, useNavigate } from "react-router-dom"; 
+import {firbaseauth} from '../../utils/firebase'
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { RiMoonFill, RiSunFill } from "react-icons/ri";
 import {
   IoMdNotificationsOutline,
@@ -12,14 +11,46 @@ import {
 } from "react-icons/io";
 import avatar from "assets/img/avatars/avatar4.png";
 import { useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = (props) => {
   const { onOpenSidenav, brandText } = props;
   const [darkmode, setDarkmode] = React.useState(false);
+  const[user,setUser]=useState()
   const data = useSelector((state) => state.UserSlice?.data);
-
+  useEffect(() => {
+    onAuthStateChanged(firbaseauth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        setUser(null);
+      }
+    });
+  }, []);
+  const navigate = useNavigate();
+  const Logout = async function (event) {
+    event.preventDefault();
+    try {
+      await signOut(firbaseauth);
+      setTimeout(()=>{
+        navigate("/login");
+      },1500)
+      toast.success('Signed Out sucessfully',1500)
+    } catch (error) {
+     alert(error.message)
+    }
+  };
   return (
     <nav className="sticky top-4 z-40 flex w-full flex-row flex-wrap items-center justify-between rounded-xl border-b-2 border-blue-200 bg-lightPrimary p-2    dark:bg-[#0b14374d]">
+       <Toaster
+          toastOptions={{ 
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },
+          }}
+        />
       <div className="ml-[6px]">
         <div className="h-6 w-[224px] pt-1">
           <a
@@ -135,8 +166,8 @@ const Navbar = (props) => {
                   className="flex items-center gap-2"
                   onClick={console.log(data)}
                 >
-                  <p className="text-sm font-bold text-navy-700 dark:text-white">
-                    👋 Hey, Adela
+                  <p className="text-sm capitalize font-bold text-navy-700 dark:text-white">
+                    👋 Hey, {user?.email?.split('@')[0]}
                   </p>{" "}
                 </div>
               </div>
@@ -156,7 +187,7 @@ const Navbar = (props) => {
                   Admin Settings
                 </a>
                 <a
-                  href=" "
+                  onClick={()=>{}}
                   className="mt-3 text-sm font-medium text-red-500 hover:text-red-500"
                 >
                   Log Out

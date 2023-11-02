@@ -1669,10 +1669,20 @@ transform: perspective (600px) translate3d(0px, 2.4988px, 0px);
   transform: scale(0.95);
   border: 1px solid blue;
 }
-
+.bgV{
+  background-image: linear-gradient(to bottom, rgba(252, 0, 224, 0.2), rgba(0, 0, 0, 0.85)), url('  https://i.pinimg.com/originals/b3/dc/a1/b3dca1ef5f188b510a587c236f6b2940.jpg' );
+  background-color: #000;
+  /* background-image:url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg); */
+  background-attachment: fixed !important;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+}
 .vidbg {
   overflow-x: hidden;
-  background-image:url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg);
+  background-image: linear-gradient(to bottom, rgba(252, 0, 224, 0.2), rgba(0, 0, 0, 0.85)), url('https://wallpapersmug.com/download/3840x2160/13f5a8/futuric-world-high-buildings-night-art.jpg' );
+  background-color: #000;
+  /* background-image:url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg); */
   background-attachment: fixed !important;
   background-position: center;
   background-repeat: no-repeat;

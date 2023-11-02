@@ -1,10 +1,25 @@
 import Footer from "components/footer/FooterAuthDefault";
 import authImg from "assets/img/auth/auth.png";
-import { Link, Routes, Route, Navigate } from "react-router-dom";
+import { Link, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import routes from "routes.js";
 import FixedPlugin from "components/fixedPlugin/FixedPlugin";
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
+import { firbaseauth } from "utils/firebase";
 
 export default function Auth() {
+  const navigate = useNavigate();
+console.log(process.env.REACT_APP_API_KEY,'key');
+
+  useEffect(() => {
+    onAuthStateChanged(firbaseauth, (user) => {
+      if (user) {
+       setTimeout(()=>{
+        navigate("/admin");
+       },1500)
+      }
+    });
+  }, []);
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
       if (prop.layout === "/auth") {

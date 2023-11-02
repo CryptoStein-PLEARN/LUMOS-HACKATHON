@@ -39,7 +39,7 @@ export default function Card(props) {
                 background: "#6b64f3",
               }}
             >
-              <a href="#">
+              <a href={user.linkedInLink}>
                 <svg
                   className="fa-brands fa-linkedin-in"
                   width="34"

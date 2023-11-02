@@ -1,5 +1,5 @@
 import Card from "components/card";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Modal from "./Modal";
@@ -12,12 +12,12 @@ import { PiArrowFatLineUpDuotone } from "react-icons/pi";
 import { getGetInTouchDetails } from "Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
 import useEventModal from "../useEventModal";
-import UsersReq from "./UsersReq";
+import UsersReq from "./UsersReq"; 
 // deleteRequest
 const General = ({ data }) => {
   const location = useLocation();
   const { isOpen, toggle } = useEventModal();
-  const history = useNavigate();  
+  const history = useNavigate();   
   const [l1, setL1] = useState(true);
   const [l2, setL2] = useState(true);
   const [l3, setL3] = useState(true);

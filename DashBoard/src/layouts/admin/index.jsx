@@ -14,16 +14,19 @@ import { getGetInTouchDetails } from "Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
 import { onAuthStateChanged } from "firebase/auth";
 import { firbaseauth } from "utils/firebase";
+import toast, { Toaster } from "react-hot-toast";
 export default function Admin(props) {
   const navigate = useNavigate();
   useEffect(() => {
     onAuthStateChanged(firbaseauth, (user) => {
       if (!user) {
+      setTimeout(()=>{
         navigate("/auth");
-      }
-    });
+       },1500)
+       toast.error('Opps Please sign in to view the Dashboard')
+    }});
   }, []);
-
+ console.log(process.env.APP_ID);
   const { ...rest } = props;
   const location = useLocation();
   const [open, setOpen] = React.useState(true);
@@ -84,6 +87,13 @@ export default function Admin(props) {
   document.documentElement.dir = "ltr";
   return (
     <div className="flex h-full w-full">
+      <Toaster toastOptions={{ 
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },
+          }}/>
       <Sidebar open={open} onClose={() => setOpen(false)} />
       {/* Navbar & Main Content */}
       <div className="h-full w-full bg-lightPrimary dark:!bg-navy-900">
