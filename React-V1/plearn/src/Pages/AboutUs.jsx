@@ -386,19 +386,17 @@ This highlights the pressing need to enhance the financial competencies of thisÂ
             </div>
                 </div>
        </div>
-       <div className="mission">
-       <div class="products p-3">
-        <div class="container">
-          <div class="flex col ">
+    
+      
+     
+          <div class="flex col container ">
             <div class="col-lg-4 col-12">
               <div class="section-title mt--30 mt_md--5 mt_mobile--5 mb_mobile--10">
-                <h2 class="title">Services</h2>
-               
+                <h2 class="title">Services</h2> 
               </div>
             </div>
-            <div class="flexd mt_md--50">
-           
-                <div class="col-6">  
+            <div class="flexd mt_md--50"> 
+                <div class="col-3">  
                     <div class="service service__style--2">
                       <div class="icon">
                         <svg
@@ -425,7 +423,7 @@ PLEARN multifaceted approach aims to foster a deeper understanding of financial 
                       </div>
                     </div> 
                 </div>
-                <div class="col-6">
+                <div class="col-3">
                   <a >
                     <div class="service service__style--2">
                       <div class="icon">
@@ -456,7 +454,7 @@ PLEARN multifaceted approach aims to foster a deeper understanding of financial 
                     </div>
                   </a>
                 </div> 
-                <div class="col-6">
+                <div class="col-3">
                   <a >
                     <div class="service service__style--2">
                       <div class="icon">
@@ -495,10 +493,7 @@ At PLEARN, our business strategy is to seamlessly infuse financial education int
                 </div>
              
             </div>
-          </div>
-        </div>
-      </div>
-       </div>
+          </div> 
         <div className="Strats">
 
         </div>
@@ -515,7 +510,12 @@ export default AboutUs;
 const Container = styled.div`
   background: #101010;
   .flexd{
-    display:flex;
+    display:flex; 
+    justify-content: space-evenly;
+  }
+  .mission{
+    width:100%;
+    height:100%;
   }
   .dflex{
   padding-top: 10vw; 
