@@ -13,6 +13,7 @@ const entrepreneurshipDetail = require("../model/entrepreneurship");
 const marketplaceDetail = require("../model/marketplace");
 const auctionDetail = require("../model/Auction")
 const getInTouchDetails = require("../model/GetInTouch");
+const LevelMapDetail = require("../model/LevelMap");
 
 const app = express();
 
@@ -852,11 +853,11 @@ const getOwnedNFTs = (req,res) => {
 
 //For adding houses in the DB.
 const insertHouses = async () => {
-    await houseDetail.upsert({ houseID: 0, houseName: "House1", cost: 600, insurancePrice: 100, taxPrice: 100, energyGain: 20});
-    await houseDetail.upsert({ houseID: 1, houseName: "House2", cost: 700, insurancePrice: 200, taxPrice: 200, energyGain: 40});
-    await houseDetail.upsert({ houseID: 2, houseName: "House3", cost: 800, insurancePrice: 300, taxPrice: 300, energyGain: 60});
+    await houseDetail.upsert({ houseID: 0, houseName: "House1", cost: 50, insurancePrice: 10, taxPrice: 5});
+    await houseDetail.upsert({ houseID: 1, houseName: "House2", cost: 75, insurancePrice: 15, taxPrice: 10});
+    await houseDetail.upsert({ houseID: 2, houseName: "House3", cost: 100, insurancePrice: 20, taxPrice: 15});
 }
-// insertHouses();
+insertHouses();
 
 const getHouseList = (req, res) => {
     houseDetail.find({}, (err, houseList) => {
@@ -887,7 +888,7 @@ const updateHouseDetails = (req,res) => {
         { userAccount: userAccount },
         { 
             $set: { houseID: selectedHouseID, gameCoins: gameCoins },
-            $push: { ownedHouseID: selectedHouseID }
+            // $push: { ownedHouseID: selectedHouseID }
         },
         (err) => {
             if(err) {
@@ -905,7 +906,7 @@ const insertEnergy = async () => {
     await energyDetail.upsert({ energyID: 1, cost: 200, energyGain: 40});
     await energyDetail.upsert({ energyID: 2, cost: 300, energyGain: 60});
 }
-// insertEnergy();
+insertEnergy();
 
 const getEnergyList = (req, res) => {
     energyDetail.find({}, (err, energyList) => {
@@ -946,7 +947,7 @@ const insertLF = async () => {
     await lfDetail.upsert({lfID: 1, cost: 200, loanAgainstLF: 60})
     await lfDetail.upsert({lfID: 2, cost: 300, loanAgainstLF: 70})
 }
-// insertLF();
+insertLF();
 
 // To fetch all Life Insurances available.
 const getLFList = (req,res) => {
@@ -1106,4 +1107,208 @@ const checkAnswer = (req,res) => {
 
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest};
+const getRealEstateMissionDetails = (req,res) => {
+    const {userAccount, countryID, cityID, pillarID, randomMissionNumber} = req.params;
+
+    playerDetail.findOne({userAccount: userAccount}, (err,userAccount) => {
+        if(userAccount)
+        {
+            if(userAccount.level[countryID].cities[cityID].pillars[pillarID].pillarStatus == "Pending") //mission pending
+            {
+                if(userAccount.realEstatePillar.assetBought == false)   //buy mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.amount;
+                    var missionType = "buy";
+                    
+                    res.send({missionTitle, amount, missionType});
+                }
+                else    //sell mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.amount;
+                    var missionType = "sell";
+
+                    res.send({missionTitle, amount, missionType});
+                }
+            }
+            else    //mission completed
+            {
+                res.send({missionTitle: "You have already completed the Real Estate mission."});
+            }
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
+const acceptRealEstateBuyOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`realEstatePillar.assetBought`]: true,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+const acceptRealEstateSellOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`realEstatePillar.assetBought`]: false,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.pillarStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+const getTradingMissionDetails = (req,res) => {
+    const {userAccount, countryID, cityID, pillarID, randomMissionNumber} = req.params;
+
+    playerDetail.findOne({userAccount: userAccount}, (err,userAccount) => {
+        if(userAccount)
+        {
+            if(userAccount.level[countryID].cities[cityID].pillars[pillarID].pillarStatus == "Pending") //mission pending
+            {
+                if(userAccount.tradingPillar.stocksBought == false)   //buy mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.buy[randomMissionNumber].details.amount;
+                    var missionType = "buy";
+                    
+                    res.send({missionTitle, amount, missionType});
+                }
+                else    //sell mission
+                {
+                    var missionTitle = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.title;
+                    var amount = userAccount.level[countryID].cities[cityID].pillars[pillarID].missions.sell[randomMissionNumber].details.amount;
+                    var missionType = "sell";
+
+                    res.send({missionTitle, amount, missionType});
+                }
+            }
+            else    //mission completed
+            {
+                res.send({missionTitle: "You have already completed the Trading mission."});
+            }
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
+const acceptTradingBuyOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`tradingPillar.stocksBought`]: true,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+const acceptTradingSellOfferDetails = (req,res) => {
+    const userAccount = req.body.userAccount;
+    const countryID = req.body.countryID;
+    const cityID = req.body.cityID;
+    const pillarID = req.body.pillarID;
+    const gameCoins = req.body.gameCoins;
+    const offerType = req.body.offerType;
+
+    playerDetail.updateOne(
+        {userAccount: userAccount},
+        {
+            $set:
+            {
+                gameCoins: gameCoins,
+                [`tradingPillar.stocksBought`]: false,
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.0.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.1.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.2.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.3.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.missions.${offerType}.4.missionStatus`]: "Completed",
+                [`level.${countryID}.cities.${cityID}.pillars.${pillarID}.pillarStatus`]: "Completed",
+            }
+        },
+        (err) => {
+            if (err) {
+                console.error(err);
+                return res.sendStatus(500);
+            }
+            res.sendStatus(200);
+        }
+    )
+}
+
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails, getTradingMissionDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails};

@@ -6,7 +6,7 @@ const LevelMapSchema = new mongoose.Schema({
         countryName: { type: String },
         cities: [{
             cityID: { type: Number },
-            cityName: { type: Number },
+            cityName: { type: String },
             pillars: [{
                 pillarID: { type: Number },
                 pillarName: { type: String },
@@ -229,16 +229,31 @@ const records = [
     }
 ]
 
-LevelMapDetail.create(records, (err, createdRecords) => {
-    if (err) 
-    {
-        console.error("Error while inserting records:", err);
-    } 
-    else 
-    {
-        console.log("Records inserted successfully:", createdRecords);
+async function upsertRecords(records) {
+    try {
+      for (const record of records) {
+        // Check if a record with the same countryID exists
+        const existingRecord = await LevelMapDetail.findOne({ "countries.countryID": record.countries[0].countryID });
+  
+        if (existingRecord) {
+          // Update the existing record with the new data
+          await LevelMapDetail.findOneAndUpdate(
+            { "countries.countryID": record.countries[0].countryID },
+            { $set: record },
+          );
+          console.log("Record updated successfully");
+        } else {
+          // Insert a new record
+          await LevelMapDetail.create(record);
+          console.log("Record inserted successfully");
+        }
+      }
+    } catch (error) {
+      console.error("Error inserting or updating records:", error);
     }
-});
+  }
+
+upsertRecords(records);
 
 
 module.exports = LevelMapDetail;
