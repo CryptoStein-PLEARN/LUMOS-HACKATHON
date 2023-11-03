@@ -20,6 +20,7 @@ export default React.memo(function MarketPlace() {
   if (currentFilter) {
     card = card.filter((item) => item.category === currentFilter);
   }
+  console.log(card);
   if (search) {
   }
   return (
@@ -42,12 +43,12 @@ export default React.memo(function MarketPlace() {
                   <Category />
                   <div className="shopAll">
                     {search === "" ? (
-                      Object.entries(card).map(([category, { details }]) =>
-                        details.map((ds) => <Cards data={ds} />)
+                      Object.entries(card).map(([ idx,{ details }]) =>
+                        details.map((ds) => <Cards category={ card[idx].category} data={ds} />)
                       )
                     ) : (
                       <>
-                        {Object.entries(card).map(([category, { details }]) =>
+                        {Object.entries(card).map(([idx, { details }]) =>
                           details
                             .filter(
                               (item) =>
@@ -56,7 +57,7 @@ export default React.memo(function MarketPlace() {
                                   .toLowerCase()
                                   .includes(search.toLowerCase())
                             )
-                            .map((ds) => <Cards key={ds.id} data={ds} />)
+                            .map((ds) => <Cards category={ card[idx].category} key={ds.id} data={ds} />)
                         )}
                       </>
                     )}

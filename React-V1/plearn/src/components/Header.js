@@ -6,6 +6,8 @@ import Lottie from "lottie-react";
 import Kitty from "../assets/Gamer.json";
 export default function Header() {
   const { userAccount } = useContext(WalletContext);
+
+  //0x0000000000000000000000000000000000000000 demo acc
   const startGame = async () => {
     if (userAccount == null) {
       alert("Please connect MetaMask wallet in order to start the game.");

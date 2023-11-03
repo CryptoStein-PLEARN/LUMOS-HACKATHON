@@ -65,6 +65,8 @@ export default React.memo(function SortingTab() {
   );
 });
 const Container = styled.div`
+
+background:black;
   padding-top: 2vh;
   display: flex;
   justify-content: space-between;

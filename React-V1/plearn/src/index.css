@@ -1670,7 +1670,7 @@ transform: perspective (600px) translate3d(0px, 2.4988px, 0px);
   border: 1px solid blue;
 }
 .bgV{
-  background-image: linear-gradient(to bottom, rgba(252, 0, 224, 0.2), rgba(0, 0, 0, 0.85)), url('  https://i.pinimg.com/originals/b3/dc/a1/b3dca1ef5f188b510a587c236f6b2940.jpg' );
+  background-image: linear-gradient(to bottom, rgba(252, 0, 224, 0.2), rgba(0, 0, 0, 0.85)), url('https://i.pinimg.com/originals/b3/dc/a1/b3dca1ef5f188b510a587c236f6b2940.jpg' );
   background-color: #000;
   /* background-image:url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg); */
   background-attachment: fixed !important;
@@ -1911,7 +1911,7 @@ transform: perspective (600px) translate3d(0px, 2.4988px, 0px);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover !important;
-  background: url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg);
+  background-image:linear-gradient(to bottom, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.35)), url(https://4kwallpapers.com/images/wallpapers/outrun-neon-dark-background-purple-3840x2160-4523.jpg);
 }
 
 .react-tabs__tab:focus:after {

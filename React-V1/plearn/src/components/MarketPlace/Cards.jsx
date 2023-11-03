@@ -16,7 +16,7 @@ export default React.memo(function Cards(props) {
       nav(`/Buy/${category + "/" + name}`);
     }
   };
-
+console.log(category);
   return (
     <Container>
       <Tilt
