@@ -1934,4 +1934,10 @@ transform: perspective (600px) translate3d(0px, 2.4988px, 0px);
   /* border-radius: 12px; */
   border-bottom: 2px solid rgba(255, 255, 255, 0.125);
 
+} 
+  
+.dropdown-menu{
+  background-color: #000;
+  flex-direction: column; 
+  gap:10px;
 }

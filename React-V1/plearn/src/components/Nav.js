@@ -7,19 +7,29 @@ import Navbtn from "./Navbtn";
 import { useNavigate } from "react-router-dom";
 
 export default function Nav() {
+  const [d,setD]=useState('none')
   // const [userAccount, setUserAccount] = useState(null);
+  const playBtn=async()=>{
+    window.open(
+      `https://singular-granita-0e1259.netlify.app?userAccount=0x0000000000000000000000000000000000000000`);
+     
+  }
   const [connButtonText, setConnButtonText] = useState("Connect Wallet");
   const [isLoading, setIsLoading] = useState(false);
   const { userAccount, setUserAccount } = useContext(WalletContext);
   // const [ playerLevel, setPlayerLevel ] = useState(1);
   // const [ gameCoins, setGameCoins] = useState(0);
   const nav = useNavigate();
-
-  // const provider = new ethers.providers.Web3Provider(window.ethereum);
+ const handleOpen=()=>{
+  if(d==='flex'){
+    setD('none');
+  }else{
+    setD('flex');
+  }
+ }
   const connectWalletHandler = () => {
     if (window.ethereum && window.ethereum.isMetaMask) {
-      console.log("MetaMask Here!");
-
+      console.log("MetaMask Here!"); 
       window.ethereum
         .request({ method: "eth_requestAccounts" })
         .then((result) => {
@@ -39,7 +49,6 @@ export default function Nav() {
     { name: "MarketPlace" },
     { name: "Tokenomics" },
     { name: "Get in Touch" },
-
     // { name: "NFT" },
   ];
 
@@ -144,14 +153,13 @@ export default function Nav() {
             <li className="nav-item "></li>
           </ul>
           <div className="flx ">
-            <Navbtn />
-            {/* <div>
-                Player level: {playerLevel}
-              </div>
-              <div>
-                Game Coins: {gameCoins}
-              </div> */}
-            <div
+            <Navbtn /> 
+<div class="dropdown">
+  <button onClick={()=>{handleOpen()}} class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   Play
+  </button>
+  <div class="dropdown-menu" style={{right:'25px',top:'40px' ,display:d}} aria-labelledby="dropdownMenuButton">
+  <div
               className="nav-link btn  px-3 py-2  wltBtn"
               onClick={connectWalletHandler}
             >
@@ -169,7 +177,12 @@ export default function Nav() {
                   />
                 </span>
               ) : null}
-            </div>
+            </div> 
+    <button className="nav-link btn  px-3 py-2  wltBtn" onClick={()=>{playBtn()}}>Demo Play</button>
+  </div>
+</div>
+           
+           
           </div>
         </div>
       </div>

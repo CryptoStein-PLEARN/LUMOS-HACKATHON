@@ -4,10 +4,11 @@ import WalletContext from "../contexts/WalletContext";
 import { useContext } from "react";
 import Lottie from "lottie-react";
 import Kitty from "../assets/Gamer.json";
+import toast, {Toaster} from 'react-hot-toast'
 export default function Header() {
   const { userAccount } = useContext(WalletContext);
 
-  //0x0000000000000000000000000000000000000000 demo acc
+  // demo acc
   const startGame = async () => {
     if (userAccount == null) {
       alert("Please connect MetaMask wallet in order to start the game.");
@@ -16,8 +17,27 @@ export default function Header() {
         `https://singular-granita-0e1259.netlify.app?userAccount=${userAccount}`
       );
     }
+    toast.dismiss();
   };
-
+const playBtn=async()=>{
+  window.open(
+    `https://singular-granita-0e1259.netlify.app?userAccount=0x0000000000000000000000000000000000000000`);
+    toast.dismiss();
+}
+const makeToast=()=>{
+  toast(
+    (t) => (
+      <span>
+          
+        Wanna try  <b>PLEARN</b>?
+        <br/> 
+        <br/> 
+        <button onClick={() => playBtn(t.id)}>Demo play</button>
+        <button onClick={() => startGame(t.id)}>Play </button>
+      </span>
+    ) 
+  );
+}
   return (
     <section className="hero hero2">
       <div className="container container--relative">
@@ -47,7 +67,7 @@ export default function Header() {
             </div>
 
             <div className="hero__intro-cta animated-box ms-3">
-              <button className="btnply" onClick={startGame}>
+              <button className="btnply" onClick={makeToast}>
                 Play Now{" "}
                 <div id="clip">
                   <div id="leftTop" className="corner"></div>
@@ -64,6 +84,12 @@ export default function Header() {
             <Lottie className="mb-24" animationData={Kitty} />
           </div>
         </div>
+        <Toaster toastOptions={{ 
+            style: {
+              border: "1px solid #713200",
+              padding: "16px",
+              color: "#713200",
+            },}} />
       </div>
     </section>
   );
