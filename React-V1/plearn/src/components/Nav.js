@@ -33,7 +33,7 @@ export default function Nav() {
   // const [userAccount, setUserAccount] = useState(null);
   const playBtn=async()=>{
     window.open(
-      `https://singular-granita-0e1259.netlify.app?userAccount=0x0000000000000000000000000000000000000000`);
+      `https://singular-granita-0e1259.netlify.app?userAccount=0xd3360559ec2d64d4276bb088ac57892f38666666`);
      
   }
   const [connButtonText, setConnButtonText] = useState("Connect Wallet");
