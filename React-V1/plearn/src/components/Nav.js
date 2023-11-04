@@ -5,9 +5,31 @@ import { ColorRing } from "react-loader-spinner";
 import WalletContext from "../contexts/WalletContext";
 import Navbtn from "./Navbtn";
 import { useNavigate } from "react-router-dom";
+function useOutsideAlerter(ref, setX) {
+  React.useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setX(false);
+      }
+    }
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, setX]);
+}
 
 export default function Nav() {
-  const [d,setD]=useState('none')
+  const [d,setD]=useState('none') 
+  const wrapperRef = React.useRef(null);
+  const [openWrapper, setOpenWrapper] = React.useState(false);
+  useOutsideAlerter(wrapperRef, setOpenWrapper);
+
   // const [userAccount, setUserAccount] = useState(null);
   const playBtn=async()=>{
     window.open(
@@ -155,10 +177,13 @@ export default function Nav() {
           <div className="flx ">
             <Navbtn /> 
 <div class="dropdown">
-  <button onClick={()=>{handleOpen()}} class="  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <button ref={wrapperRef}  onMouseDown={() => setOpenWrapper(!openWrapper)}  class=" btns dropdown-toggle" type="button" id="dropdownMenuButton">
    Play
   </button>
-  <div class="dropdown-menu" style={{right:'25px',top:'40px' ,display:d,borderRadius:'10px',border:'1px solid grey'}} aria-labelledby="dropdownMenuButton">
+  <div style={{transform: `scale( ${openWrapper ? "1" : "0"})`}}  className={`   transition
+      `}  >
+        <div className="bss">
+
   <div
               className="nav-link btn  px-3 py-2  wltBtn"
               onClick={connectWalletHandler}
@@ -179,6 +204,7 @@ export default function Nav() {
               ) : null}
             </div> 
     <button className="nav-link btn  px-3 py-2  wltBtn" onClick={()=>{playBtn()}}>Demo Play</button>
+    </div>
   </div>
 </div>
            
