@@ -155,10 +155,10 @@ export default function Nav() {
           <div className="flx ">
             <Navbtn /> 
 <div class="dropdown">
-  <button onClick={()=>{handleOpen()}} class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <button onClick={()=>{handleOpen()}} class="  dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
    Play
   </button>
-  <div class="dropdown-menu" style={{right:'25px',top:'40px' ,display:d}} aria-labelledby="dropdownMenuButton">
+  <div class="dropdown-menu" style={{right:'25px',top:'40px' ,display:d,borderRadius:'10px',border:'1px solid grey'}} aria-labelledby="dropdownMenuButton">
   <div
               className="nav-link btn  px-3 py-2  wltBtn"
               onClick={connectWalletHandler}
