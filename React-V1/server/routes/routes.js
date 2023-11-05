@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express();
-const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, getRealEstateMissionDetails, acceptRealEstateSellOfferDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails} = require("../controller/user");
+const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, getRealEstateMissionDetails, acceptRealEstateSellOfferDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails, getEntrepreneurshipMissionDetails, acceptEntrepreneurshipBuyOfferDetails} = require("../controller/user");
 const {getPlayer} = require("../controller/user");
 const {saveDetails} = require("../controller/user");
 const {getMarketplaceDetails} = require("../controller/user");
@@ -95,5 +95,11 @@ router.get('/getTradingMissionDetails/:userAccount/:countryID/:cityID/:pillarID/
 router.post('/acceptTradingBuyOfferDetails', acceptTradingBuyOfferDetails);
 
 router.post('/acceptTradingSellOfferDetails', acceptTradingSellOfferDetails);
+
+router.get('/getEntrepreneurshipMissionDetails/:userAccount/:countryID/:cityID/:pillarID/:randomMissionNumber', getEntrepreneurshipMissionDetails);
+
+router.post('/acceptEntrepreneurshipBuyOfferDetails', acceptEntrepreneurshipBuyOfferDetails);
+
+//Make the 'sell' route of entrepreneurship later in the future.
 
 module.exports = router;
