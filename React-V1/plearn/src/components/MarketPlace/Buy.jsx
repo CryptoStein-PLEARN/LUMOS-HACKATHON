@@ -35,11 +35,11 @@ export default React.memo(function Buy({ ds }) {
       userAccount: '0x9bf772ae96148ecdbc777924d212004f40c796d9',
     };
 
-    // axios
-      // .post("https://plearn-backend.onrender.com/fetchUserDetailsForMarketplace", userDetails)
-      axios.post("http://localhost:8080/fetchUserDetailsForMarketplace", userDetails)
+    axios
+      .post("https://plearn-backend.onrender.com/fetchUserDetailsForMarketplace", userDetails)
+      // axios.post("http://localhost:8080/fetchUserDetailsForMarketplace", userDetails)
       .then((response) => {
-        console.log(response.data,);
+        console.log(response.data);
         setPlayerLevel(response.data.userLevel);
         setGameCoins(response.data.userGameCoins);
       });
