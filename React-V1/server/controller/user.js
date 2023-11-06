@@ -1396,4 +1396,21 @@ const acceptEntrepreneurshipBuyOfferDetails = (req,res) => {
     )
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails, getTradingMissionDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails, getEntrepreneurshipMissionDetails, acceptEntrepreneurshipBuyOfferDetails, getLastWheelSpinTime};
+const fetchUserDetailsForMarketplace = (req,res) => {
+    const {userAccount} = req.body;
+    
+    playerDetail.findOne({userAccount: userAccount}, (err, userAccount) => {
+        if(userAccount)
+        {
+            var userLevel = userAccount.level.length;
+            var userGameCoins = userAccount.gameCoins
+            res.send({userLevel, userGameCoins});
+        }
+        else
+        {
+            res.send(err);
+        }
+    })
+}
+
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails, getTradingMissionDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails, getEntrepreneurshipMissionDetails, acceptEntrepreneurshipBuyOfferDetails, getLastWheelSpinTime, fetchUserDetailsForMarketplace};

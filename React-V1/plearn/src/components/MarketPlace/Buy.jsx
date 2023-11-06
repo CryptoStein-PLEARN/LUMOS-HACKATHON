@@ -7,7 +7,7 @@ import axios from "axios";
 import coin from "../../assets/MarketPlace/A (5).png";
 import SellModal from "./SellModal";
 export default React.memo(function Buy({ ds }) { 
-  // const [playerLevel, setPlayerLevel] = useState(1);
+  const [playerLevel, setPlayerLevel] = useState(1);
   const [gameCoins, setGameCoins] = useState(10);
   const [itemAvailable, setItemAvailable] = useState(ds.itemAvailable);
   const itemName = ds.name;
@@ -25,31 +25,31 @@ export default React.memo(function Buy({ ds }) {
   const [showLoader, setShowLoader] = useState(false);
   const [butnLoader, setLoader] = useState(false);
   useEffect(() => {
-    // getUserDetails();
+    getUserDetails();
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 500);
   }, [location]);
 
-  // const getUserDetails = async () => {
-  //   const userDetails = {
-  //     userAccount: localStorage.getItem(1),
-  //   };
+  const getUserDetails = async () => {
+    const userDetails = {
+      userAccount: '0x9bf772ae96148ecdbc777924d212004f40c796d9',
+    };
 
-  //   axios
-  //     .post("https://plearn-backend.onrender.com/", userDetails)
-  //     // axios.post("http://localhost:8080/", userDetails)
-  //     .then((response) => {
-  //       console.log(response.data,"userdetails");
-  //       setPlayerLevel(response.data.level);
-  //       setGameCoins(response.data.gameCoins);
-  //     });
-  // };
+    // axios
+      // .post("https://plearn-backend.onrender.com/fetchUserDetailsForMarketplace", userDetails)
+      axios.post("http://localhost:8080/fetchUserDetailsForMarketplace", userDetails)
+      .then((response) => {
+        console.log(response.data,);
+        setPlayerLevel(response.data.userLevel);
+        setGameCoins(response.data.userGameCoins);
+      });
+  };
   const [open, SetOpen] = useState(false);
   const BuyNFTs = async () => {
     setLoader(true);
     const userDetails = {
       userAccount: localStorage.getItem(1),
-      // userLevel: playerLevel,
+      userLevel: playerLevel,
       userGameCoins: gameCoins,
       category: category,
       itemID: itemID,
