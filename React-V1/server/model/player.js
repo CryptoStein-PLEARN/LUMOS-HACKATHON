@@ -65,6 +65,7 @@ const playerDetailSchema = new mongoose.Schema({
     bankDeposit: {type: Number, default: 0},
     timeRemainingBeforeWithdrawal: {type: Number, default: 0},
     houseID: {type: Number, default: -1},   //currently selected house
+    lastWheelSpinTime: {type: Date, default: null},
 
     level: 
     {

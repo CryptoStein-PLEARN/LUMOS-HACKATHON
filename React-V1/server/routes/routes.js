@@ -1,7 +1,7 @@
 const express = require("express");
 
 const router = express();
-const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, getRealEstateMissionDetails, acceptRealEstateSellOfferDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails, getEntrepreneurshipMissionDetails, acceptEntrepreneurshipBuyOfferDetails} = require("../controller/user");
+const {registerUser, getLFList, getDepositList, updateBankDeposit, preRegisterUser, getEntrepreneurshipBusiness, checkAnswer, endAuction, getRealEstateMissionDetails, acceptRealEstateSellOfferDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails, getEntrepreneurshipMissionDetails, acceptEntrepreneurshipBuyOfferDetails, getLastWheelSpinTime} = require("../controller/user");
 const {getPlayer} = require("../controller/user");
 const {saveDetails} = require("../controller/user");
 const {getMarketplaceDetails} = require("../controller/user");
@@ -101,5 +101,7 @@ router.get('/getEntrepreneurshipMissionDetails/:userAccount/:countryID/:cityID/:
 router.post('/acceptEntrepreneurshipBuyOfferDetails', acceptEntrepreneurshipBuyOfferDetails);
 
 //Make the 'sell' route of entrepreneurship later in the future.
+
+router.get('/getLastWheelSpinTime/:userAccount', getLastWheelSpinTime);
 
 module.exports = router;

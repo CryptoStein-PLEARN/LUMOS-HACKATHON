@@ -988,6 +988,21 @@ const updateLFDetails = (req,res) => {
     )
 }
 
+const getLastWheelSpinTime = (req,res) => {
+    const {userAccount} = req.params;
+
+    playerDetail.findOne({userAccount: userAccount}, (err,userAccount) => {
+        if(userAccount)
+        {
+            res.send(userAccount.lastWheelSpinTime);
+        }   
+        else
+        {
+            res.send(err);
+        }
+    })    
+}
+
 //For adding loans in DB.
 const insertLoans = async () => {
     await bankLoan.upsert({loanID: 0, gameCoins: 50, interestRate: 2, timeToPay: 2})
@@ -1381,4 +1396,4 @@ const acceptEntrepreneurshipBuyOfferDetails = (req,res) => {
     )
 }
 
-module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails, getTradingMissionDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails, getEntrepreneurshipMissionDetails, acceptEntrepreneurshipBuyOfferDetails};
+module.exports = {preRegisterUser,registerUser, getPlayer, saveDetails, getMarketplaceDetails, getOwnedNFTs, buyFromMarketplace, startAuction, endAuction, placeBid, startSale, cancelSale, getHouseList, getAuctionDetails, updateHouseDetails, getEnergyList, updateEnergyDetails, getLFList, updateLFDetails, getLoanList, updateBankLoan, getDepositList, updateBankDeposit, getEntrepreneurshipBusiness, checkAnswer, postGetInTouchDetails, getGetInTouchDetails, handleStatus, handlePriority, deleteRequest, getRealEstateMissionDetails, acceptRealEstateBuyOfferDetails, acceptRealEstateSellOfferDetails, getTradingMissionDetails, acceptTradingBuyOfferDetails, acceptTradingSellOfferDetails, getEntrepreneurshipMissionDetails, acceptEntrepreneurshipBuyOfferDetails, getLastWheelSpinTime};
