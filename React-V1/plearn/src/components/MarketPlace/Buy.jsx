@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
@@ -6,6 +6,8 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import coin from "../../assets/MarketPlace/A (5).png";
 import SellModal from "./SellModal";
+import WalletContext from "../../contexts/WalletContext";
+
 export default React.memo(function Buy({ ds }) { 
   const [playerLevel, setPlayerLevel] = useState(1);
   const [gameCoins, setGameCoins] = useState(10);
@@ -24,6 +26,7 @@ export default React.memo(function Buy({ ds }) {
   const category = pathArray[pathArray.length - 2];
   const [showLoader, setShowLoader] = useState(false);
   const [butnLoader, setLoader] = useState(false);
+  const { userAccount, setUserAccount } = useContext(WalletContext);
   useEffect(() => {
     getUserDetails();
     setShowLoader(true);
@@ -32,7 +35,7 @@ export default React.memo(function Buy({ ds }) {
 
   const getUserDetails = async () => {
     const userDetails = {
-      userAccount: '0x9bf772ae96148ecdbc777924d212004f40c796d9',
+      userAccount: userAccount,
     };
 
     axios
@@ -48,14 +51,14 @@ export default React.memo(function Buy({ ds }) {
   const BuyNFTs = async () => {
     setLoader(true);
     const userDetails = {
-      userAccount: localStorage.getItem(1),
+      userAccount: userAccount,
       userLevel: playerLevel,
       userGameCoins: gameCoins,
       category: category,
       itemID: itemID,
     };
     const transactionDetails = {
-      buyerAddress: localStorage.getItem(1),
+      buyerAddress: userAccount,
       sellerAddress: ds.currentOwner,
       cost: ds.cost,
       timestamp: new Date(),
@@ -87,7 +90,7 @@ export default React.memo(function Buy({ ds }) {
         console.log(error);
       });
   };
-  const user = localStorage.getItem(1);
+  const user = userAccount;
   console.log(user, ds.currentOwner);
   const isOwned = ds.currentOwner === user ? true : false;
   const handleOpen = () => {

@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { lazy, useState, useEffect } from "react";
+import React, { lazy, useState, useEffect, useContext } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Nav from "./components/Nav";
 import WalletContext from "./contexts/WalletContext";
@@ -9,14 +9,11 @@ import { SetCards } from "./Store/Slice/userSlice";
 import { useDispatch } from "react-redux";
 import { SetOwned } from "./Store/Slice/Owned";
 
+
 export default React.memo(function App() {
-  const [userAccount, setUserAccount] = useState(null);
-  useEffect(() => {
-    if (localStorage.length !== 0) {
-      setUserAccount(localStorage.getItem("1"));
-    }
-  }, []);
   const dispatch = useDispatch();
+  const [userAccount, setUserAccount] = useState(null);
+
   useEffect(() => {
     async function fetchDataFromMarketplace() {
       try {
@@ -53,24 +50,7 @@ export default React.memo(function App() {
     fetchDataFromMarketplace();
   }, []);
 
-  useEffect(() => {
-    async function fetchOwnedNFTs() {
-      try {
-        const response = await axios.get(
-          `https://plearn-backend.onrender.com/getOwnedNFTs/${localStorage.getItem(
-            1
-          )}`
-        );
-        dispatch(SetOwned(response.data));
-        // const response = await axios.get(`http://localhost:8080/getOwnedNFTs/${localStorage.getItem(1)}`)
-        // const ownedNFTs = response.data;
-      } catch (error) {
-        console.log(error);
-      }
-    }
-
-    fetchOwnedNFTs();
-  }, []);
+  
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import MarketPlace from "../../Pages/MarketPlace";
 import Buy from "../../components/MarketPlace/Buy";
@@ -8,15 +8,22 @@ import PrivacyPolicy from "../../Pages/PrivacyPolicy";
 import Error from "../../Pages/404";
 import Main from "../../Pages/Main";
 import ItemonBid from "../Bid/ItemonBid";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Sell from "../Sell/Sell";
 import Contact from "../../Pages/Contact";
 import AboutUs from "../../Pages/AboutUs";
+import { SetOwned } from "../../Store/Slice/Owned";
+import WalletContext from "../../contexts/WalletContext";
+import { useEffect } from "react";
+import axios from "axios";
 
 //need to create routes from db and make dynamic routes
 export default function Animate() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const card = useSelector((state) => state.tools.cards);
+  const { userAccount, setUserAccount } = useContext(WalletContext);
+  
   return (
     <Routes location={location} key={location.pathname}>
       <Route exact path={"/"} element={<Main />} />

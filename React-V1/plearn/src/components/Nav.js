@@ -5,6 +5,8 @@ import { ColorRing } from "react-loader-spinner";
 import WalletContext from "../contexts/WalletContext";
 import Navbtn from "./Navbtn";
 import { useNavigate } from "react-router-dom";
+import { SetOwned } from "../Store/Slice/Owned";
+import { useDispatch } from "react-redux";
 function useOutsideAlerter(ref, setX) {
     React.useEffect(() => {
         /**
@@ -26,6 +28,7 @@ function useOutsideAlerter(ref, setX) {
 
 export default function Nav() {
     const [d, setD] = useState("none");
+    const dispatch = useDispatch();
     const wrapperRef = React.useRef(null);
     const [openWrapper, setOpenWrapper] = React.useState(false);
     useOutsideAlerter(wrapperRef, setOpenWrapper);
@@ -39,6 +42,27 @@ export default function Nav() {
     const [connButtonText, setConnButtonText] = useState("Connect Wallet");
     const [isLoading, setIsLoading] = useState(false);
     const { userAccount, setUserAccount } = useContext(WalletContext);
+    useEffect(() => {
+        async function fetchOwnedNFTs() {
+          try {
+            const response = await axios.get(
+              `https://plearn-backend.onrender.com/getOwnedNFTs/${userAccount}`
+            );
+            dispatch(SetOwned(response.data));
+            console.log(response.data,"data");
+            // const response = await axios.get(`http://localhost:8080/getOwnedNFTs/${userAccount}`)
+            // const ownedNFTs = response.data;
+          } catch (error) {
+            console.log(error);
+          }
+        }
+    
+        if(userAccount)
+        {
+            fetchOwnedNFTs();
+        }
+      }, [userAccount]);
+    console.log(userAccount, "user");
     // const [ playerLevel, setPlayerLevel ] = useState(1);
     // const [ gameCoins, setGameCoins] = useState(0);
     const nav = useNavigate();

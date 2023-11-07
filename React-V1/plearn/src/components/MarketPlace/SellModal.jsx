@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosClose } from "react-icons/io";
+import { useContext } from "react";
+import WalletContext from "../../contexts/WalletContext";
 function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
   const item = useLocation();
 
@@ -18,6 +20,7 @@ function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
 
   const nav = useNavigate();
   const [Loader, setLoader] = useState(false);
+  const { userAccount, setUserAccount } = useContext(WalletContext);
   const StartAuction = async () => {
     setLoader(true);
     const daysInput = document.getElementById("durationDays");
@@ -38,7 +41,7 @@ function SellModal({ itemID, isFixed, isOpen, handleOpen, handleFixed }) {
       duration: totalDuration,
       basePrice: document.getElementById("basePrice").value,
       minBidAmount: document.getElementById("minBidAmount").value,
-      currentOwner: localStorage.getItem(1),
+      currentOwner: userAccount,
     };
 
     // await axios.post("http://localhost:8080/startAuction", data)

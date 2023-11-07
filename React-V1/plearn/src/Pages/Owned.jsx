@@ -37,6 +37,7 @@ export default function Owned() {
   };
   const location = useLocation();
   const [showLoader, setShowLoader] = useState(false);
+  console.log(card);
   useEffect(() => {
     setShowLoader(true);
     setTimeout(() => setShowLoader(false), 2000);
@@ -55,7 +56,7 @@ export default function Owned() {
           </div>
           <div className="CardsL">
             <div className="market">
-              {card.map((Category) => (
+              {card?.map((Category) => (
                 <div className="marketplace__item" key={Category.id}>
                   <div className="marketplace__image">
                     <img

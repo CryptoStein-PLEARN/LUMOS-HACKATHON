@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import styled from "styled-components";
 import SortingTab from "../SortingTab";
 import Loader from "../Loader";
@@ -8,6 +8,7 @@ import InfoTab from "./InfoTab";
 import axios from "axios";
 import PastOwners from "./PastOwners";
 import { TbListDetails } from "react-icons/tb";
+import WalletContext from "../../contexts/WalletContext";
 export default React.memo(function ItemonBid({ ds }) {
   const character = useLocation();
   const values = character.pathname.split("/")?.slice(-2); // Extract the last two values
@@ -31,6 +32,7 @@ export default React.memo(function ItemonBid({ ds }) {
   const [btnLoader, setLoding] = useState(false);
   const [responseLog, setLog] = useState("");
   const [timeLeft, setTimeLeft] = useState("");
+  const { userAccount, setUserAccount } = useContext(WalletContext);
   const EndAuction = async () => {
     const data = {
       category: Category,
@@ -63,7 +65,7 @@ export default React.memo(function ItemonBid({ ds }) {
   }, [location, placedRef.current]);
 
   const currentOwner = filteredArray[0]?.currentOwner;
-  const isOwner = localStorage.getItem(1) === currentOwner;
+  const isOwner = userAccount === currentOwner;
   let BidView = () => {
     return (
       <div className="cancelBid">
@@ -181,7 +183,7 @@ export default React.memo(function ItemonBid({ ds }) {
       category: Category,
       id: filteredArray[0].id,
       bid: {
-        bidderAddress: localStorage.getItem(1),
+        bidderAddress: userAccount,
         bidAmount: parseInt(bidValue),
         currency: "ETH",
         USDValue: 100,
