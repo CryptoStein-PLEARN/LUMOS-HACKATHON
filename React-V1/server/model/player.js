@@ -66,6 +66,7 @@ const playerDetailSchema = new mongoose.Schema({
     timeRemainingBeforeWithdrawal: {type: Number, default: 0},
     houseID: {type: Number, default: -1},   //currently selected house
     lastWheelSpinTime: {type: Date, default: null},
+    introductionGiven: {type: Number, default: 0},  // 0 - not given; 1 - given
 
     level: 
     {

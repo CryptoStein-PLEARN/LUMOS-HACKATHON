@@ -125,11 +125,12 @@ const saveDetails = (req,res) => {
     const selectedCharacter = req.body.selectedCharacter;
     // const characterName = req.body.characterName;
     const gameCoins = req.body.gameCoins;
+    const introductionGiven = req.body.introductionGiven;
 
     playerDetail.updateOne(
         { userAccount: userAccount },
         { 
-            $set: { playerName: playerName, characterID: selectedCharacter, gameCoins: gameCoins },
+            $set: { playerName: playerName, characterID: selectedCharacter, gameCoins: gameCoins, introductionGiven: introductionGiven },
             // $push: { ownedCharacters: characterName }
         },
         (err) => {
