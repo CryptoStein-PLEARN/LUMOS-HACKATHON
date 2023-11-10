@@ -48,7 +48,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 20,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Steve.jpeg?updatedAt=1685704483948",
-            unlockLevel: 2,
+            unlockLevel: 1,
         },
 
         {
@@ -57,7 +57,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 30,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Bruce.jpeg?updatedAt=1685704484347",
-            unlockLevel: 3,
+            unlockLevel: 1,
         },
 
         {
@@ -66,7 +66,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 40,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Thor.jpeg?updatedAt=1685704484293",
-            unlockLevel: 4,
+            unlockLevel: 2,
         },
 
         {
@@ -75,7 +75,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 50,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Rhodey.jpeg?updatedAt=1685704484317",
-            unlockLevel: 5,
+            unlockLevel: 2,
         },
 
         {
@@ -84,7 +84,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Natasha.jpeg?updatedAt=1685704484706",
-            unlockLevel: 7,
+            unlockLevel: 3,
         },
 
         {
@@ -93,7 +93,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Wanda.jpeg?updatedAt=1685704483325",
-            unlockLevel: 7,
+            unlockLevel: 3,
         },
 
         {
@@ -102,7 +102,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Jane.jpeg?updatedAt=1685704483456",
-            unlockLevel: 6,
+            unlockLevel: 4,
         },
 
         {
@@ -111,7 +111,7 @@ const records = [
             description: "Lorem Ipsum",
             cost: 70,
             imgUri: "https://ik.imagekit.io/temporary/Characters/Peggy.jpeg?updatedAt=1685704484891",
-            unlockLevel: 7,
+            unlockLevel: 4,
         },
     ]
     },
