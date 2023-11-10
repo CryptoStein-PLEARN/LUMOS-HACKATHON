@@ -1354,7 +1354,7 @@ const getEntrepreneurshipMissionDetails = (req,res) => {
             }
             else    //mission completed
             {
-                res.send({missionTitle: "You have already completed the Trading mission."});
+                res.send({missionTitle: "You have already completed the Entrepreneurship mission."});
             }
         }
         else
