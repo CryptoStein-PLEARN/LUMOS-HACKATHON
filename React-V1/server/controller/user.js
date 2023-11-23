@@ -1022,7 +1022,7 @@ const getLoanList = (req,res) => {
         else
         {
             res.send(loanList);
-            console.log(loanList);
+            // console.log(loanList);
         }
     })
 }
@@ -1035,9 +1035,9 @@ const updateBankLoan = (req,res) => {
     const payLoanByLevel = req.body.payLoanByLevel;
 
     playerDetail.updateOne(
-        { userAccount: { $eq: userAccount } },
+        { userAccount: userAccount },
         { 
-            $set: { bankLoan: { $eq: bankLoan }, gameCoins: { $eq: gameCoins }, payLoanByLevel: { $eq: payLoanByLevel } },
+            $set: { bankLoan: bankLoan, gameCoins: gameCoins, payLoanByLevel: payLoanByLevel },
         },
         (err) => {
             if(err) {
@@ -1067,7 +1067,7 @@ const getDepositList = (req,res) => {
         else
         {
             res.send(depositList);
-            console.log(depositList);
+            // console.log(depositList);
         }
     })
 }
@@ -1079,9 +1079,9 @@ const updateBankDeposit = (req,res) => {
     const depositAmount = req.body.depositAmount;
 
     playerDetail.updateOne(
-        { userAccount: { $eq: userAccount } },
+        { userAccount: userAccount },
         { 
-            $set: { timeRemainingBeforeWithdrawal: { $eq: timeRemainingBeforeWithdrawal }, gameCoins: { $eq: gameCoins }, bankDeposit: { $eq: depositAmount } },
+            $set: { timeRemainingBeforeWithdrawal: timeRemainingBeforeWithdrawal, gameCoins: gameCoins, bankDeposit: depositAmount },
         },
         (err) => {
             if(err) {
