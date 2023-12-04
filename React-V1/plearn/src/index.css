@@ -698,6 +698,8 @@ p {
 }
 
 .pt {
+  background-image: linear-gradient(to bottom right, #7D5C6Fff, #020917ff, #040A1Fff, #2A1724ff);
+  /* background-image: radial-gradient(#B233D050, #6C33C150, #F00EC550, #5A1DA950); */
   padding-top: 76px;
   padding-bottom: 78px;
 }

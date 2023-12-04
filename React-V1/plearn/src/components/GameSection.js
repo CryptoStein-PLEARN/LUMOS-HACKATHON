@@ -4,7 +4,7 @@ import Kitty from "../assets/Header.json";
 import Lottie from "lottie-react";
 export default function GameSection() {
   return (
-    <div className="pt bg-black">
+    <div className="pt">
       <div className="container-flex" >
         <div className="hero__blocks">
           <Lottie animationData={Kitty} />
