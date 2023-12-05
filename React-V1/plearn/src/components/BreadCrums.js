@@ -7,7 +7,8 @@ const videoSrc = {
   type: "video",
   sources: [
     {
-      src: "https://www.youtube.com/watch?v=DOPCZDODpaU",
+      // src: "https://www.youtube.com/watch?v=DOPCZDODpaU",
+      src: "https://youtu.be/m1lmB6dFQWM",
       provider: "youtube",
     },
   ],
